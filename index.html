@@ -1961,7 +1961,7 @@ function showObForm(edit){
         <div class="ob-field"><label>Coaching personality</label>
           <select id="ob-persona">${Object.entries(PERSONAS).map(([k,p])=>`<option value="${k}" ${state.personality===k?'selected':''}>${p.e} ${p.t}</option>`).join('')}</select></div>
         <div class="ob-field"><label>Coach — male / female</label>
-          <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>♂ Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>♀ Female</option></select></div>
+          <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>Female</option></select></div>
       </div>
       <div style="text-align:center;margin:10px 0 4px">
         <svg id="ob-spr-prev" viewBox="0 0 16 15.5" width="170" height="165" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:16px;padding:8px"></svg>
@@ -2330,10 +2330,13 @@ function headPx(s, x, y, dir){
       : `<rect x="${x-0.28}" y="${y+1.1}" width="0.32" height="0.5" fill="${s.studs||'#c9ced6'}"/><rect x="${x+1.96}" y="${y+1.1}" width="0.32" height="0.5" fill="${s.studs||'#c9ced6'}"/>`;
   }
   if(th==='general'){
-    /* v91: no helmet — tight buzz cut and a battle scar down the cheek */
+    /* v92: buzz cut + cigar with drifting smoke */
     h += `<rect x="${x}" y="${y-0.55}" width="2" height="0.55" fill="${s.hair}"/>
-    <rect x="${x+1.5}" y="${y+1.28}" width="0.2" height="0.62" fill="#a34a3f"/>
-    <rect x="${x+1.34}" y="${y+1.44}" width="0.52" height="0.18" fill="#a34a3f"/>`;
+    <rect x="${x+1.55}" y="${y+1.5}" width="1.15" height="0.34" fill="#6b4a2f"/>
+    <rect x="${x+2.5}" y="${y+1.5}" width="0.3" height="0.34" fill="#e8542f"/>
+    <rect x="${x+2.6}" y="${y+0.85}" width="0.32" height="0.32" fill="rgba(205,210,218,.8)"/>
+    <rect x="${x+2.85}" y="${y+0.3}" width="0.38" height="0.38" fill="rgba(205,210,218,.55)"/>
+    <rect x="${x+2.7}" y="${y-0.35}" width="0.45" height="0.45" fill="rgba(205,210,218,.32)"/>`;
   } else if(th==='punk'){
     h += `<rect x="${x+0.5}" y="${y-1.5}" width="1" height="1.5" fill="${s.hair}"/><rect x="${x+0.75}" y="${y-2}" width="0.5" height="0.5" fill="${s.hair}"/>`;
   } else {
@@ -3020,7 +3023,6 @@ const SCENES = {
   /* v65/v85: friendly wave — themed body detail per personality */
   wave: s => { const sk = sprSkin(s); const th = sprTheme();
     const slv = th==='scientist' ? (s.coat||'#f2f2ec') : null;
-    const scars = th==='general';
     const big = th==='arnold';
     const torso = (()=>{
       if(th==='scientist') return `
@@ -3030,8 +3032,8 @@ const SCENES = {
       <rect x="6" y="10.5" width="1" height="1.5" fill="${s.pants}"/><rect x="9" y="10.5" width="1" height="1.5" fill="${s.pants}"/>`;
       if(th==='general') return `
       <rect x="6" y="4.6" width="4" height="3.2" fill="${s.uniform||s.shirt}"/>
-      <rect x="6.1" y="4.7" width="0.9" height="0.55" fill="#4a3826"/><rect x="6.9" y="5.3" width="0.9" height="0.55" fill="#4a3826"/><rect x="7.7" y="5.9" width="0.9" height="0.55" fill="#4a3826"/><rect x="8.5" y="6.5" width="0.9" height="0.55" fill="#4a3826"/>
-      <rect x="6.35" y="4.78" width="0.32" height="0.38" fill="#d4af37"/><rect x="7.15" y="5.38" width="0.32" height="0.38" fill="#d4af37"/><rect x="7.95" y="5.98" width="0.32" height="0.38" fill="#d4af37"/><rect x="8.75" y="6.58" width="0.32" height="0.38" fill="#d4af37"/>
+      <rect x="6.05" y="4.65" width="0.9" height="0.55" fill="#4a3826"/><rect x="6.75" y="5.25" width="0.9" height="0.55" fill="#4a3826"/><rect x="7.45" y="5.85" width="0.9" height="0.55" fill="#4a3826"/><rect x="8.15" y="6.45" width="0.9" height="0.55" fill="#4a3826"/><rect x="8.85" y="7.05" width="0.9" height="0.55" fill="#4a3826"/><rect x="9.4" y="7.65" width="0.6" height="0.55" fill="#4a3826"/>
+      <rect x="6.3" y="4.73" width="0.32" height="0.38" fill="#d4af37"/><rect x="7" y="5.33" width="0.32" height="0.38" fill="#d4af37"/><rect x="7.7" y="5.93" width="0.32" height="0.38" fill="#d4af37"/><rect x="8.4" y="6.53" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.1" y="7.13" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.55" y="7.73" width="0.32" height="0.38" fill="#d4af37"/>
       <rect x="6" y="7.8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="3.2" fill="${s.pants}"/>`;
       if(th==='punk') return `
@@ -3069,7 +3071,7 @@ const SCENES = {
         ? `<rect x="5" y="5" width="1" height="1.6" fill="${slv}"/><rect x="5" y="6.6" width="1" height="0.7" fill="${sk}"/>`
         : `<rect x="5" y="5" width="1" height="2.2" fill="${sk}"/>`)
         + (spikes ? `<rect x="4.75" y="6.15" width="1.5" height="0.55" fill="#1c1c1c"/><rect x="4.4" y="6.2" width="0.38" height="0.38" fill="${s.studs||'#c9ced6'}"/><rect x="4.55" y="5.75" width="0.34" height="0.34" fill="${s.studs||'#c9ced6'}"/>` : '')
-        + (scars ? `<rect x="5.05" y="5.5" width="0.75" height="0.2" fill="#a34a3f"/><rect x="5.2" y="6.35" width="0.6" height="0.2" fill="#8e3b2c"/>` : '');
+;
     const shoes = big
       ? `<rect x="5.9" y="12" width="2.1" height="1" fill="#fcfcfb"/><rect x="8.1" y="12" width="2.1" height="1" fill="#fcfcfb"/>`
       : `<rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>`;
@@ -3077,12 +3079,12 @@ const SCENES = {
       ? `<rect x="10.4" y="1.7" width="1.3" height="1.2" fill="${sk}"/><rect x="10.3" y="2.9" width="1.3" height="1.8" fill="${sk}"/><rect x="10.05" y="4.4" width="1" height="1" fill="${sk}"/>`
       : `<rect x="10.2" y="2" width="1.1" height="1.1" fill="${sk}"/>` + (slv?`<rect x="10" y="3" width="1" height="1.2" fill="${slv}"/><rect x="10" y="4.2" width="1" height="0.7" fill="${sk}"/>`:`<rect x="10" y="3" width="1" height="1.8" fill="${sk}"/>`)
         + (spikes ? `<rect x="9.8" y="3.85" width="1.4" height="0.55" fill="#1c1c1c"/><rect x="11.25" y="3.9" width="0.38" height="0.38" fill="${s.studs||'#c9ced6'}"/><rect x="11.1" y="3.45" width="0.34" height="0.34" fill="${s.studs||'#c9ced6'}"/>` : '')
-        + (scars ? `<rect x="10.1" y="3.5" width="0.75" height="0.2" fill="#a34a3f"/>` : '');
+;
     const waveArmB = big
       ? `<rect x="11.6" y="2.1" width="1.3" height="1.2" fill="${sk}"/><rect x="10.6" y="3.1" width="1.5" height="1.6" fill="${sk}"/>`
       : `<rect x="11.4" y="2.4" width="1.1" height="1.1" fill="${sk}"/>` + (slv?`<rect x="10.4" y="3.2" width="1.2" height="1.4" fill="${slv}"/>`:`<rect x="10.4" y="3.2" width="1.2" height="1.4" fill="${sk}"/>`)
         + (spikes ? `<rect x="10.3" y="4.5" width="1.4" height="0.55" fill="#1c1c1c"/><rect x="11.75" y="4.55" width="0.38" height="0.38" fill="${s.studs||'#c9ced6'}"/>` : '')
-        + (scars ? `<rect x="10.5" y="3.7" width="0.75" height="0.2" fill="#a34a3f"/>` : '');
+;
     return `
     <g id="sA"><rect x="1" y="13" width="14" height="1" fill="#3a4150"/></g>
     <g id="sB">
