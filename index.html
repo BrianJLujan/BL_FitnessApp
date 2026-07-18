@@ -5461,8 +5461,8 @@ function renderYou(){
     <div class="section-label">Customize your coach</div>
     <div class="card">
       <div class="seg" style="margin-bottom:12px">
-        <button class="${state.spr.sex==='m'?'sel':''}" data-sprsex="m">♂ Male</button>
-        <button class="${state.spr.sex==='f'?'sel':''}" data-sprsex="f">♀ Female</button>
+        <button class="${state.spr.sex==='m'?'sel':''}" data-sprsex="m">Male</button>
+        <button class="${state.spr.sex==='f'?'sel':''}" data-sprsex="f">Female</button>
       </div>
       <div class="spr-grid">
       ${SPR_ROWS[sprTheme()].map(([k,lab])=>`
@@ -5593,7 +5593,7 @@ function renderYou(){
     updateHeader(); renderYou(); renderFuel(); renderTrain(); renderProgress();
     toast('✓ Names updated');
   };
-  $$('#screen-you [data-sprsex]').forEach(b=> b.onclick = ()=>{ state.spr.sex = b.dataset.sprsex; renderSprite(); renderYou(); toast({m:'♂ Your coach is ready',f:'♀ Your coach is ready',r:'🤖 Cyborg coach online — systems nominal'}[state.spr.sex]); });
+  $$('#screen-you [data-sprsex]').forEach(b=> b.onclick = ()=>{ state.spr.sex = b.dataset.sprsex; renderSprite(); renderYou(); toast({m:'Your coach is ready',f:'Your coach is ready',r:'🤖 Cyborg coach online — systems nominal'}[state.spr.sex]); });
   $$('#screen-you [data-sprk]').forEach(inp=>{
     inp.oninput = ()=>{ state.spr[inp.dataset.sprk] = inp.value; renderSprite(); };
     inp.onchange = ()=>{ renderYou(); };
