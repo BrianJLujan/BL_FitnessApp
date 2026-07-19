@@ -5441,8 +5441,8 @@ function renderProgress(){
     </div>
     <div class="card">
       <h3 style="display:flex;align-items:center;gap:8px">
-        <select id="str-pick" class="str-select" style="flex:1;min-width:0">${groupedExOptions(state.strengthKey)}</select>
-        <select id="range-pick" class="str-select" style="margin-left:auto;max-width:150px">${Object.keys(RANGE_MAP).map(k=>`<option ${k===state.chartRangeKey?'selected':''}>${k}</option>`).join('')}</select>
+        <select id="str-pick" class="str-select" style="flex:1;min-width:0;max-width:none">${groupedExOptions(state.strengthKey)}</select>
+        <select id="range-pick" class="str-select" style="flex:none">${Object.keys(RANGE_MAP).map(k=>`<option ${k===state.chartRangeKey?'selected':''}>${k}</option>`).join('')}</select>
       </h3>
       ${(()=>{ const isC = state.strengthData[state.strengthKey].mg==='Cardio';
         const hasDist = state.strengthKey.startsWith('cd_');   /* races: the distance IS the name */
