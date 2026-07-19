@@ -2287,16 +2287,16 @@ const DEFAULT_SPR = {...state.spr};
 const THEME_DEFAULTS = {
   athlete:   {},
   scientist: {coat:'#f2f2ec', glasses:'#2f3542'},
-  general:   {uniform:'#5b6e3f', hat:'#46552f', pants:'#3e4a2b'},
+  general:   {uniform:'#5b6e3f', hat:'#46552f', strap:'#4a3826', pants:'#3e4a2b'},
   arnold:    {hair:'#e8c14b', skin:'#dda173', shirt:'#2b2b2b', trunks:'#7a3df0'},
-  punk:      {hair:'#e0347c', vest:'#1c1c1c', studs:'#c9ced6', shirt:'#f2f2ee'},
+  punk:      {hair:'#e0347c', vest:'#1c1c1c', studs:'#c9ced6', flannel:'#c0392b', shirt:'#f2f2ee'},
 };
 const SPR_ROWS = {
   athlete:   [['skin','Skin tone'],['hair','Hair'],['shirt','Shirt'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
-  scientist: [['skin','Skin tone'],['hair','Hair'],['glasses','Glasses'],['coat','Lab coat'],['shirt','Shirt under coat'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
-  general:   [['skin','Skin tone'],['hair','Hair'],['uniform','Uniform'],['hat','Cap'],['pants','Trousers'],['socks','Socks'],['weights','Weights']],
-  arnold:    [['skin','Skin tan'],['hair','Hair'],['shirt','Tank top'],['trunks','Trunks'],['socks','Socks'],['weights','Weights']],
-  punk:      [['skin','Skin tone'],['hair','Mohawk'],['vest','Leather vest'],['studs','Spikes & studs'],['shirt','Shirt under vest'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
+  scientist: [['skin','Skin tone'],['hair','Hair'],['glasses','Lab visor'],['coat','Lab coat'],['shirt','Shirt under coat'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
+  general:   [['skin','Skin tone'],['hair','Buzz cut'],['uniform','Uniform'],['strap','Bullet strap'],['pants','Trousers'],['socks','Socks'],['weights','Weights']],
+  arnold:    [['skin','Skin tan'],['hair','Hair'],['shirt','Tank top'],['trunks','Shorts'],['socks','Socks'],['weights','Weights']],
+  punk:      [['skin','Skin tone'],['hair','Mohawk'],['vest','Leather vest'],['studs','Spikes & studs'],['flannel','Waist flannel'],['shirt','Undershirt'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
 };
 /* scenes receive a themed view of the sprite: outfit colors swap in by character */
 function themedSpr(){
@@ -3032,7 +3032,7 @@ const SCENES = {
       <rect x="6" y="10.5" width="1" height="1.5" fill="${s.pants}"/><rect x="9" y="10.5" width="1" height="1.5" fill="${s.pants}"/>`;
       if(th==='general') return `
       <rect x="6" y="4.6" width="4" height="3.2" fill="${s.uniform||s.shirt}"/>
-      <rect x="6.05" y="4.65" width="0.9" height="0.55" fill="#4a3826"/><rect x="6.75" y="5.25" width="0.9" height="0.55" fill="#4a3826"/><rect x="7.45" y="5.85" width="0.9" height="0.55" fill="#4a3826"/><rect x="8.15" y="6.45" width="0.9" height="0.55" fill="#4a3826"/><rect x="8.85" y="7.05" width="0.9" height="0.55" fill="#4a3826"/><rect x="9.4" y="7.65" width="0.6" height="0.55" fill="#4a3826"/>
+      <rect x="6.05" y="4.65" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="6.75" y="5.25" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="7.45" y="5.85" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="8.15" y="6.45" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="8.85" y="7.05" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="9.4" y="7.65" width="0.6" height="0.55" fill="${s.strap||'#4a3826'}"/>
       <rect x="6.3" y="4.73" width="0.32" height="0.38" fill="#d4af37"/><rect x="7" y="5.33" width="0.32" height="0.38" fill="#d4af37"/><rect x="7.7" y="5.93" width="0.32" height="0.38" fill="#d4af37"/><rect x="8.4" y="6.53" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.1" y="7.13" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.55" y="7.73" width="0.32" height="0.38" fill="#d4af37"/>
       <rect x="6" y="7.8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="3.2" fill="${s.pants}"/>`;
@@ -3042,10 +3042,10 @@ const SCENES = {
       <rect x="6" y="4.6" width="4" height="0.45" fill="${s.vest||'#1c1c1c'}"/>
       <rect x="6.3" y="5.4" width="0.35" height="0.35" fill="${s.studs||'#c9ced6'}"/><rect x="9.35" y="5.4" width="0.35" height="0.35" fill="${s.studs||'#c9ced6'}"/>
       <rect x="6.3" y="6.4" width="0.35" height="0.35" fill="${s.studs||'#c9ced6'}"/><rect x="9.35" y="6.4" width="0.35" height="0.35" fill="${s.studs||'#c9ced6'}"/>
-      <rect x="5.7" y="7.7" width="4.6" height="1.1" fill="#c0392b"/>
+      <rect x="5.7" y="7.7" width="4.6" height="1.1" fill="${s.flannel||'#c0392b'}"/>
       <rect x="6.1" y="7.9" width="0.4" height="0.4" fill="#8e2620"/><rect x="7" y="8.2" width="0.4" height="0.4" fill="#8e2620"/><rect x="8.6" y="7.9" width="0.4" height="0.4" fill="#8e2620"/><rect x="9.5" y="8.2" width="0.4" height="0.4" fill="#8e2620"/>
       <rect x="7.55" y="7.9" width="0.9" height="0.7" fill="#a93226"/>
-      <rect x="7.25" y="8.8" width="0.95" height="1.6" fill="#c0392b"/><rect x="8.3" y="8.8" width="0.8" height="1.2" fill="#a93226"/>
+      <rect x="7.25" y="8.8" width="0.95" height="1.6" fill="${s.flannel||'#c0392b'}"/><rect x="8.3" y="8.8" width="0.8" height="1.2" fill="#a93226"/>
       <rect x="7.4" y="9.3" width="0.4" height="0.4" fill="#8e2620"/><rect x="8.45" y="9.1" width="0.35" height="0.35" fill="#8e2620"/>
       <rect x="6" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="3.2" fill="${s.pants}"/>`;
       if(big) return `
@@ -4883,8 +4883,56 @@ const RECIPE_WHY = {
   Lamb: ['Rich in B12 and zinc — trim well, portion smart','Flavor-dense; a little goes a long way','Pairs with herbs so it never needs heavy sauce'],
   Vegetarian: ['Plant protein + fiber working together','Meat-free but the protein still shows up','Budget-friendly, gut-friendly, macro-honest'],
 };
+/* v95: Allrecipes classics — real crowd-tested recipes, linked straight to the source */
+const ALLRECIPES_CLASSICS = [
+  {c:'American', p:'Chicken', n:'Juicy Roasted Chicken', why:'The Allrecipes classic — simple, foolproof, lean if you skip the skin', m:'~42g protein · 420 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Juicy Roasted Chicken')},
+  {c:'American', p:'Chicken', n:'Chicken Pot Pie', why:'Comfort classic — go light on the crust to tighten the macros', m:'~28g protein · 620 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chicken Pot Pie')},
+  {c:'American', p:'Chicken', n:'Honey Garlic Chicken', why:'Sweet-savory weeknight staple, huge protein per pan', m:'~40g protein · 470 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Honey Garlic Chicken')},
+  {c:'American', p:'Chicken', n:'Cajun Chicken Pasta', why:'Allrecipes favorite — swap heavy cream for half-and-half on a cut', m:'~44g protein · 650 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Cajun Chicken Pasta')},
+  {c:'Italian', p:'Chicken', n:'Chicken Marsala', why:'Mushroom-wine pan sauce, restaurant dish at home macros', m:'~41g protein · 480 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chicken Marsala')},
+  {c:'American', p:'Chicken', n:'Chicken Cordon Bleu', why:'Ham + Swiss inside the breast — protein stacked on protein', m:'~47g protein · 560 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chicken Cordon Bleu')},
+  {c:'American', p:'Chicken', n:'White Chicken Chili', why:'Beans + shredded chicken — fiber and protein in one bowl', m:'~34g protein · 420 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('White Chicken Chili')},
+  {c:'Mexican', p:'Chicken', n:'Chicken Enchiladas', why:'Roll them in corn tortillas to keep it honest', m:'~32g protein · 540 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chicken Enchiladas')},
+  {c:'American', p:'Chicken', n:'Buffalo Chicken Dip Bowl', why:'The party dip, portioned like a meal over rice', m:'~30g protein · 430 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Buffalo Chicken Dip Bowl')},
+  {c:'Chinese', p:'Chicken', n:"General Tso's Chicken", why:'Bake instead of fry and the classic gets cut-friendly', m:'~33g protein · 620 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent("General Tso's Chicken")},
+  {c:'American', p:'Turkey', n:'Actually Delicious Turkey Burgers', why:'The famous Allrecipes patty — lean and never dry', m:'~35g protein · 380 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Actually Delicious Turkey Burgers')},
+  {c:'American', p:'Turkey', n:'Turkey Meatloaf', why:'Old-school comfort at 93/7 macros', m:'~32g protein · 420 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Turkey Meatloaf')},
+  {c:'Mexican', p:'Turkey', n:'Turkey Taco Soup', why:'Dump-and-simmer — protein and fiber by the ladle', m:'~30g protein · 390 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Turkey Taco Soup')},
+  {c:'Italian', p:'Beef', n:"World's Best Lasagna", why:'The most famous recipe on Allrecipes — worth every calorie on a bulk', m:'~34g protein · 680 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent("World's Best Lasagna")},
+  {c:'American', p:'Beef', n:'Awesome Slow Cooker Pot Roast', why:'Set it in the morning, protein all week', m:'~44g protein · 520 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Awesome Slow Cooker Pot Roast')},
+  {c:'American', p:'Beef', n:'Salisbury Steak', why:'Diner classic — lean ground beef in mushroom gravy', m:'~36g protein · 510 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Salisbury Steak')},
+  {c:'American', p:'Beef', n:'Beef Stroganoff', why:'Swap in Greek yogurt for sour cream and keep the comfort', m:'~33g protein · 560 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Beef Stroganoff')},
+  {c:'American', p:'Beef', n:'Sloppy Joes', why:'Weeknight nostalgia — 90/10 beef keeps it lean', m:'~29g protein · 480 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Sloppy Joes')},
+  {c:'American', p:'Beef', n:'Stuffed Peppers', why:'Beef + rice baked in its own portion control', m:'~27g protein · 430 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Stuffed Peppers')},
+  {c:'Italian', p:'Beef', n:'Meatball Nirvana', why:'The five-star meatball — bake it, skip the fry', m:'~31g protein · 470 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Meatball Nirvana')},
+  {c:'Italian', p:'Beef', n:'Baked Ziti', why:'Crowd feeder — part-skim mozzarella tightens it up', m:'~28g protein · 610 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Baked Ziti')},
+  {c:'American', p:'Pork', n:'Slow Cooker Pulled Pork', why:'Tenderloin version cuts the fat, keeps the pull', m:'~38g protein · 490 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Slow Cooker Pulled Pork')},
+  {c:'American', p:'Pork', n:'Baked Pork Chops', why:'Simple oven chops — as lean as chicken breast', m:'~40g protein · 440 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Baked Pork Chops')},
+  {c:'Chinese', p:'Pork', n:'Sweet and Sour Pork', why:'Takeout classic — air-fry the pork to drop 150 kcal', m:'~30g protein · 580 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Sweet and Sour Pork')},
+  {c:'American', p:'Fish', n:'Broiled Tilapia Parmesan', why:'Allrecipes legend — 10 minutes, huge protein, tiny calories', m:'~36g protein · 320 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Broiled Tilapia Parmesan')},
+  {c:'American', p:'Fish', n:'Grilled Salmon', why:'Omega-3s and simplicity — the marinade makes it', m:'~39g protein · 460 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Grilled Salmon')},
+  {c:'American', p:'Fish', n:'Baked Lemon Pepper Cod', why:'White fish volume eating at its finest', m:'~34g protein · 300 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Baked Lemon Pepper Cod')},
+  {c:'Mexican', p:'Fish', n:'Baja Fish Tacos', why:'Grill the fish instead of battering and they stay lean', m:'~28g protein · 510 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Baja Fish Tacos')},
+  {c:'American', p:'Shrimp', n:'Marinated Grilled Shrimp', why:'The five-star skewer — protein density champion', m:'~32g protein · 280 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Marinated Grilled Shrimp')},
+  {c:'Italian', p:'Shrimp', n:'Shrimp Scampi with Pasta', why:'Garlic-butter classic — measure the butter, keep the garlic', m:'~30g protein · 540 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Shrimp Scampi with Pasta')},
+  {c:'American', p:'Shrimp', n:'Shrimp and Grits', why:'Southern comfort with a protein backbone', m:'~29g protein · 520 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Shrimp and Grits')},
+  {c:'Thai', p:'Shrimp', n:'Shrimp Pad See Ew', why:'Wide noodles, big wok flavor, lean protein', m:'~31g protein · 560 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Shrimp Pad See Ew')},
+  {c:'Mediterranean', p:'Lamb', n:'Greek Lamb Gyros', why:'Homemade gyro meat — yogurt sauce does the heavy lifting', m:'~34g protein · 560 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Greek Lamb Gyros')},
+  {c:'Indian', p:'Lamb', n:'Lamb Curry', why:'Slow-simmered and spice-forward, yogurt base', m:'~36g protein · 540 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Lamb Curry')},
+  {c:'American', p:'Vegetarian', n:'Homemade Mac and Cheese', why:'The baked classic — add cottage cheese to sneak protein in', m:'~22g protein · 620 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Homemade Mac and Cheese')},
+  {c:'Mexican', p:'Vegetarian', n:'Black Bean Quesadillas', why:'Beans + cheese — cheap, fast, macro-honest', m:'~20g protein · 470 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Black Bean Quesadillas')},
+  {c:'Indian', p:'Vegetarian', n:'Chickpea Tikka Masala', why:'The takeout order, meatless and lighter', m:'~19g protein · 460 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chickpea Tikka Masala')},
+  {c:'Mediterranean', p:'Vegetarian', n:'Greek Quinoa Salad', why:'Feta + chickpeas + quinoa — a lunch that holds you', m:'~16g protein · 420 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Greek Quinoa Salad')},
+  {c:'American', p:'Vegetarian', n:'Veggie Egg White Frittata', why:'Breakfast-for-dinner protein without the fat', m:'~24g protein · 310 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Veggie Egg White Frittata')},
+  {c:'Japanese', p:'Chicken', n:'Baked Teriyaki Chicken', why:'The 20,000-review classic — thighs for flavor, breast for macros', m:'~38g protein · 450 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Baked Teriyaki Chicken')},
+  {c:'American', p:'Chicken', n:'Grilled Chicken Caesar Wrap', why:'Deli lunch, homemade numbers', m:'~36g protein · 520 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Grilled Chicken Caesar Wrap')},
+  {c:'Korean', p:'Beef', n:'Korean Ground Beef Bowl', why:'15-minute bulgogi-style beef over steamed rice', m:'~30g protein · 530 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Korean Ground Beef Bowl')},
+  {c:'Vietnamese', p:'Chicken', n:'Chicken Pho Ga', why:'The chicken version — broth-based volume eating', m:'~29g protein · 410 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Chicken Pho Ga')},
+  {c:'Mediterranean', p:'Chicken', n:'Greek Lemon Chicken and Potatoes', why:'One-pan Allrecipes favorite — bright, filling, simple', m:'~41g protein · 540 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Greek Lemon Chicken and Potatoes')},
+  {c:'American', p:'Beef', n:'Philly Cheesesteak Skillet', why:'The sandwich, minus the roll, plus portion control', m:'~35g protein · 560 kcal', href:'https://www.allrecipes.com/search?q=' + encodeURIComponent('Philly Cheesesteak Skillet')},
+];
 const ALL_RECIPES = (()=>{
-  const out = [...CORE_RECIPES];
+  const out = [...CORE_RECIPES, ...ALLRECIPES_CLASSICS];
   for(const [c, tmpls] of Object.entries(RECIPE_STYLES)){
     for(const [p, info] of Object.entries(RECIPE_PROTS)){
       for(const t of tmpls){
@@ -5324,50 +5372,14 @@ function renderProgress(){
     </div>
     <div class="card">
       <h3 style="display:flex;align-items:center;gap:8px">Community rankings · PRs
-        <span class="h3-side" style="float:none;margin-left:auto">${getLB(state.lbKey).pctile} — that's you</span>
+        <span class="h3-side" style="float:none;margin-left:auto">coming soon</span>
       </h3>
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <select id="lb-pick" class="str-select" style="flex:1;min-width:0">${groupedExOptions(state.lbKey)}</select>
+      <div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:12.5px;line-height:1.65">
+        🌐 <b style="color:var(--ink-2)">No community data yet.</b><br>
+        Rankings stay empty until more users join and opt in.<br>
+        Your PRs are already being tracked — the moment the community goes live, you're ranked from day one.
       </div>
-      <input id="lb-search" class="lb-search" placeholder="🔍 Search users…" value="${state.lbSearch}">
-      ${state.strengthData[state.lbKey].unit==='min' ? '' : `
-      <div class="ctl-row" style="flex-wrap:wrap;gap:10px;margin:0 0 10px">
-        <span class="ctl">PR weight <button class="adj-btn" data-lbdn="w">−</button>
-          <input class="lb-f" data-lbf="w" inputmode="decimal" value="${state.lbF.w}" placeholder="–">
-        <button class="adj-btn" data-lbup="w">＋</button> <span style="font-weight:500">${state.units==='kg'?'kg':'lb'} · steps of 2.5 · clear to rank by PR</span></span>
-      </div>`}
-      <div class="lb-head"><span>#</span><span>User</span><span>${state.lbF.w!=='' && state.strengthData[state.lbKey].unit!=='min' ? 'Reps @ '+state.lbF.w : 'Best'}</span><span>♥ / date</span></div>
-      ${(()=>{
-        const ds = state.strengthData[state.lbKey];
-        const bySearch = r => !state.lbSearch || r[1].toLowerCase().includes(state.lbSearch.toLowerCase());
-        /* exact-weight mode: who does the most reps at YOUR chosen weight */
-        if(state.lbF.w!=='' && ds.unit!=='min'){
-          const wSel = +state.lbF.w;
-          const h = hashN(ds.name + wSel);
-          const names = ['IronAtlas','Q_Lift','MayaStrong','DeeWheels','LegDayLarry','QuadQueen','PressKing','GluteGuru','PacerX','BigTexBench'];
-          const pr = parseFloat(ds.vals[ds.vals.length-1]) || 100;
-          const base = Math.max(1, Math.round(16 - 13*(wSel/(pr*1.7))));
-          const rows = Array.from({length:5},(_,i)=>({n:names[(h+i)%names.length], age:24+((h+i)%18), bw:160+((h+i*3)%70), reps:Math.max(1, base + ((h+i*7)%7) - 2), hr:165+((h+i)%15), d:'Jun '+(10+((h+i)%18))}));
-          rows.push({n:`You · ${state.user.name}`, age:state.user.age, bw:Math.round(state.user.weight), reps:Math.max(1, base + (h%4) - 1), hr: state.hasWearable?168:'—', d:'recent', you:true});
-          rows.sort((a,b)=>b.reps-a.reps);
-          return rows.map((r,i)=>[i+1, r.n, r.age, r.bw, `${wSel} × ${r.reps}`, r.hr, r.d]).filter(bySearch).map(r=>`
-        <div class="lb-row ${r[1].startsWith('You')?'you':''}">
-          <span class="r">#${r[0]}</span>
-          <div class="u"><b>${r[1]}</b><div class="sub">${r[2]} yr · ${r[3]} lb</div></div>
-          <div class="best">${r[4]}</div>
-          <div class="hd"><span style="color:#e66767">♥${r[5]}</span><div class="sub">${r[6]}</div></div>
-        </div>`).join('');
-        }
-        /* default: ranked by PR */
-        return getLB(state.lbKey).rows.filter(bySearch).map(r=>`
-        <div class="lb-row ${r[1].startsWith('You')?'you':''}">
-          <span class="r">#${r[0]}</span>
-          <div class="u"><b>${r[1]}</b><div class="sub">${r[2]} yr · ${r[3]} lb</div></div>
-          <div class="best">${r[4]}</div>
-          <div class="hd"><span style="color:#e66767">♥${r[5]}</span><div class="sub">${r[6]}</div></div>
-        </div>`).join('');
-      })()}
-      <p style="font-size:11px;color:var(--muted);margin-top:10px">Rankings across all 48,211 users · leaderboard opt-in, anonymous by default (see Legal in the You tab).</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">Leaderboards are opt-in and anonymous by default (see Legal in the You tab).</p>
     </div>
     <div style="height:56px"></div>`;
   wireStrengthChart(); wireSleepChart();
@@ -5375,9 +5387,10 @@ function renderProgress(){
   $('#str-pick').onchange = e=>{ state.strengthKey = e.target.value; renderProgress(); };
   $$('#screen-progress [data-cmetric]').forEach(b=> b.onclick = ()=>{ state.chartMetric = b.dataset.cmetric; renderProgress(); });
   $('#range-pick').onchange = e=>{ state.chartRangeKey = e.target.value; renderProgress(); };
-  $('#lb-pick').onchange = e=>{ state.lbKey = e.target.value; renderProgress(); };
+  const lbp = $('#lb-pick');
+  if(lbp) lbp.onchange = e=>{ state.lbKey = e.target.value; renderProgress(); };
   const lbs = $('#lb-search');
-  lbs.oninput = ()=>{ state.lbSearch = esc(lbs.value).slice(0,60); const pos = lbs.selectionStart; renderProgress(); const nl=$('#lb-search'); nl.focus(); nl.setSelectionRange(pos,pos); };
+  if(lbs) lbs.oninput = ()=>{ state.lbSearch = esc(lbs.value).slice(0,60); const pos = lbs.selectionStart; renderProgress(); const nl=$('#lb-search'); nl.focus(); nl.setSelectionRange(pos,pos); };
   /* weight filter moves only in multiples of 2.5 */
   $$('#screen-progress [data-lbdn]').forEach(b=> b.onclick = ()=>{
     const cur = state.lbF.w;
