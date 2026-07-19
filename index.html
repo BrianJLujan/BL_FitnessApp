@@ -5648,12 +5648,12 @@ function renderYou(){
     </div></div>
     <div class="section-label">AI brain · live LLM</div>
     <div class="card">
-      <p style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:10px">The built-in coach is scripted — great for demos, brittle off-script. Paste an Anthropic API key and anything the script can't handle gets answered by a live Claude model with your stats in context. The key lives in memory only — refresh and it's gone.</p>
+      <p style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:10px">Paste an Anthropic API key and Claude becomes your coach's brain: chat, food logging (typed or photographed), and vitamin &amp; mineral estimates all run through Claude first, with the built-in coach and food database standing by as backup. The key lives in memory only — refresh and it's gone.</p>
       <div style="display:flex;gap:8px">
         <input type="password" id="api-key" class="lb-search" style="margin:0;flex:1" placeholder="sk-ant-..." value="${state.apiKey?'••••••••••••':''}">
         <button class="adj-save" id="api-save" style="flex:none">${state.apiKey?'Unlink':'Link'}</button>
       </div>
-      <p style="font-size:11px;color:${state.apiKey?'var(--good)':'var(--muted)'};margin-top:8px">${state.apiKey?'● Live — off-script chat now runs through Claude':'○ Not linked — off-script chat falls back to scripted replies'}</p>
+      <p style="font-size:11px;color:${state.apiKey?'var(--good)':'var(--muted)'};margin-top:8px">${state.apiKey?'● Live — Claude answers first, built-ins are the backup':'○ Not linked — running on the built-in coach and food database'}</p>
     </div>
     <div class="section-label">Connected</div>
     <div class="card wear">
@@ -5714,10 +5714,10 @@ function renderYou(){
   };
   const ak = $('#api-save');
   if(ak) ak.onclick = ()=>{
-    if(state.apiKey){ state.apiKey = null; renderYou(); toast('Unlinked — back to scripted replies'); return; }
+    if(state.apiKey){ state.apiKey = null; renderYou(); toast('Unlinked — back to the built-in coach'); return; }
     const v = $('#api-key').value.trim();
     if(!v){ toast('Paste a key first'); return; }
-    state.apiKey = v; renderYou(); toast('🧠 Live LLM linked');
+    state.apiKey = v; renderYou(); toast('🧠 Claude linked — live answers on');
   };
   $('#exp-csv').onclick = exportCSV;
   $('#exp-pdf').onclick = exportPDF;
