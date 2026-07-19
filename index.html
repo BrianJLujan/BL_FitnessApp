@@ -591,6 +591,9 @@
   .new-tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.5px;color:#0d0d0d;background:var(--warning);border-radius:5px;padding:2px 5px;margin-top:4px;animation:pulse 1.4s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
   .see-all{width:100%;margin-top:12px;background:none;border:1px solid var(--hairline);border-radius:12px;color:var(--accent);font-weight:700;font-size:13px;padding:10px;cursor:pointer;font-family:inherit}
+  /* v107: expanded list — the collapse control floats translucently so it's always in reach */
+  .see-all.float-less{position:sticky;bottom:14px;z-index:30;background:rgba(18,20,26,.68);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.3)}
+  body.light .see-all.float-less{background:rgba(255,255,255,.68);box-shadow:0 6px 18px rgba(0,0,0,.12)}
   .badge{cursor:pointer}
   .badge.sel{border-color:var(--accent)}
   .lb-f{width:52px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;padding:6px 4px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;text-align:center;font-variant-numeric:tabular-nums}
@@ -792,7 +795,7 @@ const state = {
   workoutsGoal: 0,
   hudIdx: 0,
   theme: 'dark',
-  spr: {sex:'m', skin:'#f0b27a', eyes:'#20242c', shirt:'#e34948', pants:'#3987e5', socks:'#fcfcfb', weights:'#3987e5', hair:'#7a4a1f',
+  spr: {sex:'m', skin:'#f0b27a', eyes:'#20242c', shirt:'#e34948', pants:'#3987e5', socks:'#fcfcfb', weights:'#ff2b2b', hair:'#7a4a1f',
         coat:'#f2f2ec', glasses:'#2f3542', uniform:'#5b6e3f', hat:'#46552f', trunks:'#7a3df0', vest:'#1c1c1c', studs:'#c9ced6'},
   lbF: {w:'', s:'', r:''},
   cardio: null,
@@ -801,7 +804,6 @@ const state = {
   user: { name:'Brian', age:29, weight:186, height:`5'11"`, gender:'' },
   profileSet: { name:false, age:false, height:false, weight:false },
   recovery: { sleep:'7h 12m', sleepH:7.2, score:82, hrv:68, rhr:54 },
-  feel: 'Moderate',
   water: 0, waterTarget: 4,   // liters — your 3–4 L/day goal
   streak: 0,
   memory: [],
@@ -829,7 +831,6 @@ const state = {
   },
   sleepRange: '7N',
   sleepLog: [],
-  prs: [],
   weightNow: 186,
   prog: {
     '7 days':  {start:186, days:7},
@@ -1897,6 +1898,13 @@ function isQuestion(raw){
     || /(pros and cons|pro and con|difference between|benefits? of|better for|what'?s the)/.test(t);
 }
 
+/* v107: journey explainers — when each goal is the right call */
+const GOAL_INFO = {
+  'Muscle gain':`<b>💪 Muscle gain (a "bulk")</b> — eat ~300 kcal above maintenance with high protein so training turns the surplus into muscle.\n✅ When it's your move: you're new to lifting and want to build your base · you're lean and want more size · strength has stalled on maintenance calories · you're an athlete adding offseason mass.\n⚠️ Know going in: the scale goes UP on purpose — some fat comes with the muscle; you cut it later. Expect ~0.25–0.5 lb/week of gain, not more.`,
+  'Maintenance':`<b>⚖️ Maintenance</b> — eat right at the calories you burn; weight holds while training keeps or slowly builds muscle.\n✅ When it's your move: you like where you are and want to keep it · you just finished a long cut or bulk and want to lock the result in · life is hectic and you want structure without a scale mission · in-season athletes who can't afford under-fueling.\n⚠️ Know going in: progress is quieter here — PRs and body composition, not the scale, are your scoreboard.`,
+  'Fat loss':`<b>🔥 Fat loss (a "cut")</b> — eat ~500 kcal under maintenance with protein high and lifting heavy, so what you lose is fat, not muscle.\n✅ When it's your move: you're carrying more fat than you want · health markers (blood pressure, energy, joints) would improve lighter · you bulked and it's time to reveal the muscle · a sport or event has a weight target.\n⚠️ Know going in: sustainable pace is 0.5–1% of bodyweight per week — crash pace costs muscle, and I won't coach you there.`,
+  'Recomposition':`<b>🔄 Body recomposition</b> — eat at or just under maintenance while lifting hard, losing fat and building muscle at the same time.\n✅ When it's your move: you're new to serious lifting (beginners recomp fastest) · you're returning after a long break · you're "skinny-fat" and neither a pure bulk nor cut fits · you have muscle memory working for you.\n⚠️ Know going in: it's the slowest visible progress of the four — the scale barely moves while your body quietly rebuilds. Photos and PRs tell the real story.`,
+};
 const SPLIT_INFO = {
   ppl:`<b>PPL (Push / Pull / Legs)</b> groups training by movement pattern — push days (chest, shoulders, triceps), pull days (back, biceps, rear delts), leg days (quads, hamstrings, glutes, calves).\n✅ Pros: on a 6-day run every muscle gets hit 2×/week — the frequency research favors; easy to progress; balanced by design.\n⚠️ Cons: really wants 5–6 days a week; miss a day and the rotation slips.`,
   bro:`<b>Bro split</b> gives each muscle its own day — chest day, back day, arm day, and so on.\n✅ Pros: huge per-session focus and pump, dead simple, honestly fun.\n⚠️ Cons: each muscle is only trained ~1×/week, and studies consistently show 2×+ grows more muscle for natural lifters — so it trades results for vibes.`,
@@ -2114,7 +2122,7 @@ function showObForm(edit){
     updateHeader();
     d.querySelectorAll('input,select,button').forEach(x=>x.disabled=true);
     d.querySelector('#ob-go').textContent = '✓ Profile created';
-    finishOnboarding(false);
+    finishOnboarding();
   };
 }
 
@@ -2163,51 +2171,14 @@ function celebratePR(e, w){
   setTimeout(closeIt, 6500);
 }
 
-/* ---------- v33: prototype clock — simulate tomorrow morning ---------- */
-function nextDay(){
-  state.dayOffset = (state.dayOffset||0) + 1;
-  const d = simDate();
-  const yest = new Date(d); yest.setDate(yest.getDate()-1);
-  if(state.trainedDays.includes(dayKey(yest))) state.streak++;
-  else if(yest.getDay()!==0) state.streak = 0;      // Sundays are planned rest — streak survives
-  TODAY_NAME = d.toLocaleString('en-US',{weekday:'long'});
-  SCHED_KEY = SCHEDULE[TODAY_NAME];
-  /* daily resets */
-  ['cal','protein','carbs','fat'].forEach(k=>{ if(state.macros[k]) state.macros[k].v = 0; });
-  state.meals = []; state.mealIdx = 0; state.burned = 0;
-  state.weighedToday = false; state.sessRecorded = false;
-  state.activeSet = null; state.cardio = null; clearInterval(cardioT); clearInterval(sessI);
-  state.sess = {run:false, sec:0};
-  if(d.getDay()===1) state.workoutsWtd = 0;         // Monday: fresh week
-  /* wearable re-sync — deterministic per simulated day */
-  const h = hashN(dayKey(d));
-  state.recovery.sleepH = +(5.9 + (h%31)/10).toFixed(1);
-  const hh = Math.floor(state.recovery.sleepH), mm = Math.round((state.recovery.sleepH-hh)*60);
-  state.recovery.sleep = `${hh}h ${String(mm).padStart(2,'0')}m`;
-  state.recovery.score = Math.min(98, Math.max(38, Math.round(state.recovery.sleepH*10.5 + (h%14) - 4)));
-  state.recovery.hrv = 52 + (h%28);
-  if(state.splitChosen || state.lastSplit) applyPreset(SCHED_KEY);
-  else { state.planReady = false; renderTrain(); }
-  updateHeader(); renderFuel(); renderProgress(); renderYou();
-  switchTab('coach');
-  addMsg(`🌅 <b>${TODAY_NAME}</b> — new day, clean slate. ${state.hasWearable ? `Wearable synced overnight: <b>${state.recovery.sleep}</b> sleep · recovery <b>${state.recovery.score}%</b>.` : `No wearable connected — sleep and recovery still read N/A.`} Here's your briefing:`, 'bot');
-  setTimeout(showBriefing, 700);
-  toast(`🌅 ${TODAY_NAME}`);
-}
-
-function finishOnboarding(demo){
+function finishOnboarding(){
   obStep = -2; state.onboarded = true;
-  if(demo){ state.planReady = true; state.splitChosen = true; state.hasWearable = true; state.intensity = 'Intense'; state.goalsKnown = true; state.lastSplit = 'ppl'; state.workoutsGoal = 6; state.weighDays = ['Wednesday','Sunday']; applyPreset(SCHED_KEY); }
-  if(!demo){
-    state.memory.unshift(
-      {ic:'📝', t:`No split locked in yet — you pick each day; I'll learn your goals and rhythm as we talk`},
-    );
-  }
+  state.memory.unshift(
+    {ic:'📝', t:`No split locked in yet — you pick each day; I'll learn your goals and rhythm as we talk`},
+  );
   updateHeader(); renderTrain(); renderFuel(); renderYou(); renderProgress();
-  addMsg(demo
-    ? `Demo profile loaded — you're <b>Brian</b>, I'm <b>NAVI</b>, and we're 8 weeks into your 6-day PPL cut: 500–750 kcal deficit, 180–200 g protein, cardio after every lift, Sundays fully off. Here are your daily health diagnostics and goals, Brian:`
-    : `Profile created, ${state.user.name} — everything else (goals, split, preferences) I'll learn as we talk. Here are your daily health diagnostics and goals:`, 'bot');
-  setTimeout(showBriefing, demo?600:1200);
+  addMsg(`Profile created, ${state.user.name} — everything else (goals, split, preferences) I'll learn as we talk. Here are your daily health diagnostics and goals:`, 'bot');
+  setTimeout(showBriefing, 1200);
 }
 
 function handleOnboarding(text){
@@ -2242,7 +2213,7 @@ function showIntensityChoice(recheck){
       renderYou(); showInput();
       setTimeout(()=>{ addMsg(`Updated — <b>${state.intensity}</b> pace, ${days} days a week from here on. Here's your briefing:`, 'bot'); setTimeout(showBriefing, 800); }, 400);
     } else {
-      finishOnboarding(false);
+      finishOnboarding();
     }
   });
 }
@@ -4094,10 +4065,21 @@ function showGoalsChoice(){
       <button class="opt-btn" data-goalpick="Maintenance">⚖️ Maintain</button>
       <button class="opt-btn" data-goalpick="Fat loss">🔥 Lose fat</button>
       <button class="opt-btn" data-goalpick="Recomposition">🔄 Body recomposition</button>
+    </div>
+    <div class="btn-panel" style="margin-top:8px">
+      <button class="opt-btn learn" data-ginfo="Muscle gain">About muscle gain</button>
+      <button class="opt-btn learn" data-ginfo="Maintenance">About maintaining</button>
+      <button class="opt-btn learn" data-ginfo="Fat loss">About fat loss</button>
+      <button class="opt-btn learn" data-ginfo="Recomposition">About recomposition</button>
     </div>`;
   chatEl.appendChild(d); scrollChat();
+  /* learn-more: posts the explainer, keeps the journey choice live */
+  d.querySelectorAll('[data-ginfo]').forEach(b=> b.onclick = ()=>{
+    addMsg(GOAL_INFO[b.dataset.ginfo] + `\n\n<i>The journey buttons above are still live — pick whenever you're ready.</i>`, 'bot');
+  });
   d.querySelectorAll('[data-goalpick]').forEach(b=> b.onclick = ()=>{
     d.querySelectorAll('[data-goalpick]').forEach(x=>{ x.disabled=true; x.classList.add(x===b?'sel':'dim'); });
+    d.querySelectorAll('[data-ginfo]').forEach(x=>{ x.disabled=true; x.classList.add('dim'); });
     const g = b.dataset.goalpick;
     state.goal = g; state.goalsKnown = true; state.rateAdj = 0;
     retuneMacros();
@@ -5446,10 +5428,13 @@ function renderProgress(){
           const key = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
           if(state.trainedDays.includes(key)) n++;
         }
+        if(!state.trainedDays.length) return `<div class="tile"><div class="t-l">Days trained</div><div class="t-v">0</div><div class="t-d">No sessions yet</div></div>`;
         return `<div class="tile"><div class="t-l">Days trained</div><div class="t-v">${n}<span style="font-size:12px;color:var(--muted)">/${denom}</span></div><div class="t-d">🔥 ${state.streak}-day streak</div></div>`;
       })()}
       ${(()=>{
+        if(!state.profileSet.weight) return `<div class="tile"><div class="t-l">Weight change</div><div class="t-v">N/A</div><div class="t-d">No weight set yet</div></div>`;
         const d = state.weightNow - p.start;
+        if(d === 0) return `<div class="tile"><div class="t-l">Weight change</div><div class="t-v">—</div><div class="t-d">Baseline ${bw(p.start)}</div></div>`;
         const mag = state.units==='kg' ? Math.abs(d*0.45359237).toFixed(1) : Math.abs(d).toFixed(1);
         const unit = state.units==='kg' ? 'kg' : 'lb';
         const lab = d < 0 ? 'Weight lost' : d > 0 ? 'Weight gained' : 'Weight change';
@@ -5511,7 +5496,7 @@ function renderProgress(){
         ${earned.slice(0, state.medalsAll? earned.length : 6).map(a=>`
           <div class="badge"><div class="b-e">${a.e}</div><div class="b-n">${a.n}</div><div class="b-s">${a.s}</div></div>`).join('')}
       </div>
-      ${earned.length > 6 ? `<button class="see-all" id="see-all">${state.medalsAll?'Show less':'See all '+earned.length+' medals'}</button>` : ''}`
+      ${earned.length > 6 ? `<button class="see-all ${state.medalsAll?'float-less':''}" id="see-all">${state.medalsAll?'▴ Show less':'See all '+earned.length+' medals'}</button>` : ''}`
       : `<div style="text-align:center;padding:22px 12px;color:var(--muted);font-size:13px;line-height:1.6">🔒 No medals yet.<br>They stay hidden until you earn them — every session, meal and mile is working toward one.</div>`}
       <p style="font-size:11px;color:var(--muted);margin-top:10px;text-align:center">🎁 ${hidden} more waiting to be discovered</p>`;
       })() : `
@@ -5523,7 +5508,7 @@ function renderProgress(){
             ${m.isNew?'<span class="new-tag">NEW PR</span>':''}
           </div>`).join('')}
       </div>
-      <button class="see-all" id="see-all">${state.medalsAll?'Show less':'See all '+state.medals.length+' PRs'}</button>
+      <button class="see-all ${state.medalsAll?'float-less':''}" id="see-all">${state.medalsAll?'▴ Show less':'See all '+state.medals.length+' PRs'}</button>
       `}
     </div>
     <div class="card">
@@ -5571,7 +5556,13 @@ function renderProgress(){
     showPRHistory(i);
   });
   const sa = $('#see-all');
-  if(sa) sa.onclick = ()=>{ state.medalsAll = !state.medalsAll; if(!state.medalsAll && state.medalSel>5) state.medalSel=null; renderProgress(); };
+  if(sa) sa.onclick = ()=>{
+    const collapsing = state.medalsAll;
+    state.medalsAll = !state.medalsAll;
+    if(!state.medalsAll && state.medalSel>5) state.medalSel=null;
+    renderProgress();
+    if(collapsing){ const w = $('#see-all'); if(w) w.closest('.card').scrollIntoView({block:'nearest'}); }
+  };
 }
 
 /* ============================================================
