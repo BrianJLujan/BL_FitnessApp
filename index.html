@@ -11,6 +11,8 @@
 <title>NAVI — Your AI Performance Coach</title>
 <meta name="description" content="NAVI — training, nutrition, sleep and recovery in one conversational AI coach.">
 <meta name="theme-color" content="#0d0d0d">
+<link rel="apple-touch-icon" href="navi-icon.png">
+<link rel="icon" type="image/png" href="navi-icon.png">
 <style>
   :root{
     --page:#0d0d0d;
@@ -19,7 +21,7 @@
     --surface-3:#2c2c2a;
     --ink:#ffffff;
     --ink-2:#c3c2b7;
-    --muted:#898781;
+    --muted:#96948d;
     --hairline:rgba(255,255,255,0.10);
     --grid:#2c2c2a;
     --baseline:#383835;
@@ -34,7 +36,7 @@
     --radius:16px;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
+  html,body{height:100%;overscroll-behavior:none}
   body{
     background:var(--page);
     font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -44,7 +46,7 @@
   }
   body.light{
     --page:#f4f4f1; --surface:#ffffff; --surface-2:#efefec; --surface-3:#e4e4e0;
-    --ink:#0d0d0d; --ink-2:#43423d; --muted:#83817a;
+    --ink:#0d0d0d; --ink-2:#43423d; --muted:#74726b;
     --hairline:rgba(11,11,11,.12); --grid:#e1e0d9; --baseline:#c3c2b7;
   }
   body.light nav{background:rgba(250,250,248,.94)}
@@ -106,7 +108,7 @@
   /* ---------- chat ---------- */
   #chat-scroll{flex:1;overflow-y:auto;padding:8px 16px 12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:none}
   #chat-scroll::-webkit-scrollbar{display:none}
-  .msg{max-width:82%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.45;white-space:pre-wrap;animation:pop .18s ease}
+  .msg{max-width:82%;padding:11px 14px;border-radius:18px;font-size:15px;line-height:1.45;white-space:pre-wrap;animation:pop .18s ease}
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .msg.bot{background:var(--surface);border:1px solid var(--hairline);border-bottom-left-radius:6px;align-self:flex-start;color:var(--ink)}
   .msg.user{background:var(--accent);border-bottom-right-radius:6px;align-self:flex-end}
@@ -114,10 +116,10 @@
   .msg.bot{padding-right:30px}
   .msg-back{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;opacity:.55;padding:2px;line-height:1}
   .msg-back:hover{opacity:1;color:var(--accent)}
-  .msg .tag{display:block;font-size:10.5px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:5px;text-transform:uppercase}
+  .msg .tag{display:block;font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:5px;text-transform:uppercase}
   .msg.user .tag{display:none}
   .msg b{font-weight:650}
-  #hist-toggle{position:sticky;top:6px;z-index:6;align-self:center;background:var(--surface-2);box-shadow:0 2px 10px rgba(0,0,0,.35);border:1px solid var(--hairline);border-radius:999px;color:var(--muted);font-size:11.5px;font-weight:700;font-family:inherit;padding:7px 14px;cursor:pointer;margin-bottom:2px;flex:none}
+  #hist-toggle{position:sticky;top:6px;z-index:6;align-self:center;background:var(--surface-2);box-shadow:0 2px 10px rgba(0,0,0,.35);border:1px solid var(--hairline);border-radius:999px;color:var(--muted);font-size:12px;font-weight:700;font-family:inherit;padding:7px 14px;cursor:pointer;margin-bottom:2px;flex:none}
   #hist-toggle:active{background:var(--surface-2)}
   .typing{align-self:flex-start;background:var(--surface);border:1px solid var(--hairline);border-radius:18px;border-bottom-left-radius:6px;padding:14px 16px;display:flex;gap:5px}
   .typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
@@ -133,7 +135,7 @@
   .briefing .b-stats{display:flex;gap:8px;margin-bottom:10px}
   .b-stat{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--hairline);border-radius:12px;padding:10px}
   .b-stat .v{font-size:17px;font-weight:700}
-  .b-stat .l{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .b-stat .l{font-size:11px;color:var(--muted);margin-top:2px}
   .briefing p{font-size:14px;line-height:1.5;color:var(--ink-2)}
   .briefing p b{color:var(--ink)}
   /* chips + input */
@@ -148,7 +150,7 @@
   #inputbar{display:flex;gap:8px;padding:10px 16px 16px;flex:none}
   #inputbar input{
     flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:999px;
-    padding:12px 16px;color:var(--ink);font-size:14.5px;outline:none;font-family:inherit;
+    padding:12px 16px;color:var(--ink);font-size:15px;outline:none;font-family:inherit;
   }
   #inputbar input::placeholder{color:var(--muted)}
   #send{
@@ -163,7 +165,7 @@
   }
   nav button{
     flex:1;background:none;border:none;color:var(--muted);font-family:inherit;
-    font-size:10.5px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;
+    font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;
   }
   nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   nav button.active{color:var(--accent)}
@@ -182,13 +184,13 @@
     border:1px solid var(--hairline);background:none;color:var(--muted);border-radius:10px;
     font-size:12px;font-weight:600;padding:6px 10px;cursor:pointer;font-family:inherit;flex:none;
   }
-  .ex-meta{display:flex;gap:14px;margin-top:8px;font-size:12.5px;color:var(--muted)}
+  .ex-meta{display:flex;gap:14px;margin-top:8px;font-size:13px;color:var(--muted)}
   .ex-meta b{color:var(--ink-2);font-weight:600}
   .ex-meta .target b{color:var(--accent)}
   .sets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   .set-btn{
     min-width:74px;padding:9px 10px;border-radius:12px;border:1px dashed var(--baseline);
-    background:none;color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;
+    background:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;
   }
   .set-btn.done{border:1px solid rgba(12,163,12,.5);background:rgba(12,163,12,.10);color:var(--ink);border-style:solid}
   .set-btn.done .chk{color:var(--good);font-weight:800}
@@ -196,7 +198,7 @@
   #rest-timer{
     position:absolute;left:50%;bottom:86px;transform:translateX(-50%);
     background:var(--surface-3);border:1px solid var(--hairline);border-radius:999px;
-    padding:9px 18px;font-size:13.5px;font-weight:700;display:none;align-items:center;gap:8px;z-index:5;
+    padding:9px 18px;font-size:14px;font-weight:700;display:none;align-items:center;gap:8px;z-index:5;
     box-shadow:0 8px 24px rgba(0,0,0,.5);
   }
   #rest-timer.on{display:flex}
@@ -221,13 +223,13 @@
     background:linear-gradient(160deg,#14291f,#1a1a19 75%);border:1px solid rgba(25,158,112,.4);
   }
   .suggest h3{color:#3ecf96}
-  .suggest p{font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+  .suggest p{font-size:14px;line-height:1.5;color:var(--ink-2)}
   .suggest p b{color:var(--ink)}
   .rest-row{display:flex;gap:10px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
   .rest-row::-webkit-scrollbar{display:none}
   .rest-card{flex:none;width:150px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;padding:11px}
   .rest-card .r-n{font-size:13px;font-weight:650}
-  .rest-card .r-i{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .rest-card .r-i{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
   .rest-card .r-m{font-size:11px;font-weight:700;color:#3ecf96;margin-top:6px}
   /* ---------- progress ---------- */
   .tiles{display:flex;gap:10px;margin-bottom:12px}
@@ -254,13 +256,13 @@
   .prof-head{display:flex;align-items:center;gap:14px;padding:6px 4px 16px}
   .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3987e5,#9085e9);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
   .prof-head .p-name{font-size:18px;font-weight:700}
-  .prof-head .p-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .prof-head .p-sub{font-size:13px;color:var(--muted);margin-top:2px}
   .goal-row{display:flex;flex-wrap:wrap;gap:8px}
   .goal-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;scroll-behavior:smooth}
   .goal-scroll::-webkit-scrollbar{display:none}
   .goal-scroll .goal{flex:none;white-space:nowrap}
   .goal{
-    font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer;
+    font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer;
     background:var(--surface-2);border:1px solid var(--hairline);color:var(--ink-2);
   }
   .goal.sel{background:rgba(57,135,229,.15);border-color:var(--accent);color:var(--accent)}
@@ -273,7 +275,7 @@
   .p-card.sel{border-color:var(--accent);background:rgba(57,135,229,.12)}
   .p-card .p-e{font-size:22px}
   .p-card .p-t{font-size:13px;font-weight:650;margin-top:6px}
-  .p-card .p-d{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .p-card .p-d{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35}
   .mem{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--hairline);font-size:13px;color:var(--ink-2);line-height:1.45;align-items:flex-start}
   .mem:last-child{border-bottom:none}
   .mem .m-ic{flex:none;font-size:14px;margin-top:1px}
@@ -288,7 +290,7 @@
   .exercise.active{border-color:rgba(57,135,229,.55);box-shadow:0 0 0 1px rgba(57,135,229,.22)}
   .set-line{display:flex;align-items:center;gap:8px;padding:11px 13px;border-radius:12px;font-size:13px;font-weight:600;margin-top:8px;border:1px dashed var(--baseline);color:var(--muted)}
   .set-line.done{border:1px solid rgba(12,163,12,.5);background:rgba(12,163,12,.10);color:var(--ink);cursor:pointer;border-style:solid}
-  .set-line.done .hr{margin-left:auto;color:#e66767;font-weight:700;font-size:11.5px;white-space:nowrap}
+  .set-line.done .hr{margin-left:auto;color:#e66767;font-weight:700;font-size:12px;white-space:nowrap}
   .set-go{width:100%;margin-top:8px;padding:13px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
   .set-go:active{transform:scale(.985)}
   .set-go.end{background:var(--critical);animation:pulse 1.6s infinite}
@@ -315,18 +317,18 @@
   .badge{background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:12px 8px;text-align:center}
   .badge.locked{opacity:.38}
   .badge .b-e{font-size:24px}
-  .badge .b-n{font-size:11.5px;font-weight:700;margin-top:6px}
+  .badge .b-n{font-size:12px;font-weight:700;margin-top:6px}
   .badge .b-s{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.35}
   /* ---------- community ---------- */
   .composer{display:flex;gap:8px;margin-bottom:12px}
-  .composer input{flex:1;background:var(--surface);border:1px solid var(--hairline);border-radius:999px;padding:11px 15px;color:var(--ink);font-size:13.5px;outline:none;font-family:inherit}
+  .composer input{flex:1;background:var(--surface);border:1px solid var(--hairline);border-radius:999px;padding:11px 15px;color:var(--ink);font-size:14px;outline:none;font-family:inherit}
   .composer input::placeholder{color:var(--muted)}
   .composer button{border:none;background:var(--accent);color:#fff;border-radius:999px;padding:0 16px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
   .post{padding:14px 16px}
   .post-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
   .p-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:none}
   .post-head .u{font-size:14px;font-weight:650}
-  .post-head .t{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .post-head .t{font-size:12px;color:var(--muted);margin-top:1px}
   .post-text{font-size:14px;line-height:1.5;color:var(--ink-2)}
   .p-img{margin-top:10px;border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;font-size:44px;border:1px solid var(--hairline)}
   .p-route{margin-top:10px;border-radius:12px;border:1px solid var(--hairline);background:var(--surface-2);overflow:hidden}
@@ -340,7 +342,7 @@
   .cmt b{color:var(--ink)}
   .cmt span{color:var(--ink-2)}
   .cmt-add{display:flex;gap:8px;margin-top:4px}
-  .cmt-add input{flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:999px;padding:8px 13px;color:var(--ink);font-size:12.5px;outline:none;font-family:inherit}
+  .cmt-add input{flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:999px;padding:8px 13px;color:var(--ink);font-size:13px;outline:none;font-family:inherit}
   .cmt-add button{border:none;background:var(--surface-3);color:var(--accent);border-radius:999px;padding:0 13px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
   /* ---------- guided flow buttons + cardio timer + set adjuster ---------- */
   .btn-panel{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -361,12 +363,12 @@
   .opt-btn.sched{position:relative}
   .opt-btn.sched::after{content:'scheduled';position:absolute;top:-8px;right:8px;font-size:9px;font-weight:800;letter-spacing:.5px;background:var(--warning);color:#0d0d0d;border-radius:5px;padding:1px 5px}
   .opt-btn.begin{flex:1 1 100%;background:var(--good);border-color:var(--good);font-size:15px}
-  .opt-btn.learn{flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);min-width:110px;height:44px;padding:6px 10px;font-size:11.5px;font-weight:600;background:none;border-color:var(--hairline);color:var(--muted)}
+  .opt-btn.learn{flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);min-width:110px;height:44px;padding:6px 10px;font-size:12px;font-weight:600;background:none;border-color:var(--hairline);color:var(--muted)}
   /* ---------- onboarding form ---------- */
   .ob-form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
   .ob-row{display:flex;gap:8px}
   .ob-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-  .ob-field label{font-size:10.5px;font-weight:700;letter-spacing:.4px;color:var(--muted);text-transform:uppercase}
+  .ob-field label{font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--muted);text-transform:uppercase}
   .ob-field input,.ob-field select{
     background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;
     padding:10px 12px;color:var(--ink);font-size:14px;font-family:inherit;outline:none;width:100%;
@@ -376,14 +378,19 @@
   .acct-links a{color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--hairline)}
   .acct-links a:last-child{border-bottom:none}
   .wd-row{display:flex;gap:6px}
-  .wd-chip{flex:1;padding:9px 0;border-radius:10px;background:var(--surface-2);border:1px solid var(--hairline);color:var(--muted);font-weight:700;font-size:11.5px;cursor:pointer;font-family:inherit}
+  .wd-chip{flex:1;padding:9px 0;border-radius:10px;background:var(--surface-2);border:1px solid var(--hairline);color:var(--muted);font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
   .wd-chip.sel{background:rgba(57,135,229,.15);border-color:var(--accent);color:var(--accent)}
-  .ob-submit{border:none;background:var(--accent);color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:14.5px;cursor:pointer;font-family:inherit;margin-top:2px}
-  .ob-skip{background:none;border:1px solid var(--hairline);color:var(--muted);border-radius:12px;padding:10px;font-weight:600;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .ob-submit{border:none;background:var(--accent);color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;margin-top:2px}
+  .ob-skip{background:none;border:1px solid var(--hairline);color:var(--muted);border-radius:12px;padding:10px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
   /* session timer bar */
   .sess-bar{display:flex;align-items:center;gap:10px;margin-top:12px}
   .sess-bar .s-time{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;min-width:74px}
-  .sess-bar .s-lab{font-size:10.5px;color:var(--muted)}
+  .sess-bar .s-lab{font-size:11px;color:var(--muted)}
+  /* v102: slim sticky vitals bar — keeps clock/sets/burn in view mid-session */
+  .sess-mini{position:sticky;top:0;z-index:40;height:38px;margin-bottom:-38px;display:flex;align-items:center;gap:10px;padding:0 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--hairline);box-shadow:0 8px 20px rgba(0,0,0,.28);font-size:12px;font-weight:700;opacity:0;transform:translateY(-8px);transition:opacity .18s ease, transform .18s ease;pointer-events:none;visibility:hidden}
+  .sess-mini.show{opacity:1;transform:none;visibility:visible;pointer-events:auto}
+  .sess-mini .sm-time{font-variant-numeric:tabular-nums;color:var(--accent);font-size:14px}
+  body.light .sess-mini{box-shadow:0 8px 20px rgba(0,0,0,.12)}
   .sess-btn{flex:1;padding:10px;border-radius:12px;border:1px solid var(--hairline);background:var(--surface-2);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
   .sess-btn.start{background:var(--good);border-color:var(--good);color:#fff}
   .sess-btn.stop{background:rgba(208,59,59,.15);border-color:var(--critical)}
@@ -402,7 +409,7 @@
   .sum-card .b-stats{display:flex;gap:8px}
   .sum-card .b-stat{flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;padding:10px}
   .sum-card .b-stat .v{font-size:17px;font-weight:700}
-  .sum-card .b-stat .l{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .sum-card .b-stat .l{font-size:11px;color:var(--muted);margin-top:2px}
   .sum-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--hairline);font-size:13px;gap:10px}
   .sum-row:last-child{border-bottom:none}
   .sum-row .up{color:#3ecf96;font-weight:700;white-space:nowrap}
@@ -422,7 +429,7 @@
   .cb-row .cb-reps{flex:none;width:58px;text-align:center}
   .cb-row .cb-w{flex:none;width:58px;text-align:center}
   .swap-row{display:flex;gap:8px;margin-top:12px;align-items:center}
-  .swap-row select{flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;padding:9px;color:var(--ink);font-size:12.5px;font-family:inherit;outline:none;min-width:0}
+  .swap-row select{flex:1;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;padding:9px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;min-width:0}
   .meal-items{flex:1 1 100%;margin-top:8px;margin-left:48px;border-left:2px solid var(--hairline);padding-left:10px}
   .meal-item{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2);padding:3px 0}
   .meal-item span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -431,14 +438,17 @@
   .cardio-live .c-sub{text-align:center;font-size:12px;color:var(--muted);margin-bottom:10px}
   .cardio-live .c-gps{text-align:center;font-size:13px;font-weight:650;color:var(--accent);margin:-2px 0 6px;font-variant-numeric:tabular-nums}
   .cardio-live .c-splits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:8px}
-  .cardio-live .c-splits span{font-size:10.5px;font-weight:700;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--hairline);border-radius:999px;padding:3px 9px}
+  .cardio-live .c-splits span{font-size:11px;font-weight:700;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--hairline);border-radius:999px;padding:3px 9px}
   .cardio-live .c-row{display:flex;gap:8px}
   .cardio-live .c-row .opt-btn.end{background:rgba(208,59,59,.15);border-color:var(--critical)}
   .adj-row{display:flex;align-items:center;gap:8px;margin-top:12px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;padding:10px}
   .adj-row .adj-val{font-size:14px;font-weight:700;flex:1;text-align:center;font-variant-numeric:tabular-nums}
-  .adj-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;flex:none}
-  .adj-save{border:none;background:var(--accent);color:#fff;border-radius:10px;padding:0 14px;height:34px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit;flex:none}
-  .adj-lab{font-size:10.5px;color:var(--muted);text-align:center;margin-top:3px}
+  .adj-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;flex:none;position:relative}
+  /* v102: invisible halo lifts the tap target to ~44pt without changing the look */
+  .adj-btn::before{content:'';position:absolute;inset:-6px}
+  .ctl-row .adj-btn::before{inset:-9px}
+  .adj-save{border:none;background:var(--accent);color:#fff;border-radius:10px;padding:0 14px;height:34px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;flex:none}
+  .adj-lab{font-size:11px;color:var(--muted);text-align:center;margin-top:3px}
   .spr-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
   .spr-lab{width:52px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
   .swatch{width:22px;height:22px;border-radius:7px;border:2px solid transparent;cursor:pointer;padding:0}
@@ -456,7 +466,7 @@
   .mg-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 4px;font-size:11px;color:var(--muted);font-weight:600}
   .mgc{background:var(--surface);border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;color:var(--ink-2)}
   .mg-head{font-size:11px;font-weight:800;letter-spacing:.8px;color:var(--accent);text-transform:uppercase;margin:16px 4px 2px}
-  .set-undo{width:100%;margin-top:6px;background:none;border:none;color:var(--muted);font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:4px}
+  .set-undo{width:100%;margin-top:6px;background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:4px}
   .set-undo:hover{color:var(--accent)}
   /* ---------- pixel lifter HUD animations ---------- */
   #hud-fig{width:30px;height:30px;position:relative;flex:none}
@@ -483,77 +493,79 @@
   @keyframes restBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
   #hud-fig.rest #spr-rest{animation:restBreathe 2.4s steps(2) infinite}
   /* ---------- v22: two-frame scenes, training calendar, memory scroll ---------- */
-  #hud-fig[data-scene="pushup"] #sB{animation:scnFrA 1.1s steps(1) infinite}
-  #hud-fig[data-scene="pushup"] #sC{animation:scnFrB 1.1s steps(1) infinite}
+  [data-scene="pushup"] #sB{animation:scnFrA 1.1s steps(1) infinite}
+  [data-scene="pushup"] #sC{animation:scnFrB 1.1s steps(1) infinite}
   @keyframes scnFrA{0%,49.9%{opacity:1}50%,100%{opacity:0}}
   @keyframes scnFrB{0%,49.9%{opacity:0}50%,100%{opacity:1}}
   @keyframes confFall{0%{transform:translateY(0) rotate(0deg);opacity:1}85%{opacity:1}100%{transform:translateY(760px) rotate(560deg);opacity:0}}
-  #hud-fig[data-scene="jumprope"] #sB{animation:scnFrA .55s steps(1) infinite}
-  #hud-fig[data-scene="jumprope"] #sC{animation:scnFrB .55s steps(1) infinite}
+  [data-scene="jumprope"] #sB{animation:scnFrA .55s steps(1) infinite}
+  [data-scene="jumprope"] #sC{animation:scnFrB .55s steps(1) infinite}
 
   .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
-  .cal-dow{font-size:9.5px;font-weight:800;color:var(--muted);letter-spacing:.5px}
-  .cal-day{font-size:11.5px;padding:6px 0;border-radius:8px;color:var(--ink-2);font-variant-numeric:tabular-nums;border:1px solid transparent}
+  .cal-dow{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px}
+  .cal-day{font-size:12px;padding:6px 0;border-radius:8px;color:var(--ink-2);font-variant-numeric:tabular-nums;border:1px solid transparent}
   .cal-day.worked{background:rgba(57,135,229,.16);border-color:rgba(57,135,229,.45);color:var(--accent);font-weight:700}
   .cal-day.today{border-color:var(--warning)}
   .cal-day.future{opacity:.32}
   .mem-scroll{max-height:200px;overflow-y:auto;scrollbar-width:thin;margin-right:-6px;padding-right:6px}
   /* ---------- v21 context scenes — the coach acts out the moment ---------- */
-  #hud-fig[data-scene="flex"] #sB{animation:scnPump 1.6s steps(3) infinite}
+  [data-scene="flex"] #sB{animation:scnPump 1.6s steps(3) infinite}
   @keyframes scnPump{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
-  #hud-fig[data-scene="chalk"] #sB{animation:scnWrite 1.1s steps(3) infinite}
-  #hud-fig[data-scene="chalk"] #sC{animation:scnBlink 1.8s steps(2) infinite}
+  [data-scene="chalk"] #sB{animation:scnWrite 1.1s steps(3) infinite}
+  [data-scene="chalk"] #sC{animation:scnBlink 1.8s steps(2) infinite}
   @keyframes scnWrite{0%,100%{transform:translate(0,0)}35%{transform:translate(1px,0)}70%{transform:translate(0,1px)}}
-  #hud-fig[data-scene="bench"] #sB{animation:scnPress 1.5s steps(4) infinite}
+  [data-scene="bench"] #sB{animation:scnPress 1.5s steps(4) infinite}
   @keyframes scnPress{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
-  #hud-fig[data-scene="squat"] #sB{transform-origin:8px 14px;animation:scnSquat 1.9s steps(5) infinite}
+  [data-scene="squat"] #sB{transform-origin:8px 14px;animation:scnSquat 1.9s steps(5) infinite}
   @keyframes scnSquat{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.84)}}
-  #hud-fig[data-scene="curl"] #sB{animation:scnCurl 1.3s steps(4) infinite}
+  [data-scene="curl"] #sB{animation:scnCurl 1.3s steps(4) infinite}
   @keyframes scnCurl{0%,100%{transform:translateY(0)}55%{transform:translateY(-3px)}}
-  #hud-fig[data-scene="run"] #sB, #hud-fig[data-scene="bike"] #sB{animation:scnJog .5s steps(2) infinite}
+  [data-scene="run"] #sB, [data-scene="bike"] #sB{animation:scnJog .5s steps(2) infinite}
   @keyframes scnJog{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
-  #hud-fig[data-scene="run"] #sC, #hud-fig[data-scene="swim"] #sC{animation:scnBlink .7s steps(2) infinite}
+  [data-scene="run"] #sC, [data-scene="swim"] #sC{animation:scnBlink .7s steps(2) infinite}
   @keyframes scnBlink{0%,100%{opacity:1}50%{opacity:.12}}
-  #hud-fig[data-scene="swim"] #sB{animation:scnSwim 1.4s steps(4) infinite}
+  [data-scene="swim"] #sB{animation:scnSwim 1.4s steps(4) infinite}
   @keyframes scnSwim{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,1px)}}
-  #hud-fig[data-scene="stair"] #sB{animation:scnClimb 1.2s steps(3) infinite}
+  [data-scene="stair"] #sB{animation:scnClimb 1.2s steps(3) infinite}
   @keyframes scnClimb{0%{transform:translate(-2px,2px)}100%{transform:translate(1px,-1px)}}
-  #hud-fig[data-scene="ellip"] #sB{animation:scnGlide 1s steps(3) infinite}
+  [data-scene="ellip"] #sB{animation:scnGlide 1s steps(3) infinite}
   @keyframes scnGlide{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-1px)}}
-  #hud-fig[data-scene="eat"] #sB{animation:scnEat 1.2s steps(3) infinite}
+  [data-scene="eat"] #sB{animation:scnEat 1.2s steps(3) infinite}
   @keyframes scnEat{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-2px)}}
-  #hud-fig[data-scene="cook"] #sB{animation:scnSteam 1.7s steps(4) infinite}
+  [data-scene="cook"] #sB{animation:scnSteam 1.7s steps(4) infinite}
   @keyframes scnSteam{0%{opacity:0;transform:translateY(2px)}40%{opacity:1}100%{opacity:0;transform:translateY(-3px)}}
-  #hud-fig[data-scene="cook"] #sC{animation:scnJiggle 2.4s steps(3) infinite}
+  [data-scene="cook"] #sC{animation:scnJiggle 2.4s steps(3) infinite}
   @keyframes scnJiggle{0%,100%{transform:translateX(0)}50%{transform:translateX(1px)}}
-  #hud-fig[data-scene="ohp"] #sB{animation:scnFrA 1.4s steps(1) infinite}
-  #hud-fig[data-scene="ohp"] #sC{animation:scnFrB 1.4s steps(1) infinite}
+  [data-scene="ohp"] #sB{animation:scnFrA 1.4s steps(1) infinite}
+  [data-scene="ohp"] #sC{animation:scnFrB 1.4s steps(1) infinite}
   /* v54: per-muscle-group scenes all run the two-frame swap */
-  #hud-fig[data-scene^="mg"] #sB{animation:scnFrA 1.1s steps(1) infinite}
-  #hud-fig[data-scene^="mg"] #sC{animation:scnFrB 1.1s steps(1) infinite}
-  #hud-fig[data-scene="grow"] #sB{animation:scnFrA 1.7s steps(1) infinite}
-  #hud-fig[data-scene="grow"] #sC{animation:scnFrB 1.7s steps(1) infinite}
-  #hud-fig[data-scene="tailor"] #sB{animation:scnFrA 1.5s steps(1) infinite}
-  #hud-fig[data-scene="tailor"] #sC{animation:scnFrB 1.5s steps(1) infinite}
-  #hud-fig[data-scene="stroll"] #sB{animation:scnFrA .6s steps(1) infinite}
-  #hud-fig[data-scene="stroll"] #sC{animation:scnFrB .6s steps(1) infinite}
-  #hud-fig[data-scene="stretch"] #sB{animation:scnFrA 1.8s steps(1) infinite}
-  #hud-fig[data-scene="stretch"] #sC{animation:scnFrB 1.8s steps(1) infinite}
-  #hud-fig[data-scene="wave"] #sB{animation:scnFrA .7s steps(1) infinite}
-  #hud-fig[data-scene="wave"] #sC{animation:scnFrB .7s steps(1) infinite}
+  [data-scene^="mg"] #sB{animation:scnFrA 1.1s steps(1) infinite}
+  [data-scene^="mg"] #sC{animation:scnFrB 1.1s steps(1) infinite}
+  [data-scene="grow"] #sB{animation:scnFrA 1.7s steps(1) infinite}
+  [data-scene="grow"] #sC{animation:scnFrB 1.7s steps(1) infinite}
+  [data-scene="tailor"] #sB{animation:scnFrA 1.5s steps(1) infinite}
+  [data-scene="tailor"] #sC{animation:scnFrB 1.5s steps(1) infinite}
+  [data-scene="stroll"] #sB{animation:scnFrA .6s steps(1) infinite}
+  [data-scene="stroll"] #sC{animation:scnFrB .6s steps(1) infinite}
+  [data-scene="stretch"] #sB{animation:scnFrA 1.8s steps(1) infinite}
+  [data-scene="stretch"] #sC{animation:scnFrB 1.8s steps(1) infinite}
+  [data-scene="wave"] #sB{animation:scnFrA .7s steps(1) infinite}
+  [data-scene="wave"] #sC{animation:scnFrB .7s steps(1) infinite}
   #ob-spr-prev #sB{animation:scnFrA .7s steps(1) infinite}
   #ob-spr-prev #sC{animation:scnFrB .7s steps(1) infinite}
-  #hud-fig[data-scene="plateload"] #sB{animation:scnFrA 1.3s steps(1) infinite}
-  #hud-fig[data-scene="plateload"] #sC{animation:scnFrB 1.3s steps(1) infinite}
-  #hud-fig[data-scene="scalewin"] #sB{animation:scnFrA 1.5s steps(1) infinite}
-  #hud-fig[data-scene="scalewin"] #sC{animation:scnFrB 1.5s steps(1) infinite}
-  #hud-fig[data-scene="pedestal"] #sB{animation:scnFrA 1.6s steps(1) infinite}
-  #hud-fig[data-scene="pedestal"] #sC{animation:scnFrB 1.6s steps(1) infinite}
+  [data-scene="sleepbed"] #sB{animation:scnFrA .9s steps(1) infinite}
+  [data-scene="sleepbed"] #sC{animation:scnFrB .9s steps(1) infinite}
+  [data-scene="plateload"] #sB{animation:scnFrA 1.3s steps(1) infinite}
+  [data-scene="plateload"] #sC{animation:scnFrB 1.3s steps(1) infinite}
+  [data-scene="scalewin"] #sB{animation:scnFrA 1.5s steps(1) infinite}
+  [data-scene="scalewin"] #sC{animation:scnFrB 1.5s steps(1) infinite}
+  [data-scene="pedestal"] #sB{animation:scnFrA 1.6s steps(1) infinite}
+  [data-scene="pedestal"] #sC{animation:scnFrB 1.6s steps(1) infinite}
   /* v55: toweling-off recovery — slow swap + sweat drips */
-  #hud-fig[data-scene="recover"] #sB{animation:scnFrA 2.2s steps(1) infinite}
-  #hud-fig[data-scene="recover"] #sC{animation:scnFrB 2.2s steps(1) infinite}
-  #hud-fig[data-scene="recover"] #swA{animation:sweatDrip 1.6s steps(4) infinite}
-  #hud-fig[data-scene="recover"] #swB{animation:sweatDrip 1.6s steps(4) .8s infinite}
+  [data-scene="recover"] #sB{animation:scnFrA 2.2s steps(1) infinite}
+  [data-scene="recover"] #sC{animation:scnFrB 2.2s steps(1) infinite}
+  [data-scene="recover"] #swA{animation:sweatDrip 1.6s steps(4) infinite}
+  [data-scene="recover"] #swB{animation:sweatDrip 1.6s steps(4) .8s infinite}
   /* photo button */
   #photo-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--hairline);background:var(--surface-2);color:var(--ink-2);font-size:17px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
   .msg.user img{max-width:100%;border-radius:12px;display:block;margin-top:4px}
@@ -578,34 +590,34 @@
   .see-all{width:100%;margin-top:12px;background:none;border:1px solid var(--hairline);border-radius:12px;color:var(--accent);font-weight:700;font-size:13px;padding:10px;cursor:pointer;font-family:inherit}
   .badge{cursor:pointer}
   .badge.sel{border-color:var(--accent)}
-  .lb-f{width:52px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;padding:6px 4px;color:var(--ink);font-size:12.5px;font-family:inherit;outline:none;text-align:center;font-variant-numeric:tabular-nums}
+  .lb-f{width:52px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;padding:6px 4px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;text-align:center;font-variant-numeric:tabular-nums}
   .lb-search{width:100%;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;margin-bottom:10px}
   .lb-head{display:grid;grid-template-columns:34px 1fr 74px 64px;gap:8px;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;padding:0 2px 6px;border-bottom:1px solid var(--hairline)}
-  .lb-row{display:grid;grid-template-columns:34px 1fr 74px 64px;gap:8px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--hairline);font-size:12.5px}
+  .lb-row{display:grid;grid-template-columns:34px 1fr 74px 64px;gap:8px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--hairline);font-size:13px}
   .lb-row:last-of-type{border-bottom:none}
   .lb-row .r{color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
-  .lb-row .sub{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .lb-row .sub{font-size:11px;color:var(--muted);margin-top:1px}
   .lb-row .best{font-weight:700;font-variant-numeric:tabular-nums}
-  .lb-row .hd{font-size:11.5px;font-weight:600;text-align:right}
+  .lb-row .hd{font-size:12px;font-weight:600;text-align:right}
   .lb-row.you{background:rgba(57,135,229,.10);border-radius:10px;border:1px solid rgba(57,135,229,.4);padding:9px 6px}
-  .str-select{background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;color:var(--ink);font-family:inherit;font-size:12.5px;padding:6px 8px;outline:none;font-weight:650;max-width:210px}
+  .str-select{background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;color:var(--ink);font-family:inherit;font-size:13px;padding:6px 8px;outline:none;font-weight:650;max-width:210px}
   .seg{display:flex;gap:8px;margin-bottom:14px}
-  .seg button{flex:1;padding:9px;border-radius:10px;background:var(--surface-2);border:1px solid var(--hairline);color:var(--muted);font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .seg button{flex:1;padding:9px;border-radius:10px;background:var(--surface-2);border:1px solid var(--hairline);color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
   .seg button.sel{background:rgba(57,135,229,.15);border-color:var(--accent);color:var(--accent)}
   .persona-wrap{position:relative;display:flex;align-items:center;gap:6px}
   .p-arrow{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--hairline);background:var(--surface-2);color:var(--ink-2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .mem-suggest{margin-top:12px;border-top:1px solid var(--hairline);padding-top:12px}
   .mem-suggest .ms-h{font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
-  .mem-suggest .ms-item{display:flex;gap:8px;font-size:12.5px;color:var(--ink-2);line-height:1.5;padding:5px 0}
+  .mem-suggest .ms-item{display:flex;gap:8px;font-size:13px;color:var(--ink-2);line-height:1.5;padding:5px 0}
   .mem-suggest .ok{color:#3ecf96;font-weight:600}
   .badge .b-pr{font-size:12px;font-weight:700;color:var(--accent);margin-top:3px}
   .micro-btn{width:100%;margin-top:14px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;color:var(--ink-2);font-weight:650;font-size:13px;padding:10px;cursor:pointer;font-family:inherit}
   .micros{margin-top:14px;border-top:1px solid var(--hairline);padding-top:14px}
   .micro{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-  .micro .mi-n{font-size:12.5px;color:var(--ink-2);width:92px;flex:none}
+  .micro .mi-n{font-size:13px;color:var(--ink-2);width:92px;flex:none}
   .micro .mi-track{flex:1;height:7px;border-radius:999px;background:rgba(57,135,229,.15);overflow:hidden}
   .micro .mi-fill{height:100%;border-radius:999px;background:var(--accent)}
-  .micro .mi-v{font-size:11.5px;color:var(--muted);width:38px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+  .micro .mi-v{font-size:12px;color:var(--muted);width:38px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
   .avatar{cursor:pointer;background-size:cover;background-position:center;position:relative}
   .avatar .cam{position:absolute;right:-3px;bottom:-3px;width:20px;height:20px;border-radius:50%;background:var(--surface-3);border:1px solid var(--hairline);font-size:10px;display:flex;align-items:center;justify-content:center}
   .p-av{background-size:cover;background-position:center}
@@ -787,7 +799,7 @@ const state = {
   profileSet: { name:false, age:false, height:false, weight:false },
   recovery: { sleep:'7h 12m', sleepH:7.2, score:82, hrv:68, rhr:54 },
   feel: 'Moderate',
-  water: 1.5, waterTarget: 4,   // liters — your 3–4 L/day goal
+  water: 0, waterTarget: 4,   // liters — your 3–4 L/day goal
   streak: 0,
   memory: [],
   macros: { cal:{v:0,t:2200}, protein:{v:0,t:190}, carbs:{v:0,t:220}, fat:{v:0,t:70} },
@@ -806,11 +818,11 @@ const state = {
     rdl:{name:'Romanian Deadlifts', vals:[], reps:[], hr:[]},
     pullup:{name:'Weighted Pull-up (+lb)', vals:[], reps:[], hr:[]},
     ohp:{name:'Standing Barbell OHP', vals:[], reps:[], hr:[]},
-    mile:{name:'Mile Time (min)', vals:[], reps:null, unit:'min', invert:true, hr:[]},
-    cardio:{name:'Cardio — weekly minutes', vals:[], reps:null, unit:'mins', hr:[]},
-    fivek:{name:'5K Time (min)', vals:[], reps:null, unit:'min', invert:true, hr:[]},
-    halfm:{name:'Half Marathon (time)', vals:[], reps:null, unit:'min', invert:true, hr:[]},
-    marathon:{name:'Marathon (time)', vals:[], reps:null, unit:'min', invert:true, hr:[]},
+    mile:{name:'Mile', vals:[], reps:null, unit:'min', invert:true, hr:[]},
+    fivek:{name:'5K', vals:[], reps:null, unit:'min', invert:true, hr:[]},
+    tenk:{name:'10K', vals:[], reps:null, unit:'min', invert:true, hr:[]},
+    halfm:{name:'Half Marathon', vals:[], reps:null, unit:'min', invert:true, hr:[]},
+    marathon:{name:'Marathon', vals:[], reps:null, unit:'min', invert:true, hr:[]},
   },
   sleepRange: '7N',
   sleepLog: [],
@@ -1072,7 +1084,27 @@ Object.entries(EX_LIB).forEach(([mg,list])=>list.forEach(n=>{
     state.strengthData[key] = { name:n, mg, vals:[], reps:[], hr:[] };
   }
 }));
-['mile','cardio','fivek','halfm','marathon'].forEach(k=> state.strengthData[k].mg = 'Cardio');
+['mile','fivek','tenk','halfm','marathon'].forEach(k=> state.strengthData[k].mg = 'Cardio');
+/* v104: every cardio activity is tracked separately on the Progress tab */
+function ensureCardioDS(){
+  [['run','Outdoor Running'],['tread','Treadmill'],['stair','Stair Stepper'],['ellip','Elliptical'],['bikein','Indoor Cycling'],['bikeout','Outdoor Cycling'],['swim','Swimming']].forEach(([t,nm])=>{
+    const k = 'cd_'+t;
+    if(!state.strengthData[k]) state.strengthData[k] = {name:nm, mg:'Cardio', vals:[], reps:null, unit:'min', hr:[], cal:[], dist:[], weeks:[]};
+  });
+  Object.values(state.strengthData).forEach(ds=>{ if(!ds.dist) ds.dist = []; if(!ds.cal) ds.cal = []; });
+  /* v105: race PBs get clean names, 10K joins, weekly-minutes is retired */
+  Object.entries({mile:'Mile', fivek:'5K', halfm:'Half Marathon', marathon:'Marathon'}).forEach(([k,nm])=>{ if(state.strengthData[k]) state.strengthData[k].name = nm; });
+  if(!state.strengthData.tenk) state.strengthData.tenk = {name:'10K', mg:'Cardio', vals:[], reps:null, unit:'min', invert:true, hr:[], cal:[], dist:[]};
+  delete state.strengthData.cardio;
+  if(state.strengthKey === 'cardio') state.strengthKey = 'mile';
+  /* canonical Cardio ordering in the picker: races first, then the activities */
+  const cOrd = ['mile','fivek','tenk','halfm','marathon','cd_run','cd_tread','cd_stair','cd_ellip','cd_bikein','cd_bikeout','cd_swim'];
+  const rebuilt = {};
+  Object.entries(state.strengthData).forEach(([k,v])=>{ if(!cOrd.includes(k)) rebuilt[k] = v; });
+  cOrd.forEach(k=>{ if(state.strengthData[k]) rebuilt[k] = state.strengthData[k]; });
+  state.strengthData = rebuilt;
+}
+ensureCardioDS();
 /* calories-burned series for every dataset */
 Object.entries(state.strengthData).forEach(([k,ds])=>{ if(!ds.cal) ds.cal = []; });
 
@@ -1317,7 +1349,7 @@ function handleFlowChoice(k, label){
       ev.target.disabled = true; ev.target.classList.add('dim');
       showFlow(ev.target.dataset.gb);
     };
-    setTimeout(()=>switchTab('train'), 7000);   /* 7 s to read the loaded-workout message */
+    setTimeout(()=>switchTab('train'), 6000);   /* 6 s to read the loaded-workout message */
   }, 380);
 }
 
@@ -1371,21 +1403,20 @@ function showCustomBuilder(){
     showInput();
     setTimeout(()=>{
       addMsg(`${pick(flav().open)} <b>Custom Workout</b> built — ${ex.length} exercises${cardioName ? `, finishing with <b>${cardioName}</b> (unlocks after your last lift)` : ''}, loaded on your Train tab with your sets, reps and weights. Hit <b>Start</b> when you're ready; every lift is now tracked for PRs and progression.`, 'bot');
-      setTimeout(()=>switchTab('train'), 7000);   /* 7 s to read the loaded-workout message */
+      setTimeout(()=>switchTab('train'), 6000);   /* 6 s to read the loaded-workout message */
     }, 400);
   };
 }
 
-/* ---------- food logging: photo (rough) / barcode (better) / manual (best) ---------- */
+/* ---------- food logging: photo (rough) / manual (best) ---------- */
 function showFoodOptions(){
   const d = document.createElement('div');
   d.className = 'msg bot'; d.style.maxWidth = '92%';
-  d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>How do you want to log it? Three tiers of accuracy:
+  d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>How do you want to log it?
     <div class="btn-panel">
-      <button class="opt-btn" data-food="photo">📷 Upload a photo<br><span style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.7)">rough — AI estimate ±20%</span></button>
-      <button class="opt-btn" data-food="scan">▐▌▐ Scan barcode<br><span style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.7)">exact label data</span></button>
-      <button class="opt-btn" data-food="manual" style="flex:1 1 100%">⌨️ Describe it to me<br><span style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.7)">portions the way you actually ate them</span></button>
-      <button class="opt-btn learn" data-food="back" style="flex:1 1 100%">← Go back</button>
+      <button class="opt-btn" data-food="photo" style="height:74px">📷 Take/upload a photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7)">rough — AI estimate ±20%</span></button>
+      <button class="opt-btn" data-food="manual" style="height:74px">⌨️ Describe it to me<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7)">portions as you ate them</span></button>
+      <button class="opt-btn learn" data-food="back" style="flex:1 1 100%;max-width:100%">← Go back</button>
     </div>
     <input type="file" id="food-in" accept="image/*" hidden>`;
   chatEl.appendChild(d); scrollChat();
@@ -1402,6 +1433,32 @@ function showFoodOptions(){
       chatEl.appendChild(u); scrollChat();
       const typing = document.createElement('div'); typing.className='typing'; typing.innerHTML='<i></i><i></i><i></i>';
       chatEl.appendChild(typing); scrollChat();
+      /* v98: with a key linked, the photo goes to Claude Haiku vision for a REAL read */
+      if(state.apiKey){
+        const img = new Image();
+        img.onload = ()=>{
+          const mx = 1024, sc = Math.min(1, mx/Math.max(img.width, img.height));
+          const cv = document.createElement('canvas');
+          cv.width = Math.max(1, Math.round(img.width*sc)); cv.height = Math.max(1, Math.round(img.height*sc));
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          const b64 = cv.toDataURL('image/jpeg', 0.8).split(',')[1];
+          llmFoodJSON([
+            {type:'image', source:{type:'base64', media_type:'image/jpeg', data:b64}},
+            {type:'text', text:'Identify every food in this meal photo and estimate portions and nutrition.'}
+          ]).then(p=>{
+            typing.remove();
+            const {tot, items} = logLLMMeal(p, 'photo — ' + items0(p));
+            addMsg(`📷 My read: <b>${items0(p)}</b> — <b>~${tot.cal} kcal · ${tot.p}g P · ${tot.c}g C · ${tot.f}g F</b> <i>(±20% — photo estimates are directional)</i>. Logged as meal ${state.meals.length}.\n\n<span style="font-size:10px;color:var(--muted)">⚡ live AI vision — vitamins & minerals updated too</span>`, 'bot');
+            setTimeout(()=>showFlow('root'), 1400);
+          }).catch(()=>{
+            typing.remove();
+            addMsg(`📷 I couldn't read that photo — bad angle or low light happens. Describe the meal to me instead and I'll log it.`, 'bot');
+            showInput();
+          });
+        };
+        img.src = rd.result;
+        return;
+      }
       setTimeout(()=>{
         typing.remove();
         const est = {cal:730, p:48, c:82, f:19};
@@ -1410,48 +1467,12 @@ function showFoodOptions(){
         state.meals.push({n:'Photo estimate', s:'grilled chicken bowl (AI vision)', cal:est.cal, p:est.p, c:est.c, f:est.f, items:[{n:'grilled chicken (est.)',cal:280,p:38},{n:'rice (est.)',cal:310,p:6},{n:'vegetables + oil (est.)',cal:140,p:4}]});
         transientScene('eat');
         renderFuel(); showInput();
-        addMsg(`📷 My read: <b>grilled chicken bowl with rice and vegetables</b> — roughly <b>~${est.cal} kcal · ${est.p}g P · ${est.c}g C · ${est.f}g F</b> <i>(±20% — photo estimates are directional)</i>. Logged as meal ${state.meals.length}.\n\nFor tighter numbers next time: scan the barcode or just describe it to me.`, 'bot');
+        addMsg(`📷 My read: <b>grilled chicken bowl with rice and vegetables</b> — roughly <b>~${est.cal} kcal · ${est.p}g P · ${est.c}g C · ${est.f}g F</b> <i>(±20% — photo estimates are directional)</i>. Logged as meal ${state.meals.length}.\n\nFor tighter numbers next time, just describe it to me — portions and all.`, 'bot');
         setTimeout(()=>showFlow('root'), 1200);
       }, 1600);
     };
     rd.readAsDataURL(file);
   });
-  d.querySelector('[data-food="scan"]').onclick = ()=>{
-    done('scan');
-    const typing = document.createElement('div'); typing.className='typing'; typing.innerHTML='<i></i><i></i><i></i>';
-    chatEl.appendChild(typing); scrollChat();
-    setTimeout(()=>{
-      typing.remove();
-      const r = document.createElement('div');
-      r.className = 'msg bot'; r.style.maxWidth='92%';
-      let servings = 1;
-      const base = {cal:90, p:18, c:5, f:0};
-      r.innerHTML = `<span class="tag">${state.coachName} · barcode</span>🔍 Scanned: <b>Fage Total 0% Greek Yogurt</b> · 170 g per serving — exact label data.\n<i>(Full product: live camera scan against the barcode database.)</i>
-        <div class="ctl-row" style="justify-content:center;margin-top:10px">
-          <span class="ctl">Servings <button class="adj-btn" id="srv-dn">−</button> <b id="srv-v">1</b> <button class="adj-btn" id="srv-up">＋</button></span>
-        </div>
-        <div style="text-align:center;font-weight:700;margin-top:8px" id="srv-macros">90 kcal · 18g P · 5g C · 0g F</div>
-        <div class="btn-panel"><button class="opt-btn" id="scan-log">＋ Log it</button></div>`;
-      chatEl.appendChild(r); scrollChat();
-      const upd = ()=>{
-        r.querySelector('#srv-v').textContent = servings;
-        r.querySelector('#srv-macros').textContent = `${Math.round(base.cal*servings)} kcal · ${Math.round(base.p*servings)}g P · ${Math.round(base.c*servings)}g C · ${Math.round(base.f*servings)}g F`;
-      };
-      r.querySelector('#srv-dn').onclick = ()=>{ servings = Math.max(0.5, servings-0.5); upd(); };
-      r.querySelector('#srv-up').onclick = ()=>{ servings += 0.5; upd(); };
-      r.querySelector('#scan-log').onclick = ()=>{
-        r.querySelectorAll('button').forEach(x=>x.disabled=true); r.querySelector('#scan-log').classList.add('sel');
-        const cal = Math.round(base.cal*servings), p = Math.round(base.p*servings), cc = Math.round(base.c*servings);
-        state.macros.cal.v += cal; state.macros.protein.v += p; state.macros.carbs.v += cc;
-        state.mealIdx = state.meals.length;
-        state.meals.push({n:'Barcode scan', s:`Fage Total 0% greek yogurt × ${servings}`, cal, p, c:cc, f:0, items:[{n:`Fage Total 0% · ${servings} serving${servings!==1?'s':''}`, cal, p}]});
-        transientScene('eat');
-        renderFuel(); showInput();
-        addMsg(`Logged as meal ${state.meals.length} — <b>${cal} kcal, ${p}g protein</b> (${servings} serving${servings!==1?'s':''}). ${proteinLeft()}g protein to go.`, 'bot');
-        setTimeout(()=>showFlow('root'), 1200);
-      };
-    }, 1400);
-  };
   d.querySelector('[data-food="manual"]').onclick = ()=>{
     done('manual');
     showInput();
@@ -1479,6 +1500,13 @@ const CARDIO_CFG = {
   bikeout:[{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
   swim:   [{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
 };
+/* v104: distance for the session — GPS when we have it, speed × time on machines that report speed */
+function cardioKm(c){
+  if(c.gps && c.dist > 0) return c.dist;
+  const sp = c.vals && +c.vals.speed;
+  if(sp > 0 && (c.type==='tread' || c.type==='bikein')) return sp * 1.609344 * (c.sec/3600);
+  return 0;
+}
 function cardioTargetStr(cfg, vals, mode){
   return cfg.filter(c=>!(c.k==='dur' && mode==='up')).map(c=>`${c.lab} ${vals[c.k]}${c.unit}`).join(' · ') + (mode==='up' ? (cfg.length>1?' · ':'') + 'open timer' : '');
 }
@@ -1501,7 +1529,7 @@ function cardioSetup(type, label){
   d.className = 'msg bot'; d.style.maxWidth='92%';
   d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span><b>${name}</b> — dial in your session. I'll track the clock${gps?' and the GPS':''}; you just move.
     <div class="ctl-row" style="flex-wrap:wrap;gap:12px">
-      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${c.v}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:10.5px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
+      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${c.v}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
     </div>
     <div class="seg" style="margin:10px 0 0">
       <button class="sel" data-cmode="down">⏱ Countdown</button>
@@ -1586,6 +1614,16 @@ function endCardio(){
   const maxHr = state.hasWearable ? 148 + Math.floor(Math.random()*22) : 0;
   const avgHr = maxHr ? maxHr - 8 - Math.floor(Math.random()*6) : 0;
   state.burned += Math.round(c.cal);
+  /* v104: the session lands in its own Progress dataset — time, distance, HR, kcal */
+  const cds = state.strengthData['cd_'+c.type];
+  if(cds && c.sec >= 30){
+    cds.vals.push(+(c.sec/60).toFixed(1));
+    cds.hr.push(maxHr||0);
+    cds.cal.push(Math.round(c.cal));
+    cds.dist.push(+cardioKm(c).toFixed(2));
+    cds.weeks = cds.weeks || [];
+    cds.weeks.push(simDate().toLocaleDateString('en-US',{month:'short', day:'numeric'}));
+  }
   /* v80: lifetime distance + cardio-type coverage */
   if(c.gps && c.dist > 0) state.lifeKm = +((state.lifeKm||0) + c.dist).toFixed(2);
   state.cardioTypes = state.cardioTypes || [];
@@ -1963,10 +2001,7 @@ function showObForm(edit){
         <div class="ob-field"><label>Coach — male / female</label>
           <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>Female</option></select></div>
       </div>
-      <div style="text-align:center;margin:10px 0 4px">
-        <svg id="ob-spr-prev" viewBox="0 0 16 15.5" width="170" height="165" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:16px;padding:8px"></svg>
-        <div style="font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:6px">Your coach · live preview</div>
-      </div>
+      <div style="text-align:center;margin:2px 0 0"><svg id="ob-spr-prev" viewBox="1 0.4 14 13.6" width="136" height="132" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:6px;display:block;margin:0 auto"></svg><div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:4px">Your coach · live preview</div></div>
       <button class="ob-submit" id="ob-go">Create profile →</button>
     </div>`;
   chatEl.appendChild(d); scrollChat();
@@ -2081,51 +2116,6 @@ function showObForm(edit){
 }
 
 /* ---------- returning user: pick up right where we left off ---------- */
-function startWelcomeBack(){
-  obStep = -2; state.onboarded = true; state.planReady = true; state.splitChosen = true;
-  state.hasWearable = true; state.intensity = 'Intense'; state.goalsKnown = true; state.lastSplit = 'ppl'; state.workoutsGoal = 6; state.weighDays = ['Wednesday','Sunday'];
-  applyPreset(SCHED_KEY);
-  updateHeader(); renderTrain(); renderFuel(); renderYou(); renderProgress();
-  showInput();
-  pendingIntent = 'checkinWeight';
-  setTimeout(()=>{
-    addMsg(`Welcome back, <b>${state.user.name}</b>. 👋 It's been <b>13 days</b> since your last login — everything is exactly where you left it: your PPL split, your PRs, your ${state.streak}-day streak (paused, not lost), and every set you've ever logged.\n\nBefore we jump back in, let's recalibrate: <b>what's your current weight?</b>`, 'bot');
-    inputEl.focus();
-  }, 500);
-}
-
-function handleCheckinWeight(text){
-  const w = parseFloat(text);
-  if(isNaN(w)){ addMsg(`Just the number is fine — e.g. "184" or "184 lb".`, 'bot'); return; }
-  const delta = (w - state.user.weight).toFixed(1);
-  state.user.weight = w; state.weightNow = w;
-  state.macros.protein.t = Math.round(Math.max(150, w));
-  state.memory.unshift({ic:'⚖️', t:`Weight check-in after 13 days away: ${w} lb (${delta>0?'+':''}${delta} lb)`});
-  renderYou(); renderFuel(); renderProgress();
-  pendingIntent = null;
-  const d = document.createElement('div');
-  d.className = 'msg bot'; d.style.maxWidth='92%';
-  d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>Logged — <b>${w} lb</b> (${delta>0?'+':''}${delta} lb while you were away). ${Math.abs(delta)<3?'Barely moved — easy to pick right back up.':'No judgment — we adjust and move.'} I've re-tuned your protein target to <b>${state.macros.protein.t} g</b>.\n\nWant to reset anything while we're at it?
-    <div class="btn-panel">
-      <button class="opt-btn" data-wb="goals">🎯 Reset my goals</button>
-      <button class="opt-btn" data-wb="intensity">⚡ Change intensity</button>
-      <button class="opt-btn" data-wb="keep">✓ Keep everything — let's train</button>
-    </div>`;
-  chatEl.appendChild(d); scrollChat();
-  d.querySelectorAll('[data-wb]').forEach(b=> b.onclick = ()=>{
-    d.querySelectorAll('[data-wb]').forEach(x=>{ x.disabled=true; x.classList.add(x===b?'sel':'dim'); });
-    const k = b.dataset.wb;
-    if(k==='goals'){
-      pendingIntent = 'checkinGoals'; showInput();
-      setTimeout(()=>{ addMsg(`Fresh start on the targets — <b>what are we chasing now?</b> Weight, lifts, cardio — anything.`, 'bot'); inputEl.focus(); }, 350);
-    } else if(k==='intensity'){
-      setTimeout(()=>showIntensityChoice(true), 350);
-    } else {
-      setTimeout(()=>{ addMsg(`That's what I like to hear. Two weeks off means we ease back in — I've trimmed today's targets ~10% so your first session back feels strong, not brutal. Here's your briefing:`, 'bot'); setTimeout(showBriefing, 800); }, 350);
-    }
-  });
-}
-
 /* ---------- v33: how NAVI reaches you — mock lock-screen ---------- */
 function showNotifPreview(){
   const ov = document.createElement('div');
@@ -2141,7 +2131,7 @@ function showNotifPreview(){
     + items.map(([ic,t,bb,tm])=>`
     <div style="background:rgba(32,34,40,.94);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:12px 14px;display:flex;gap:11px;align-items:flex-start">
       <div style="font-size:20px">${ic}</div>
-      <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:13px;color:#fff">${t}</b><span style="font-size:10.5px;color:rgba(255,255,255,.45);flex:none">${tm}</span></div>
+      <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:13px;color:#fff">${t}</b><span style="font-size:11px;color:rgba(255,255,255,.45);flex:none">${tm}</span></div>
       <div style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.45;margin-top:2px">${bb}</div></div>
     </div>`).join('')
     + `<button class="ob-submit" id="notif-close" style="margin-top:6px">Close preview</button>`;
@@ -3169,6 +3159,41 @@ const SCENES = {
       <rect x="8" y="6" width="1" height="1" fill="#e8a13c"/>
     </g>`; },
   /* at the stove — Fuel tab */
+  /* v103: fast asleep — bed, crescent moon, z's drifting up (Progress sleep card) */
+  sleepbed: s => { const sk = sprSkin(s); const bed = `
+      <rect x="2.4" y="7.2" width="0.8" height="5.8" fill="#6b4a33"/>
+      <rect x="12.8" y="9" width="0.8" height="4" fill="#6b4a33"/>
+      <rect x="2.4" y="11.4" width="11.2" height="0.7" fill="#7d5842"/>
+      <rect x="2.7" y="12.1" width="0.6" height="0.9" fill="#54381f"/><rect x="12.9" y="12.1" width="0.6" height="0.9" fill="#54381f"/>
+      <rect x="3.2" y="10.5" width="9.6" height="0.9" fill="#cfd3da"/>
+      <rect x="3.4" y="9.7" width="2.2" height="0.8" fill="#f0efe9"/>`;
+    const sleeper = lift => `
+      <rect x="3.7" y="${8.9+lift}" width="1.4" height="1.4" fill="${sk}"/>
+      <rect x="3.5" y="${8.7+lift}" width="1.6" height="0.5" fill="${s.hair}"/>
+      <rect x="4.55" y="${9.5+lift}" width="0.45" height="0.2" fill="#1c1c1c"/>
+      <rect x="5.3" y="9.5" width="7.2" height="1.1" fill="${s.shirt}"/>
+      <rect x="5.3" y="${9.15+lift}" width="1.9" height="0.45" fill="${s.shirt}"/>
+      <rect x="11.3" y="9.2" width="1" height="0.4" fill="${s.shirt}"/>`;
+    return `
+    <g id="sA">
+      <rect x="1" y="13" width="14" height="1" fill="#3a4150"/>
+      <rect x="11.9" y="1.1" width="1.7" height="0.45" fill="#f5d76e"/>
+      <rect x="11.4" y="1.55" width="1" height="0.45" fill="#f5d76e"/>
+      <rect x="11.2" y="2" width="0.8" height="1" fill="#f5d76e"/>
+      <rect x="11.4" y="3" width="1" height="0.45" fill="#f5d76e"/>
+      <rect x="11.9" y="3.45" width="1.7" height="0.45" fill="#f5d76e"/>
+    </g>
+    <g id="sB">
+      ${bed}${sleeper(0)}
+      <text x="5.9" y="8.3" font-size="1.2" font-weight="700" fill="#8fb7f0">z</text>
+      <text x="6.9" y="6.9" font-size="1.6" font-weight="700" fill="#a9c8f5">z</text>
+    </g>
+    <g id="sC">
+      ${bed}${sleeper(-0.12)}
+      <text x="6.3" y="7.5" font-size="1.2" font-weight="700" fill="#8fb7f0">z</text>
+      <text x="7.4" y="6" font-size="1.6" font-weight="700" fill="#a9c8f5">z</text>
+      <text x="8.6" y="4.4" font-size="2" font-weight="700" fill="#c4dbfa">z</text>
+    </g>`; },
   cook: s => { const sk = sprSkin(s); return `
     <g id="sA">
       <rect x="1" y="10" width="7" height="1" fill="#444c5c"/>
@@ -3269,13 +3294,24 @@ function transientScene(sc, ms=3800){
   sceneLock = sc; renderSprite();
   sceneLockT = setTimeout(()=>{ sceneLock = null; renderSprite(); }, ms);
 }
+/* v103b: the Progress chart sprite performs the selected exercise — same mapping as live training */
+function exScene(name, mg){
+  if(mg === 'Cardio') return ({run:'run',tread:'run',stair:'stair',ellip:'ellip',bikein:'bike',bikeout:'bike',swim:'swim'})[segCardioType(name)] || 'run';
+  const g = mg || NAME2MG[name] || '';
+  return MG2SCENE[g] || 'lift';
+}
+/* v102: mid-size animated coach sprite for empty states — dead ends get personality */
+function emptySprite(scene, px=104){
+  /* v104: the wrapper carries data-scene so every scene runs its REAL animation, same as the HUD */
+  return `<span class="e-spr" data-scene="${SCENES[scene]?scene:'wave'}" style="display:inline-block;line-height:0"><svg viewBox="0 0 16 15.5" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true">${(SCENES[scene]||SCENES.wave)(themedSpr())}</svg></span>`;
+}
 
 function updateHud(){
   const el = $('#hud-text'); if(!el) return;
   const views = [
     `💤 Recovery ${state.hasWearable ? state.recovery.score+'%' : 'N/A'}`,
     `🍽 ${state.macros.cal.v.toLocaleString()} / ${state.goalsKnown ? state.macros.cal.t.toLocaleString()+' kcal' : 'N/A'}`,
-    `🔥 ~${state.burned}${state.goalsKnown ? ' / '+state.burnGoal : ''} kcal burned`,
+    `🔥 ~${state.burned}${state.goalsKnown ? ' / '+state.burnGoal : ''} kcal`,
     `🏋️ ${state.workoutsWtd} / ${state.workoutsGoal||'N/A'} this wk`,
   ];
   el.textContent = views[state.hudIdx % views.length];
@@ -3331,6 +3367,16 @@ function logMeal(foods, raw){
 
 /* v59: vitamins & minerals estimated ONLY from logged meals */
 function microEst(){
+  /* v98: meals analyzed by the LLM carry real micro estimates — use them when present */
+  const api = {};
+  let apiAny = false;
+  state.meals.forEach(ml=>{ if(ml.micros){ apiAny = true; for(const [k,v] of Object.entries(ml.micros)) api[k] = (api[k]||0) + v; } });
+  if(apiAny){
+    return ['Vitamin D','Vitamin B12','Vitamin C','Iron','Calcium','Magnesium','Potassium','Zinc','Fiber','Sodium'].map(n=>{
+      const v = Math.min(250, Math.round(api[n]||0));
+      return {n, v, warn: n==='Sodium' && v > 100};
+    });
+  }
   const m = state.macros;
   const calP = Math.min(1, m.cal.v / Math.max(1, m.cal.t));
   const pP = Math.min(1, m.protein.v / Math.max(1, m.protein.t));
@@ -3416,6 +3462,8 @@ function coachReply(text){
 
   /* ----- pending food description (from "Describe it to me") ----- */
   if(pendingIntent==='fooddesc'){
+    /* v99: Claude reads the meal first — the built-in dictionary is only the backup */
+    if(state.apiKey){ pendingIntent = null; llmFoodText(text); return {silent:true, noAuto:true}; }
     const foods = parseFoods(t);
     if(!foods.length) return { text:`I couldn't identify those items — try simple names with amounts, like <i>"2 eggs, 1 cup rice, chicken"</i>.` };
     pendingIntent = null;
@@ -3423,7 +3471,7 @@ function coachReply(text){
     const left = proteinLeft();
     const lines = foods.map(fd=>`• <b>${fd.qty!==1?fd.qty+' ':''}${fd.key}</b> — ${Math.round(fd.cal*fd.qty)} kcal · ${Math.round(fd.p*fd.qty)}g P · ${Math.round(fd.c*fd.qty)}g C · ${Math.round(fd.f*fd.qty)}g F`).join('\n');
     const follow = left>0 ? `You're at <b>${state.macros.protein.v}g protein</b> — ${left}g to go.` : `Protein goal ✅.`;
-    return { text:`${pick(f.open)} Looked it up — per-item nutrition <i>(nutrient data: USDA FoodData Central)</i>:\n\n${lines}\n\n<b>Meal total: ~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> — logged as Meal ${state.meals.length}.\n\n${follow}` };
+    return { text:`${pick(f.open)} Looked it up — per-item nutrition from my built-in database:\n\n${lines}\n\n<b>Meal total: ~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> — logged as Meal ${state.meals.length}.\n\n${follow}` };
   }
 
   /* ----- weigh-in day ----- */
@@ -3442,16 +3490,6 @@ function coachReply(text){
     pendingIntent = null;
     const trend = delta <= 0 ? `right on track for your cut — the deficit is doing its job` : `slightly up — could be water, sodium, or carbs from yesterday; the weekly trend is what matters`;
     return { text:`Logged: <b>${w} lb</b> (${delta>0?'+':''}${delta} lb since last weigh-in). You're ${trend}. Next weigh-in: ${state.weighDays.filter(d=>d!==TODAY_NAME)[0]||TODAY_NAME}.` };
-  }
-
-  /* ----- returning-user check-in ----- */
-  if(pendingIntent==='checkinWeight'){ handleCheckinWeight(text); return {silent:true}; }
-  if(pendingIntent==='checkinGoals'){
-    pendingIntent = null;
-    state.goalText = esc(text);
-    state.memory.unshift({ic:'🎯', t:`Goals (reset after time away): ${state.goalText}`});
-    renderYou();
-    return { text:`New targets locked: <b>${state.goalText}</b>. Every plan from here points at them. Here's your briefing:`, brief:true };
   }
 
   /* ----- edit profile / names ----- */
@@ -3473,7 +3511,7 @@ function coachReply(text){
         yogaType:`\n\n—\n<b>Vinyasa flow</b> or <b>deep stretch</b>?`,
         pilatesType:`\n\n—\n<b>Core focus</b> or <b>full body</b>?`,
       }[pendingIntent] || '';
-      return { text: ans + back };
+      return { info:true, text: ans + back };
     }
   }
 
@@ -3526,7 +3564,9 @@ function coachReply(text){
     }
     if(/ppl|push.?pull/.test(t)){
       pendingIntent = 'confirm'; pendingPreset = SCHED_KEY;
-      return { text:`Last session we continued PPL — yesterday you completed <b>Pull A</b>. Today is ${TODAY_NAME}, which means <b>${PRESETS[SCHED_KEY].name}</b>. You squatted <b>250 × 10 across all four sets</b> last time — by your own rule, that earns <b>255</b> today. Continue this split?` };
+      return { text: Object.keys(state.history).length
+        ? `PPL it is. Today is ${TODAY_NAME}, which puts <b>${PRESETS[SCHED_KEY].name}</b> on the rotation — targets come straight from your own logged numbers. Continue?`
+        : `PPL it is. Today is ${TODAY_NAME}, which puts <b>${PRESETS[SCHED_KEY].name}</b> first on the rotation — your opening session sets every baseline. Load it?` };
     }
     if(/bro|chest/.test(t)){
       pendingIntent = 'confirm'; pendingPreset = 'chest';
@@ -3644,6 +3684,8 @@ function coachReply(text){
 
   /* food logging */
   if(/\b(ate|had|eating|eat)\b|for (breakfast|lunch|dinner)|i'?m having/.test(t)){
+    /* v99: Claude reads the meal first — the built-in dictionary is only the backup */
+    if(state.apiKey){ llmFoodText(text); return {silent:true, noAuto:true}; }
     const foods = parseFoods(t);
     if(foods.length){
       const tot = logMeal(foods, text);
@@ -3652,7 +3694,7 @@ function coachReply(text){
       let follow = left>0
         ? `You're at <b>${state.macros.protein.v}g protein</b> — ${left}g to go. ${left>60?'I\'d slot a shake mid-afternoon and keep dinner protein-heavy.':left>25?'A greek yogurt or a shake covers most of that.':'Basically there — dinner closes it out.'}`
         : `That puts you <b>over your ${state.macros.protein.t}g protein goal</b> — perfectly timed.`;
-      return { text:`${pick(f.open)} Looked it up — per-item nutrition <i>(nutrient data: USDA FoodData Central)</i>:\n\n${lines}\n\n<b>Meal total: ~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> — logged as Meal ${state.meals.length}.\n\n${follow}` };
+      return { text:`${pick(f.open)} Looked it up — per-item nutrition from my built-in database:\n\n${lines}\n\n<b>Meal total: ~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> — logged as Meal ${state.meals.length}.\n\n${follow}` };
     }
     return { text:`${pick(f.open)} Tell me what was in it — e.g. "3 eggs, bacon and a cup of rice" — and I'll look up the nutrition for each item and log it. <i>(Full product: live lookup against the USDA database for any food.)</i>` };
   }
@@ -3689,12 +3731,12 @@ function coachReply(text){
 
   /* soreness (DOMS) vs injury */
   if(/(sore|doms|stiff)/.test(t) && !/(hurt|pain|injur|tweak|pinch)/.test(t)){
-    return { text:`${pick(f.open)} Normal soreness (DOMS) peaks 24–48h after training and it's a sign of novel stimulus, not damage. Best moves: light movement of the same muscles, 10 min of walking, protein + sleep. Training a sore muscle is fine as long as strength isn't down more than ~10%.\n\nIf it's sharp, one-sided, or in a joint rather than the muscle belly — that's different. Tell me and I'll adjust today's plan.` };
+    return { info:true, text:`${pick(f.open)} Normal soreness (DOMS) peaks 24–48h after training and it's a sign of novel stimulus, not damage. Best moves: light movement of the same muscles, 10 min of walking, protein + sleep. Training a sore muscle is fine as long as strength isn't down more than ~10%.\n\nIf it's sharp, one-sided, or in a joint rather than the muscle belly — that's different. Tell me and I'll adjust today's plan.` };
   }
 
   /* supplements */
   if(/(creatine|supplement|whey|pre.?workout|vitamin)/.test(t)){
-    return { text:`${pick(f.open)} My evidence-based shortlist for your goal:\n\n• <b>Creatine monohydrate</b> — 5g daily, any time. The most-studied supplement in existence.\n• <b>Whey/protein powder</b> — only to hit your ${state.macros.protein.t}g target; food first.\n• <b>Caffeine</b> — 2–3mg/kg ~45 min pre-lift on heavy days.\n\nEverything else is margins.` };
+    return { info:true, text:`${pick(f.open)} My evidence-based shortlist for your goal:\n\n• <b>Creatine monohydrate</b> — 5g daily, any time. The most-studied supplement in existence.\n• <b>Whey/protein powder</b> — only to hit your ${state.macros.protein.t}g target; food first.\n• <b>Caffeine</b> — 2–3mg/kg ~45 min pre-lift on heavy days.\n\nEverything else is margins.` };
   }
 
   /* "cardio time" → straight to the cardio picker */
@@ -3704,7 +3746,7 @@ function coachReply(text){
 
   /* cardio (advice) */
   if(/(cardio|running|zone 2|5k|10k|conditioning|treadmill)/.test(t)){
-    return { text:`${pick(f.open)} With your lifting volume, here's the cardio that helps instead of interfering:\n\n• <b>2× Zone 2</b> (30–40 min easy pace) on rest days\n• <b>1× short intervals</b> (8× 30s hard / 90s easy) after an upper day\n\nThat protects recovery for legs. I'll fold these into your week and nudge you on the right days.` };
+    return { info:true, text:`${pick(f.open)} With your lifting volume, here's the cardio that helps instead of interfering:\n\n• <b>2× Zone 2</b> (30–40 min easy pace) on rest days\n• <b>1× short intervals</b> (8× 30s hard / 90s easy) after an upper day\n\nThat protects recovery for legs. I'll fold these into your week and nudge you on the right days.` };
   }
 
   /* injury */
@@ -3722,7 +3764,9 @@ function coachReply(text){
 
   /* sleep / recovery */
   if(/(sleep|recover|tired|exhausted|hrv|rest day)/.test(t)){
-    return { text:`${pick(f.open)} Last night: <b>${state.recovery.sleep}</b>, HRV <b>${state.recovery.hrv}ms</b> (↑6% vs your baseline), resting HR ${state.recovery.rhr}. Recovery score <b>${state.recovery.score}%</b> — you're cleared for full intensity.\n\nContext: your target is <b>8–9 h</b> and two of your last seven nights were under 6.5. If tonight is short again, I'll pull volume down ~15% tomorrow. Per your own rules, we only deload if performance <i>and</i> recovery noticeably decline — we're not there.` };
+    return state.hasWearable
+      ? { info:true, text:`${pick(f.open)} Last night: <b>${state.recovery.sleep}</b>, HRV <b>${state.recovery.hrv}ms</b>, resting HR ${state.recovery.rhr}. Recovery score <b>${state.recovery.score}%</b>. Target is <b>8–9 h</b> — if tonight runs short, I'll pull tomorrow's volume down ~15%. We only deload if performance <i>and</i> recovery noticeably decline.` }
+      : { info:true, text:`${pick(f.open)} I don't have sleep or recovery data yet — connect a watch (Apple Watch, Whoop, Garmin via the NAVI Sync shortcut) and I'll adapt training to how you actually slept.\n\nGeneral rule while we're blind: <b>8–9 h target</b>, and if you feel wrecked, cut today's volume ~15% rather than skipping.` };
   }
 
   /* water — your goal: 3–4 L/day */
@@ -3739,17 +3783,22 @@ function coachReply(text){
 
   /* form check */
   if(/(form|video|check my|squat depth|bar path|technique)/.test(t)){
-    return { text:`${pick(f.open)} Upload a set and I'll analyze it. 🎥 <i>(In the full product: computer vision reviews depth, knee tracking, bar path and spinal alignment, then tracks your technique score over time.)</i>\n\nFrom your last squat video (Jun 30): depth ✅, knees tracking well, slight forward drift on rep 5+ — we cued "chest through" and it cleaned up.` };
+    return { info:true, text:`${pick(f.open)} Upload a set and I'll analyze it. 🎥 <i>(In the full product: computer vision reviews depth, knee tracking, bar path and spinal alignment, then tracks your technique score over time.)</i>\n\nFrom your last squat video (Jun 30): depth ✅, knees tracking well, slight forward drift on rep 5+ — we cued "chest through" and it cleaned up.` };
   }
 
   /* motivation / skip */
   if(/(don'?t feel|skip|unmotivat|lazy|can'?t today|no energy)/.test(t)){
-    return { text:`${f.push}\n\nHere's the deal: you're on a <b>${state.streak}-day streak</b> and recovery is at ${state.recovery.score}% — your body is ready even if your head isn't. Give me the first two sets. If you still want out after that, we call it a recovery day with zero guilt. Fair?` };
+    return { info:true, text:`${f.push}\n\nHere's the deal: you're on a <b>${state.streak}-day streak</b> and recovery is at ${state.recovery.score}% — your body is ready even if your head isn't. Give me the first two sets. If you still want out after that, we call it a recovery day with zero guilt. Fair?` };
   }
 
   /* progress */
   if(/(progress|stronger|gains|pr\b|personal record|how am i doing)/.test(t)){
-    return { text:`${pick(f.open)} Zoom out: Incline DB Press went <b>70 → 90 lb in 8 weeks</b> (+29%). Three PRs in the last two weeks. Bodyweight trending down with strength up — that's the cut working.\n\n${pick(f.close)}`, goTab:'progress' };
+    const prCount = state.medals.filter(m=>m.pr!=='—').length;
+    const sessions = Object.values(state.history).reduce((a,h)=> a + (h && h.multi ? h.sessions.length : 1), 0);
+    const wd = state.weightNow - ((Object.values(state.prog)[0]||{}).start || state.weightNow);
+    return { info:true, text: sessions
+      ? `${pick(f.open)} The real ledger: <b>${sessions} session${sessions!==1?'s':''} logged</b>, <b>${prCount} lift${prCount!==1?'s':''} with a PR on the board</b>${wd!==0?`, bodyweight ${wd<0?'down':'up'} <b>${Math.abs(wd).toFixed(1)} lb</b> since you started`:''}. Full charts are on the Progress tab.\n\n${pick(f.close)}`
+      : `${pick(f.open)} Nothing on the board yet — your first logged session sets every baseline: first PRs, first chart point, first calendar day. Load a workout and let's start the ledger.`, goTab:'progress' };
   }
 
   /* greetings */
@@ -3772,6 +3821,73 @@ function coachReply(text){
 }
 
 /* ---------- v33: live LLM — the real brain, when a key is linked ---------- */
+/* v98: LLM nutrition — Claude Haiku reads meal descriptions AND photos into structured data */
+const FOOD_SYS = 'You are a precise nutrition estimator. Given a meal description or meal photo, reply with ONLY valid JSON, no prose, exactly: {"items":[{"n":"food with portion","cal":0,"p":0,"c":0,"f":0}],"micros":{"Vitamin D":0,"Vitamin B12":0,"Vitamin C":0,"Iron":0,"Calcium":0,"Magnesium":0,"Potassium":0,"Zinc":0,"Fiber":0,"Sodium":0}} — items are each food with integer calories/protein/carbs/fat grams; micros are integer percentages of typical adult daily targets for the WHOLE meal. Estimate typical portions honestly.';
+function items0(p){ return (p.items||[]).slice(0,3).map(i=>String(i.n||'').replace(/<[^>]*>/g,'')).join(', ') || 'your meal'; }
+async function llmFoodJSON(content){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'content-type':'application/json', 'x-api-key':state.apiKey, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true'},
+    body: JSON.stringify({model:'claude-haiku-4-5', max_tokens:900, system:FOOD_SYS, messages:[{role:'user', content}]})
+  });
+  if(!res.ok) throw new Error('API ' + res.status);
+  const j = await res.json();
+  const txt = j.content.map(c=>c.text||'').join('');
+  const m = txt.match(/\{[\s\S]*\}/);
+  return JSON.parse(m ? m[0] : txt);
+}
+function logLLMMeal(parsed, label){
+  const items = (parsed.items||[]).map(it=>({
+    n: esc(String(it.n||'item').slice(0,60)),
+    cal: Math.min(3000, Math.max(0, Math.round(+it.cal||0))),
+    p: Math.min(250, Math.max(0, Math.round(+it.p||0))),
+    c: Math.min(400, Math.max(0, Math.round(+it.c||0))),
+    f: Math.min(250, Math.max(0, Math.round(+it.f||0))),
+  })).filter(it=>it.cal>0 || it.p>0);
+  if(!items.length) throw new Error('no items');
+  const tot = items.reduce((a,x)=>({cal:a.cal+x.cal, p:a.p+x.p, c:a.c+x.c, f:a.f+x.f}), {cal:0,p:0,c:0,f:0});
+  state.macros.cal.v += tot.cal; state.macros.protein.v += tot.p;
+  state.macros.carbs.v += tot.c; state.macros.fat.v += tot.f;
+  const micros = {};
+  if(parsed.micros) for(const k of ['Vitamin D','Vitamin B12','Vitamin C','Iron','Calcium','Magnesium','Potassium','Zinc','Fiber','Sodium']){
+    const v = Math.round(+parsed.micros[k]||0);
+    if(v > 0 && v <= 400) micros[k] = v;
+  }
+  state.meals.push({n:'Meal', s: esc(String(label).slice(0,80)), cal:tot.cal, p:tot.p, c:tot.c, f:tot.f,
+    items: items.map(it=>({n:it.n, cal:it.cal, p:it.p})),
+    micros: Object.keys(micros).length ? micros : undefined});
+  state.mealIdx = state.meals.length-1;
+  state.mealCount = (state.mealCount||0) + 1;
+  checkMedals();
+  renderFuel(); transientScene('eat');
+  return {tot, items};
+}
+function llmFoodText(text){
+  const typing = document.createElement('div');
+  typing.className = 'typing'; typing.innerHTML = '<i></i><i></i><i></i>';
+  chatEl.appendChild(typing); scrollChat();
+  llmFoodJSON([{type:'text', text:'Meal description: ' + text.slice(0,400)}]).then(p=>{
+    typing.remove();
+    const {tot, items} = logLLMMeal(p, text);
+    const lines = items.map(i=>`• <b>${i.n}</b> — ${i.cal} kcal · ${i.p}g P`).join('\n');
+    const left = proteinLeft();
+    addMsg(`${pick(flav().open)} Looked it up:\n\n${lines}\n\n<b>Meal total: ~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> — logged as Meal ${state.meals.length}.\n\n${left>0?`${left}g protein to go.`:'Protein goal ✅.'}\n\n<span style="font-size:10px;color:var(--muted)">⚡ live AI estimate — vitamins & minerals updated too</span>`, 'bot');
+    showInput();
+    setTimeout(()=>showFlow('root'), 1600);
+  }).catch(()=>{
+    typing.remove();
+    const foods = parseFoods(text);
+    if(foods.length){
+      const tot = logMeal(foods, text);
+      addMsg(`Connection hiccup — logged from my built-in database instead: <b>~${tot.cal} kcal · ${tot.p}g protein · ${tot.c}g carbs · ${tot.f}g fat</b> (Meal ${state.meals.length}).`, 'bot');
+      showInput();
+      setTimeout(()=>showFlow('root'), 1400);
+    } else {
+      addMsg(`I couldn't read that one — try simple names with amounts, like <i>"2 eggs, bacon and a cup of rice"</i>.`, 'bot');
+      showInput();
+    }
+  });
+}
 async function llmReply(userText){
   const m = state.macros;
   const sys = `You are ${state.coachName}, an elite AI performance coach inside the NAVI app — training, nutrition, sleep, and recovery in one place. Persona: ${flav().t}. User: ${state.user.name}, ${state.user.age}y, ${state.user.weight} lb, height ${state.user.height}, goal: ${state.goal}. Today so far: ${m.cal.v}/${m.cal.t||'?'} kcal eaten, ${m.protein.v}/${m.protein.t||'?'}g protein, planned session "${state.sessionName}", recovery ${state.hasWearable ? state.recovery.score+'%' : 'unknown (no wearable)'}, sleep ${state.recovery.sleep}, streak ${state.streak} days. Rules: stay strictly in the health/fitness/nutrition/sleep/recovery lane and decline anything else briefly; be concrete and evidence-based, referring to peer-reviewed research in general terms only — never name influencers, coaches, or commercial programs; no medical diagnoses — refer pain or injury red flags to a professional; maximum 120 words; plain text with <b> tags for emphasis only.`;
@@ -3875,7 +3991,7 @@ function botRespond(text){
     typing.remove();
     if(!state.onboarded){ handleOnboarding(text); return; }
     const r = coachReply(text);
-    if(r.fallback && state.apiKey){ llmRespond(text, r.text); return; }
+    if((r.fallback || r.info) && state.apiKey){ llmRespond(text, r.text); return; }
     if(!r.silent) addMsg(r.text, 'bot');
     if(r.brief) setTimeout(showBriefing, 450);
     if(r.flow) setTimeout(()=>showFlow(r.flow), 600);
@@ -4045,6 +4161,8 @@ function sessTick(){
     else state.sess.sec++;
     const el = $('#sess-time');
     if(el) el.textContent = fmtSec(state.sess.sec);
+    const em = $('#sess-time-mini');
+    if(em) em.textContent = fmtSec(state.sess.sec);
   }
 }
 const fmtSec = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
@@ -4054,6 +4172,7 @@ const fmtSec = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).
    apply to everyone) — but they still unlock for anyone who earns them */
 function medalApplies(a){
   if(/^\d+ lb Lost$/.test(a.n)) return false;
+  if(/^Top \d/.test(a.n)) return false;   // percentile medals need a live community
   return true;
 }
 function medalPR(name){ const m = state.medals.find(x=>x.n===name); return m ? (parseFloat(m.pr)||0) : 0; }
@@ -4271,7 +4390,7 @@ function trainCalHTML(){
         <button class="p-arrow" id="tcal-prev" aria-label="Previous month">‹</button>
         <div style="flex:1;text-align:center">
           <div style="font-size:14px;font-weight:700">${monthName}</div>
-          <div style="font-size:11.5px;color:var(--accent);font-weight:700;margin-top:2px">${worked}/${state.trainCalOffset===0 ? now.getDate() : daysIn} days trained</div>
+          <div style="font-size:12px;color:var(--accent);font-weight:700;margin-top:2px">${worked}/${state.trainCalOffset===0 ? now.getDate() : daysIn} days trained</div>
         </div>
         <button class="p-arrow" id="tcal-next" aria-label="Next month" ${state.trainCalOffset>=0?'disabled style="opacity:.3"':''}>›</button>
       </div>
@@ -4297,7 +4416,7 @@ function showSessionPicker(key, entry){
   ov.innerHTML = `
     <div class="card" style="width:100%;background:var(--surface-2);border:1px solid var(--hairline);margin:0">
       <h5 style="font-size:15px;font-weight:700;margin-bottom:4px">${key} — ${entry.sessions.length} workouts</h5>
-      <p style="font-size:11.5px;color:var(--muted);margin-bottom:12px">You trained more than once this day. Pick a session:</p>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px">You trained more than once this day. Pick a session:</p>
       ${entry.sessions.map((s,si)=>`<button class="opt-btn" data-pickss="${si}" style="width:100%;max-width:none;flex:none;margin-bottom:8px;height:auto;padding:10px">${si+1}. ${s.name.split(' · ')[0]}${s.time?` — ${s.time}`:''}</button>`).join('')}
       <button class="ob-submit" id="ssp-close" style="width:100%;margin-top:4px;background:var(--surface-3)">Cancel</button>
     </div>`;
@@ -4403,11 +4522,12 @@ function renderTrain(){
     const multi = hRaw && hRaw.multi;
     const h = multi ? hRaw.sessions[Math.min(state.trainSessIdx||0, hRaw.sessions.length-1)] : hRaw;
     el.innerHTML = dateBar + (h && h.rest
-      ? `<div class="card empty-state"><div class="e-ic">😴</div><h4>Sunday Recovery</h4><p>No lifting — by design. Logged: 10,412 steps · 18 min stretch · foam roll · meal prep ✓ · 8h 41m sleep.</p></div>`
+      ? `<div class="card empty-state"><div class="e-ic">😴</div><h4>Sunday Recovery</h4><p>No lifting — by design. Rest days are when the training sinks in.</p></div>`
       : !h
       ? `<div class="card empty-state"><div class="e-ic">📅</div><h4>${state.trainDate}</h4><p>No session logged on this date. <i>(In the full product, every workout you've ever done lives here — any day, any year.)</i></p></div>`
       : `
       <div class="section-label">${state.trainDate} · ${h.name} · completed${h.time?` · ${h.time}`:''}</div>
+      ${h.watch?`<div class="card" style="display:flex;gap:14px;align-items:center;font-size:13px;font-weight:600"><span>⌚ Watch session data</span>${h.watch.kcal?`<span style="color:#eb6834">🔥 ${h.watch.kcal} kcal</span>`:''}${h.watch.avg?`<span style="color:#e66767">♥ avg ${h.watch.avg}</span>`:''}${h.watch.max?`<span style="color:#e66767">peak ${h.watch.max}</span>`:''}${h.watch.dur?`<span style="color:var(--muted)">${h.watch.dur} min</span>`:''}</div>`:''}
       ${multi?`<div class="date-row" style="margin-bottom:10px">${hRaw.sessions.map((s,si)=>`<button class="f-chip ${si===Math.min(state.trainSessIdx||0, hRaw.sessions.length-1)?'sel':''}" data-sesspick="${si}" style="flex:1">${si+1}. ${s.name.split(' · ')[0]}${s.time?` · ${s.time}`:''}</button>`).join('')}</div>`:''}
       ${h.ex.map(e=>`
         <div class="card exercise complete">
@@ -4426,7 +4546,7 @@ function renderTrain(){
   if(!state.planReady && !(state.cardio && state.cardio.on)){
     el.innerHTML = dateBar + `
       <div class="card empty-state" style="margin-top:8px">
-        <div class="e-ic">💬</div>
+        ${emptySprite('jumprope')}
         <h4>Your plan lives in the conversation</h4>
         <p>There's nothing to fill out here — ever. Tell your coach your goals, your split, and how you want to train, and this tab builds today's session by itself. Your training history is in the calendar above.</p>
         <div class="chip" style="display:inline-block;margin-top:16px" id="go-coach">Talk to your coach</div>
@@ -4442,7 +4562,7 @@ function renderTrain(){
     el.innerHTML = dateBar + `
       <div class="section-label">Today · ${c.name} · live</div>
       <div class="card cardio-live" style="text-align:center">
-        <span style="display:block;font-size:10.5px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:6px">LIVE${c.gps?' · GPS':''}</span>
+        <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:6px">LIVE${c.gps?' · GPS':''}</span>
         <b style="font-size:16px">${c.name}</b>
         <div class="c-timer" id="ct-timer">${(()=>{const s=c.mode==='down'?Math.max(0,c.dur*60-c.sec):c.sec;return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;})()}</div>
         <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--muted);margin-top:-4px;margin-bottom:4px">${c.mode==='down'?'COUNTING DOWN':'OPEN TIMER'}</div>
@@ -4489,9 +4609,11 @@ function renderTrain(){
 
   const doneSets = state.exercises.reduce((a,e)=>a+e.done.length,0);
   const totSets = state.exercises.reduce((a,e)=>a+e.sets,0);
+  const sessBurn = state.exercises.flatMap(ex=>ex.done.filter(Boolean).map(d=>d.cal||0)).reduce((a,b)=>a+b,0);
   el.innerHTML = dateBar + `
+    ${state.sess.run?`<div class="sess-mini" id="sess-mini"><span class="sm-time" id="sess-time-mini">${fmtSec(state.sess.sec)}</span><span>${doneSets}/${totSets} sets</span><span style="margin-left:auto;color:#eb6834">🔥 ~${sessBurn} kcal est.</span></div>`:''}
     <div class="section-label">Today · ${state.sessionName}</div>
-    <div class="card" style="padding:14px 16px">
+    <div class="card" id="sess-card" style="padding:14px 16px">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
           <div style="font-size:15px;font-weight:700">Session progress</div>
@@ -4508,7 +4630,7 @@ function renderTrain(){
           const burned = state.exercises.flatMap(ex=>ex.done.filter(Boolean).map(d=>d.cal||0)).reduce((a,b)=>a+b,0);
           return `<div style="margin-left:auto;font-size:12px;color:var(--ink-2);text-align:right;line-height:1.5;font-weight:600">♥ avg <b style="color:#e66767">${avg}</b> · max <b style="color:#e66767">${mx}</b><br>🔥 <b style="color:#eb6834">~${burned}</b> kcal est. <span style="font-weight:500;color:var(--muted)">(wearable)</span></div>`; })()}
       </div>
-      <p style="font-size:11.5px;color:var(--muted);line-height:1.55;margin-top:10px">📋 ${RULES}</p>
+      <p style="font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px">📋 ${RULES}</p>
     </div>
     <div class="section-label">Today's workouts · start any of them, in any order</div>
     ${(()=>{ const exCard = (e,i)=>{
@@ -4535,23 +4657,23 @@ function renderTrain(){
           const mphCfg = ccfg.some(cc=>cc.unit===' mph');
           return `
         <div class="ctl-row" style="flex-wrap:wrap;gap:10px">
-          ${ccfg.map(cc=>`<span class="ctl">${cc.lab} <button class="adj-btn" data-cvdn="${i}:${cc.k}">−</button> <input class="lb-f" data-cvval="${i}:${cc.k}" inputmode="decimal" value="${e.cardVals[cc.k]}" style="width:46px"> <button class="adj-btn" data-cvup="${i}:${cc.k}">＋</button> <span style="font-size:10.5px;color:var(--muted)">${cc.unit===' mph' ? (e.cardUnit||'mph') : cc.unit.trim()}</span></span>`).join('')}
-          ${mphCfg?`<button class="adj-btn" data-cunit="${i}" style="width:auto;padding:0 8px;font-size:10.5px" title="Toggle units">${(e.cardUnit||'mph')==='mph'?'→ kph':'→ mph'}</button>`:''}
+          ${ccfg.map(cc=>`<span class="ctl">${cc.lab} <button class="adj-btn" data-cvdn="${i}:${cc.k}">−</button> <input class="lb-f" data-cvval="${i}:${cc.k}" inputmode="decimal" value="${e.cardVals[cc.k]}" style="width:46px"> <button class="adj-btn" data-cvup="${i}:${cc.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${cc.unit===' mph' ? (e.cardUnit||'mph') : cc.unit.trim()}</span></span>`).join('')}
+          ${mphCfg?`<button class="adj-btn" data-cunit="${i}" style="width:auto;padding:0 8px;font-size:11px" title="Toggle units">${(e.cardUnit||'mph')==='mph'?'→ kph':'→ mph'}</button>`:''}
         </div>`;
         })():''}
         ${isActive&&!e.seg&&!complete?`
         <div class="ctl-row ctl-grid">
-          ${typeof e.target.w==='number'?`<span class="ctl"><span>Weight</span><button class="adj-btn" data-wdn="${i}">−</button><input class="lb-f" data-wval="${i}" inputmode="decimal" value="${state.units==='kg' ? +(e.target.w*LB2KG).toFixed(1) : e.target.w}"><button class="adj-btn" data-wup="${i}">＋</button><span style="font-size:10.5px;color:var(--muted)">${state.units==='kg'?'kg':'lb'}</span></span>`:''}
+          ${typeof e.target.w==='number'?`<span class="ctl"><span>Weight</span><button class="adj-btn" data-wdn="${i}">−</button><input class="lb-f" data-wval="${i}" inputmode="decimal" value="${state.units==='kg' ? +(e.target.w*LB2KG).toFixed(1) : e.target.w}"><button class="adj-btn" data-wup="${i}">＋</button><span style="font-size:11px;color:var(--muted)">${state.units==='kg'?'kg':'lb'}</span></span>`:''}
           <span class="ctl"><span>Sets</span><button class="adj-btn" data-setsdn="${i}">−</button><input class="lb-f" data-setsval="${i}" inputmode="numeric" value="${e.sets}"><button class="adj-btn" data-setsup="${i}">＋</button><span></span></span>
           <span class="ctl"><span>Reps</span><button class="adj-btn" data-repsdn="${i}">−</button><input class="lb-f" data-repsval="${i}" inputmode="numeric" value="${repTop(e)}"><button class="adj-btn" data-repsup="${i}">＋</button><span></span></span>
-          <span class="ctl"><span>Rest</span><button class="adj-btn" data-restdn="${i}">−</button><input class="lb-f" data-restval="${i}" inputmode="numeric" value="${e.restSec || (e.comp?150:75)}"><button class="adj-btn" data-restup="${i}">＋</button><span style="font-size:10.5px;color:var(--muted)">s</span></span>
+          <span class="ctl"><span>Rest</span><button class="adj-btn" data-restdn="${i}">−</button><input class="lb-f" data-restval="${i}" inputmode="numeric" value="${e.restSec || (e.comp?150:75)}"><button class="adj-btn" data-restup="${i}">＋</button><span style="font-size:11px;color:var(--muted)">s</span></span>
         </div>`:''}
         ${Array.from({length:e.sets},(_,s)=>{
           const d = e.done[s];
           if(d){
             const undo = (!complete && s===e.done.length-1) ? `<button class="set-undo" data-undoset="${i}">↩ Undo set ${s+1}</button>` : '';
             return e.seg
-              ? `<div class="set-line done">✓ Complete<span class="hr">${d.hr?`♥ ${d.hr} · `:''}🔥 ~${d.cal||0} kcal est.</span></div>${undo}`
+              ? `<div class="set-line done">✓ Complete${d.hr?`<span class="hr">♥ ${d.hr}</span>`:''}</div>${undo}`
               : `<div class="set-line done" data-adj="${i}:${s}" title="Tap to adjust">✓ Set ${s+1} — ${load(d.w)} × ${d.r} ✎${d.hr?`<span class="hr">♥ ${d.hr} max</span>`:''}</div>${undo}`;
           }
           if(state.activeSet && state.activeSet.i===i && state.activeSet.s===s)
@@ -4611,6 +4733,10 @@ function renderTrain(){
     <div style="height:56px"></div>`;
 
   wireDatePick(el);
+  /* v102: show the sticky vitals bar only once the Session progress card is off-screen */
+  const sCard = el.querySelector('#sess-card'), sMini = el.querySelector('#sess-mini');
+  if(sCard && sMini && 'IntersectionObserver' in window)
+    new IntersectionObserver(en=> sMini.classList.toggle('show', !en[0].isIntersecting), {root:el, threshold:0}).observe(sCard);
   el.querySelectorAll('[data-startset]').forEach(b=> b.onclick = ()=>{
     if(state.activeSet){ toast('Finish your current set first — one at a time 😄'); return; }
     const [i,s] = b.dataset.startset.split(':').map(Number);
@@ -4627,10 +4753,11 @@ function renderTrain(){
     const [i,s] = b.dataset.endset.split(':').map(Number);
     const e = state.exercises[i];
     const hr = state.hasWearable ? (e.comp?152:136) + Math.floor(Math.random()*24) : 0;   // HR only once a watch is connected
+    /* v101: per-set kcal is INTERNAL ONLY — it feeds session totals & burnLog but is never shown per set */
     const cal = e.seg ? 240 + Math.floor(Math.random()*60) : (e.comp?12:7) + Math.floor(Math.random()*6);
     state.burned += cal;
     state.activeSet = null;
-    if(e.seg){ e.done[s] = {w:0, r:0, hr, cal}; renderTrain(); renderFuel(); toast(`Complete ✅ ·${hr?` ♥ ${hr} bpm ·`:''} 🔥 ~${cal} kcal est.`); return; }
+    if(e.seg){ e.done[s] = {w:0, r:0, hr, cal}; renderTrain(); renderFuel(); toast(`Complete ✅${hr?` · ♥ ${hr} bpm`:''}`); return; }
     const top = repTop(e);
     e.done[s] = {w:e.target.w, r:top, hr, cal};
     state.lastLogged = {i, s};
@@ -4965,7 +5092,7 @@ function renderFuel(){
       <div class="ic num" style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(235,104,52,.15);color:#eb6834;font-size:16px">🔥</div>
       <div style="flex:1"><div class="m-name" style="font-size:14px;font-weight:600">Calories burned today <span style="font-size:10px;color:var(--muted);font-weight:600">EST.</span></div><div style="font-size:11px;color:var(--muted)">session-level estimate from your wearable</div></div>
       <div style="text-align:right"><b style="font-size:17px;color:#eb6834">~${state.burned}</b> <span style="font-size:11px;color:var(--muted)">kcal</span>
-        <div style="font-size:10.5px;color:var(--muted)">net today: ~${(m.cal.v - state.burned).toLocaleString()} kcal</div></div>
+        <div style="font-size:11px;color:var(--muted)">net today: ~${(m.cal.v - state.burned).toLocaleString()} kcal</div></div>
     </div>
     <div class="section-label">Today's fuel</div>
     <div class="card">
@@ -4995,14 +5122,14 @@ function renderFuel(){
             <div class="mi-track" style="${mi.warn?'background:rgba(250,178,25,.15)':''}"><div class="mi-fill" style="width:${Math.min(100,mi.v)}%;${mi.warn?'background:var(--warning)':''}"></div></div>
             <span class="mi-v">${mi.v}%</span>
           </div>`).join('') + `
-        <p style="font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:6px">% of daily target, estimated from your logged meals — the more you log, the sharper these get.</p>`
-        : `<p style="font-size:12.5px;color:var(--muted);text-align:center;padding:10px 0">No data yet — log a meal and your vitamin &amp; mineral estimates build from it.</p>`}
+        <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px">% of daily target, estimated from your logged meals — the more you log, the sharper these get.</p>`
+        : `<p style="font-size:13px;color:var(--muted);text-align:center;padding:10px 0">No data yet — log a meal and your vitamin &amp; mineral estimates build from it.</p>`}
       </div>`:''}
     </div>
     <div class="section-label">Meals · just tell ${state.coachName} what you ate</div>
     <div class="card">
       ${(()=>{
-        if(!state.meals.length) return `<p style="font-size:13px;color:var(--muted);text-align:center;padding:14px 0">No meals logged yet — tell ${state.coachName} what you ate.</p>`;
+        if(!state.meals.length) return `<div style="text-align:center;padding:10px 0 6px">${emptySprite('cook',92)}<p style="font-size:13px;color:var(--muted);margin-top:4px">No meals logged yet — tell ${state.coachName} what you ate.</p></div>`;
         state.mealIdx = Math.min(state.mealIdx, state.meals.length-1);
         const mi = state.mealIdx, ml = state.meals[mi];
         return `
@@ -5011,9 +5138,9 @@ function renderFuel(){
           <div style="flex:1">
             <div class="meal" style="flex-wrap:wrap;border-bottom:none">
               <div class="ic num">${mi+1}</div>
-              <div><div class="m-name">Meal ${mi+1}</div><div style="font-size:10.5px;color:var(--muted)">${mi+1} of ${state.meals.length}</div></div>
+              <div><div class="m-name">Meal ${mi+1}</div><div style="font-size:11px;color:var(--muted)">${mi+1} of ${state.meals.length}</div></div>
               <button class="del" data-mdel="${mi}" title="Delete meal" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 4px">✕</button>
-              <div class="m-cal">${ml.cal} kcal · ${ml.p}g P<div style="font-size:10.5px;color:var(--muted);font-weight:500;text-align:right">${Math.round(ml.cal/Math.max(1,m.cal.v)*100)}% of today</div></div>
+              <div class="m-cal">${ml.cal} kcal · ${ml.p}g P<div style="font-size:11px;color:var(--muted);font-weight:500;text-align:right">${Math.round(ml.cal/Math.max(1,m.cal.v)*100)}% of today</div></div>
               <div class="meal-items">
                 ${(ml.items||[{n:ml.s,cal:ml.cal,p:ml.p}]).map(it=>`<div class="meal-item"><span>${it.n}</span><span>${it.cal} kcal · ${it.p}g P</span></div>`).join('')}
               </div>
@@ -5041,7 +5168,7 @@ function renderFuel(){
         const R0 = ALL_RECIPES.filter(x=> (state.cuisine==='Any'||x.c===state.cuisine) && (state.protein==='Any'||x.p===state.protein));
         const seed = state.recipeSeed || 7;
         const R = R0.map(x=>[hashN(x.n + '·' + seed), x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
-        if(!R.length) return `<div style="font-size:12.5px;color:var(--muted);padding:16px 10px;text-align:center;border:1px dashed var(--hairline);border-radius:12px">No ${state.protein==='Any'?'':state.protein.toLowerCase()+' '}picks in ${state.cuisine==='Any'?'this combo':state.cuisine} yet — try another protein or cuisine.</div>`;
+        if(!R.length) return `<div style="font-size:13px;color:var(--muted);padding:16px 10px;text-align:center;border:1px dashed var(--hairline);border-radius:12px">No ${state.protein==='Any'?'':state.protein.toLowerCase()+' '}picks in ${state.cuisine==='Any'?'this combo':state.cuisine} yet — try another protein or cuisine.</div>`;
         state.recipeIdx = Math.min(state.recipeIdx||0, R.length-1);
         const r = R[state.recipeIdx];
         return `
@@ -5121,11 +5248,12 @@ function chartData(){
   const raw = state.strengthData[state.strengthKey];
   const n = RANGE_MAP[state.chartRangeKey] || 8;
   const m = state.chartMetric==='cal' ? 'val' : state.chartMetric;
+  const km2disp = km => state.units==='kg' ? km : km * 0.621371;
   const ds = {
     name: raw.name,
-    vals: (m==='hr' ? raw.hr : m==='cal' ? raw.cal : raw.vals).slice(-n),
+    vals: (m==='hr' ? raw.hr : m==='cal' ? raw.cal : m==='dist' ? (raw.dist||[]).map(v=>+km2disp(v).toFixed(2)) : raw.vals).slice(-n),
     reps: (m==='val' && raw.reps) ? raw.reps.slice(-n) : null,
-    unit: m==='hr' ? 'bpm' : m==='cal' ? 'kcal' : raw.unit,
+    unit: m==='hr' ? 'bpm' : m==='cal' ? 'kcal' : m==='dist' ? (state.units==='kg' ? 'km' : 'mi') : raw.unit,
   };
   ds.weeks = (raw.weeks || []).slice(-n);
   return ds;
@@ -5133,11 +5261,11 @@ function chartData(){
 function chartScale(){
   const ds = chartData();
   const lo = Math.min(...ds.vals), hi = Math.max(...ds.vals);
-  const pad = Math.max(ds.unit==='min'?0.4:ds.unit==='mins'?12:ds.unit==='bpm'?4:ds.unit==='kcal'?10:5, (hi-lo)*0.25);
-  const step = ds.unit==='min'?0.5:ds.unit==='mins'?15:5;
+  const pad = Math.max(ds.unit==='min'?0.4:ds.unit==='mins'?12:ds.unit==='bpm'?4:ds.unit==='kcal'?10:(ds.unit==='km'||ds.unit==='mi')?0.5:5, (hi-lo)*0.25);
+  const step = ds.unit==='min'?0.5:ds.unit==='mins'?15:(ds.unit==='km'||ds.unit==='mi')?0.5:5;
   return { min: Math.floor((lo-pad)/step)*step, max: Math.ceil((hi+pad)/step)*step, ds };
 }
-const valFmt = (v, ds) => ds.unit==='min' ? (v>=90 ? `${Math.floor(v/60)}:${String(Math.floor(v%60)).padStart(2,'0')}:${String(Math.round((v%1)*60)).padStart(2,'0')}` : `${Math.floor(v)}:${String(Math.round(v%1*60)).padStart(2,'0')}`) : ds.unit==='mins' ? `${Math.round(v)} min` : ds.unit==='bpm' ? `${Math.round(v)} bpm` : ds.unit==='kcal' ? `${Math.round(v)} kcal` : `${v} lb`;
+const valFmt = (v, ds) => (ds.unit==='km'||ds.unit==='mi') ? `${(+v).toFixed(1)} ${ds.unit}` : ds.unit==='min' ? (v>=90 ? `${Math.floor(v/60)}:${String(Math.floor(v%60)).padStart(2,'0')}:${String(Math.round((v%1)*60)).padStart(2,'0')}` : `${Math.floor(v)}:${String(Math.round(v%1*60)).padStart(2,'0')}`) : ds.unit==='mins' ? `${Math.round(v)} min` : ds.unit==='bpm' ? `${Math.round(v)} bpm` : ds.unit==='kcal' ? `${Math.round(v)} kcal` : `${v} lb`;
 
 function strengthChart(){
   const {min, max, ds} = chartScale();
@@ -5316,15 +5444,21 @@ function renderProgress(){
         <select id="str-pick" class="str-select" style="flex:1;min-width:0">${groupedExOptions(state.strengthKey)}</select>
         <select id="range-pick" class="str-select" style="margin-left:auto;max-width:150px">${Object.keys(RANGE_MAP).map(k=>`<option ${k===state.chartRangeKey?'selected':''}>${k}</option>`).join('')}</select>
       </h3>
-      <div class="seg" style="margin:0 auto 10px;width:100%;max-width:none">
-        <button class="${state.chartMetric!=='hr'?'sel':''}" data-cmetric="val" style="flex:1">${state.strengthData[state.strengthKey].mg==='Cardio'?'\u23f1 Time':'\u2696\ufe0f Weight'}</button>
+      ${(()=>{ const isC = state.strengthData[state.strengthKey].mg==='Cardio';
+        const hasDist = state.strengthKey.startsWith('cd_');   /* races: the distance IS the name */
+        if(!hasDist && state.chartMetric==='dist') state.chartMetric = 'val';
+        return `<div class="seg" style="margin:0 auto 10px;width:100%;max-width:none">
+        <button class="${state.chartMetric!=='hr'&&state.chartMetric!=='dist'?'sel':''}" data-cmetric="val" style="flex:1">${isC?'\u23f1 '+(hasDist?'Time':'Best Time'):'\u2696\ufe0f Weight'}</button>
+        ${hasDist?`<button class="${state.chartMetric==='dist'?'sel':''}" data-cmetric="dist" style="flex:1">📏 ${state.units==='kg'?'Km':'Miles'}</button>`:''}
         <button class="${state.chartMetric==='hr'?'sel':''}" data-cmetric="hr" style="flex:1">♥ Max HR</button>
-      </div>
-      ${state.chartMetric==='hr' && !state.strengthData[state.strengthKey].hr.some(v=>v>0)
-        ? `<div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:12.5px;line-height:1.55">♥ No heart-rate data yet.<br>Connect a watch (Apple Watch, Whoop, Garmin) and every set logs its bpm.</div>`
+      </div>`; })()}
+      ${state.chartMetric==='dist' && !(state.strengthData[state.strengthKey].dist||[]).some(v=>v>0)
+        ? `<div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:13px;line-height:1.55">📏 No distance logged for this activity yet.<br>GPS sessions (outdoor runs &amp; rides) and speed-based machines (treadmill, indoor bike) record it automatically.</div>`
+        : state.chartMetric==='hr' && !state.strengthData[state.strengthKey].hr.some(v=>v>0)
+        ? `<div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:13px;line-height:1.55">♥ No heart-rate data yet.<br>Connect a watch (Apple Watch, Whoop, Garmin) and every set logs its bpm.</div>`
         : state.strengthData[state.strengthKey].vals.length
         ? `<div class="chart-wrap">${strengthChart()}</div>`
-        : `<div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:12.5px;line-height:1.55">📈 Nothing logged for this ${state.strengthData[state.strengthKey].mg==='Cardio'?'activity':'lift'} yet.<br>Your first session draws the first point.</div>`}
+        : `<div style="text-align:center;padding:16px 12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite(exScene(state.strengthKey, state.strengthData[state.strengthKey].mg),92)}<br>Nothing logged for this ${state.strengthData[state.strengthKey].mg==='Cardio'?'activity':'lift'} yet.<br>Your first session draws the first point.</div>`}
     </div>
     <div class="card">
       ${state.sleepLog.length >= 2 ? `
@@ -5335,10 +5469,10 @@ function renderProgress(){
         ${[['7N','7 nights'],['14N','14 nights'],['1M','1 month'],['3M','3 months'],['6M','6 months'],['YTD','YTD'],['ALL','ALL']].map(([k,lab])=>`<option value="${k}" ${state.sleepRange===k?'selected':''}>${lab}</option>`).join('')}
       </select>
       <div class="chart-wrap">${sleepChart()}</div>
-      <p style="font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px">🧠 ${state.coachName}: target is 8–9 h. Short nights auto-trim the next day's compound volume.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px">🧠 ${state.coachName}: target is 8–9 h. Short nights auto-trim the next day's compound volume.</p>
       ` : `
       <h3>Sleep</h3>
-      <div style="text-align:center;padding:20px 12px;color:var(--muted);font-size:12.5px;line-height:1.55">😴 No sleep data yet.<br>Sync your Apple Watch (NAVI Sync shortcut) a couple of mornings and your nights chart here.</div>`}
+      <div style="text-align:center;padding:12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite('sleepbed',108)}<br>No sleep data yet.<br>Sync your Apple Watch (NAVI Sync shortcut) a couple of mornings and your nights chart here.</div>`}
     </div>
     <div class="card">
       <div class="seg">
@@ -5356,7 +5490,7 @@ function renderProgress(){
           <div class="badge"><div class="b-e">${a.e}</div><div class="b-n">${a.n}</div><div class="b-s">${a.s}</div></div>`).join('')}
       </div>
       ${earned.length > 6 ? `<button class="see-all" id="see-all">${state.medalsAll?'Show less':'See all '+earned.length+' medals'}</button>` : ''}`
-      : `<div style="text-align:center;padding:22px 12px;color:var(--muted);font-size:12.5px;line-height:1.6">🔒 No medals yet.<br>They stay hidden until you earn them — every session, meal and mile is working toward one.</div>`}
+      : `<div style="text-align:center;padding:22px 12px;color:var(--muted);font-size:13px;line-height:1.6">🔒 No medals yet.<br>They stay hidden until you earn them — every session, meal and mile is working toward one.</div>`}
       <p style="font-size:11px;color:var(--muted);margin-top:10px;text-align:center">🎁 ${hidden} more waiting to be discovered</p>`;
       })() : `
       <h3 style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px">Personal records <span class="h3-side" style="float:none;margin-left:auto;text-align:right">every lift tracked · tap for history</span></h3>
@@ -5374,7 +5508,7 @@ function renderProgress(){
       <h3 style="display:flex;align-items:center;gap:8px">Community rankings · PRs
         <span class="h3-side" style="float:none;margin-left:auto">coming soon</span>
       </h3>
-      <div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:12.5px;line-height:1.65">
+      <div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:13px;line-height:1.65">
         🌐 <b style="color:var(--ink-2)">No community data yet.</b><br>
         Rankings stay empty until more users join and opt in.<br>
         Your PRs are already being tracked — the moment the community goes live, you're ranked from day one.
@@ -5446,8 +5580,8 @@ function renderYou(){
     <div class="section-label">Edit profile</div>
     <div class="card">
       <div style="display:flex;gap:8px">
-        <div style="flex:1"><label style="display:block;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Your name</label><input id="edit-uname" class="lb-search" style="margin:0" placeholder="N/A — set your name" value="${state.profileSet.name ? state.user.name : ''}"></div>
-        <div style="flex:1"><label style="display:block;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Coach's name</label><input id="edit-cname" class="lb-search" style="margin:0" placeholder="e.g. NAVI, Atlas" value="${state.coachName}"></div>
+        <div style="flex:1"><label style="display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Your name</label><input id="edit-uname" class="lb-search" style="margin:0" placeholder="N/A — set your name" value="${state.profileSet.name ? state.user.name : ''}"></div>
+        <div style="flex:1"><label style="display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Coach's name</label><input id="edit-cname" class="lb-search" style="margin:0" placeholder="e.g. NAVI, Atlas" value="${state.coachName}"></div>
       </div>
       <button class="adj-save" id="edit-names-save" style="width:100%;margin-top:8px">Save names</button>
       <p style="font-size:11px;color:var(--muted);margin-top:8px">Weight, height, age and weigh-in days: type <b>"edit profile"</b> in the coach tab and the full setup card reopens.</p>
@@ -5501,13 +5635,13 @@ function renderYou(){
     </div>
     <div class="section-label">UI Appearance &amp; Unit Settings</div>
     <div class="card">
-    <div style="font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Theme</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Theme</div>
     <div class="seg" style="margin:0">
       <button class="${state.theme!=='light'?'sel':''}" data-theme="dark">🌙 Dark mode</button>
       <button class="${state.theme==='light'?'sel':''}" data-theme="light">☀️ Light mode</button>
     </div>
     <div style="border-top:1px solid var(--hairline);margin:14px 0 10px"></div>
-    <div style="font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Units</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Units</div>
     <div class="seg" style="margin:0">
       <button class="${state.units!=='kg'?'sel':''}" data-units="lb">Pounds (lb)</button>
       <button class="${state.units==='kg'?'sel':''}" data-units="kg">Kilograms (kg)</button>
@@ -5540,11 +5674,21 @@ function renderYou(){
         <button id="exp-pdf">📄 PDF</button>
       </div>
     </div>
+    <div class="card">
+      <h3>Backup &amp; restore</h3>
+      <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px">Download your entire NAVI life — profile, workouts, PRs, meals, medals, settings — as one file. Restore it here or on a new phone and pick up exactly where you left off.</p>
+      <div class="seg" style="margin:0">
+        <button id="bk-dl">💾 Back up my data</button>
+        <button id="bk-restore">📥 Restore from backup</button>
+      </div>
+      <input type="file" id="bk-file" accept=".json,application/json" style="display:none">
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5">Restoring replaces everything currently in the app with the backup's contents. Your API key is never included in a backup.</p>
+    </div>
     <div class="section-label">Account</div>
     <div class="card">
       <button class="ob-submit" id="auth-btn" style="width:100%;background:${state.signedIn?'var(--surface-3)':'var(--accent)'}">${state.signedIn?'Sign out':'Sign in'}</button>
       <button class="ob-submit" id="del-data" style="width:100%;margin-top:8px;background:none;border:1px solid #e34948;color:#e34948">🔄 Restart app — erase all my data</button>
-      <p style="font-size:11.5px;color:#e34948;margin-top:6px;line-height:1.5">The full reset: wipes your profile, workouts, PRs, meals and medals, and returns to first-time setup. No undo.</p>
+      <p style="font-size:12px;color:#e34948;margin-top:6px;line-height:1.5">The full reset: wipes your profile, workouts, PRs, meals and medals, and returns to first-time setup. No undo.</p>
       <div class="acct-links">
         <a href="#" data-link="website">🌐 Website</a>
         <a href="#" data-link="guidelines">📜 Community Guidelines</a>
@@ -5577,6 +5721,51 @@ function renderYou(){
   };
   $('#exp-csv').onclick = exportCSV;
   $('#exp-pdf').onclick = exportPDF;
+  /* v101: backup my data — the whole saved state as a downloadable JSON file */
+  $('#bk-dl').onclick = ()=>{
+    try{
+      const snap = {...state, apiKey:null, cardio:null, activeSet:null, adj:null, swapSel:null,
+        sess:{run:false, paused:false, sec:0}, trainCalOpen:false, trainDate:'Today', dayOffset:0};
+      const payload = {app:'NAVI', v:1, day: dayKey(new Date()), s: snap};
+      const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+      const d = new Date(), pad = x=> String(x).padStart(2,'0');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `navi-backup-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.json`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} }, 4000);
+      toast('💾 Backup downloaded — keep it somewhere safe');
+    }catch(e){ toast('Backup failed — try again'); }
+  };
+  const bkFile = $('#bk-file');
+  const bkBtn = $('#bk-restore');
+  bkBtn.onclick = ()=>{
+    if(!bkBtn.dataset.armed){
+      bkBtn.dataset.armed = '1';
+      bkBtn.textContent = '⚠️ Replaces current data — tap again';
+      setTimeout(()=>{ if(bkBtn.isConnected){ bkBtn.dataset.armed=''; bkBtn.textContent='📥 Restore from backup'; } }, 4000);
+      return;
+    }
+    bkBtn.dataset.armed = ''; bkBtn.textContent = '📥 Restore from backup';
+    bkFile.click();
+  };
+  bkFile.onchange = ()=>{
+    const f = bkFile.files && bkFile.files[0];
+    bkFile.value = '';
+    if(!f) return;
+    const rd = new FileReader();
+    rd.onload = ()=>{
+      try{
+        const j = JSON.parse(rd.result);
+        if(!j || j.app!=='NAVI' || !j.s || !j.s.onboarded) throw new Error('not a NAVI backup');
+        naviWiping = true;   /* freeze autosave so the current state can't overwrite the restore */
+        localStorage.setItem(SAVE_KEY, JSON.stringify({v: j.v||1, day: j.day || dayKey(new Date()), s: {...j.s, apiKey:null}}));
+        toast('📥 Backup restored — reloading…');
+        setTimeout(()=> location.reload(), 700);
+      }catch(e){ naviWiping = false; toast(`That file isn't a NAVI backup — nothing was changed`); }
+    };
+    rd.readAsText(f);
+  };
   $('#auth-btn').onclick = ()=>{
     state.signedIn = !state.signedIn;
     renderYou();
@@ -5726,6 +5915,7 @@ let bootNewDay = false;
     Object.assign(state, saved.s);
     /* saves from before v67 have no profileSet — an onboarded profile counts as fully set */
     if(!state.profileSet) state.profileSet = {name:true, age:true, height:true, weight:true};
+    ensureCardioDS();   /* v104: older saves gain the per-activity cardio datasets */
     state.apiKey = null; state.cardio = null; state.activeSet = null;
     state.dayOffset = 0; state.trainDate = 'Today'; state.trainCalOpen = false;
     state.sess = {run:false, paused:false, sec:0};
@@ -5740,8 +5930,9 @@ function ingestWatchSync(){
     const q = new URLSearchParams(location.search);
     const num = (k, lo, hi) => { const v = parseFloat(q.get(k)); return (isFinite(v) && v >= lo && v <= hi) ? v : null; };
     const sleep = num('sleep', 0, 16), rhr = num('rhr', 30, 120), hrv = num('hrv', 5, 200),
-          wt = num('wt', 60, 700), kcal = num('kcal', 0, 8000);
-    if(sleep===null && rhr===null && hrv===null && wt===null && kcal===null) return false;
+          wt = num('wt', 60, 700), kcal = num('kcal', 0, 8000),
+          wkcal = num('wkcal', 1, 4000), wavg = num('wavg', 50, 220), wmax = num('wmax', 60, 230), wmin = num('wmin', 1, 600);
+    if(sleep===null && rhr===null && hrv===null && wt===null && kcal===null && wkcal===null && wavg===null && wmax===null) return false;
     state.hasWearable = true;
     if(sleep!==null){
       state.recovery.sleepH = +sleep.toFixed(1);
@@ -5762,6 +5953,19 @@ function ingestWatchSync(){
       state.memory.unshift({ic:'⚖️', t:`Watch sync weigh-in: ${wt} lb (${delta>0?'+':''}${delta})`});
     }
     if(kcal!==null) state.watchKcal = Math.round(kcal);
+    /* v96: whole-workout sync — the watch's session totals attach to today's latest workout */
+    if(wkcal!==null || wavg!==null || wmax!==null){
+      const lab = new Date().toLocaleString('en-US',{month:'short', day:'numeric'});
+      let sess = state.history[lab];
+      if(sess && sess.multi) sess = sess.sessions[sess.sessions.length-1];
+      const watch = {};
+      if(wkcal!==null){ watch.kcal = Math.round(wkcal); state.burned += Math.round(wkcal); state.burnLog = state.burnLog||[]; state.burnLog.push(Math.round(wkcal)); }
+      if(wavg!==null) watch.avg = Math.round(wavg);
+      if(wmax!==null) watch.max = Math.round(wmax);
+      if(wmin!==null) watch.dur = Math.round(wmin);
+      if(sess){ sess.watch = watch; }
+      state.memory.unshift({ic:'⌚', t:`Watch workout sync${sess?` → ${sess.name.split(' · ')[0]}`:''}: ${watch.kcal?watch.kcal+' kcal':''}${watch.avg?` · avg ♥ ${watch.avg}`:''}${watch.max?` · peak ♥ ${watch.max}`:''}${watch.dur?` · ${watch.dur} min`:''}`});
+    }
     if(sleep!==null){
       const lab = new Date().toLocaleString('en-US',{month:'short', day:'numeric'});
       state.sleepLog = (state.sleepLog||[]).filter(r=>r.d!==lab);
@@ -5786,16 +5990,11 @@ function realNewDay(){
   if(state.goalsKnown && state.macros.protein.v >= state.macros.protein.t) state.proteinStreak = (state.proteinStreak||0) + 1;
   else state.proteinStreak = 0;
   ['cal','protein','carbs','fat'].forEach(k=>{ if(state.macros[k]) state.macros[k].v = 0; });
-  state.meals = []; state.mealIdx = 0; state.burned = 0;
+  state.meals = []; state.mealIdx = 0; state.burned = 0; state.water = 0;
   state.weighedToday = false; state.sessRecorded = false;
   if(d.getDay()===1) state.workoutsWtd = 0;
-  const h = hashN(dayKey(d));
-  if(state.hasWearable && !(state.watchSync && state.watchSync.day === dayKey(d))){
-    state.recovery.sleepH = +(5.9 + (h%31)/10).toFixed(1);
-    const hh = Math.floor(state.recovery.sleepH), mm = Math.round((state.recovery.sleepH-hh)*60);
-    state.recovery.sleep = `${hh}h ${String(mm).padStart(2,'0')}m`;
-    state.recovery.score = Math.min(98, Math.max(38, Math.round(state.recovery.sleepH*10.5 + (h%14) - 4)));
-  }
+  /* v100: recovery numbers come ONLY from a real watch sync — never invented.
+     If the shortcut hasn't fired today, yesterday's real values simply persist. */
   if(state.splitChosen || state.lastSplit) applyPreset(SCHED_KEY);
   else state.planReady = false;
 }
