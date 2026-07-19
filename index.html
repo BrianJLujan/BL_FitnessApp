@@ -2272,6 +2272,44 @@ function themedSpr(){
   return {...s, baseShirt:s.shirt};
 }
 function sprSkin(s){ return s.skin || '#f0b27a'; }
+/* v109/v110: the five personas (community placeholder) — gender follows the coach setting.
+   One does pull-ups in the middle while the other four watch. The puller cycles through
+   a shuffled order: never the same twice in a row, no repeats until all five have gone.
+   The four watchers reshuffle every time too, never landing in the same arrangement twice. */
+const LINEUP_ALL = ['encouraging','scientific','tough','military','bodybuilder'];
+function shuffleArr(a){ const x=[...a]; for(let j=x.length-1;j>0;j--){ const k=Math.floor(Math.random()*(j+1)); [x[j],x[k]]=[x[k],x[j]]; } return x; }
+/* v111: the lineup deals a new puller only when you come BACK to the Progress tab —
+   re-renders while you're on the tab keep the current arrangement */
+function advanceLineup(){
+  const L = state.lineup = state.lineup || {order:[], i:0, prev:null, prevWatch:'', seq:null};
+  if(!Array.isArray(L.order) || L.i >= L.order.length){
+    let pool;
+    do { pool = shuffleArr(LINEUP_ALL); } while(pool[0] === L.prev);   /* new cycle can't open with last cycle's closer */
+    L.order = pool; L.i = 0;
+  }
+  const puller = L.order[L.i++];
+  L.prev = puller;
+  let rest;
+  do { rest = shuffleArr(LINEUP_ALL.filter(x=>x!==puller)); } while(rest.join() === L.prevWatch);
+  L.prevWatch = rest.join();
+  L.seq = [rest[0], rest[1], puller, rest[2], rest[3]];
+}
+function personaLineup(px=56){
+  if(!state.lineup || !Array.isArray(state.lineup.seq) || state.lineup.seq.length !== 5) advanceLineup();
+  const puller = state.lineup.prev;
+  const seq = state.lineup.seq;
+  const keepP = state.personality, keepSpr = {...state.spr};
+  const sex = state.spr.sex;
+  const html = seq.map(pk=>{
+    state.personality = pk;
+    Object.assign(state.spr, DEFAULT_SPR, THEME_DEFAULTS[sprTheme()] || {}, {sex});
+    const scene = pk === puller ? 'mgPullup' : 'wave';
+    return `<span data-scene="${scene}" style="display:inline-block;line-height:0"><svg viewBox="1 0.4 14 13.6" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true">${SCENES[scene](themedSpr())}</svg></span>`;
+  }).join('');
+  state.personality = keepP;
+  Object.assign(state.spr, keepSpr);
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;gap:3px;flex-wrap:wrap;margin-bottom:6px">${html}</div>`;
+}
 /* chunky 8-bit head — persona headgear included */
 function headPx(s, x, y, dir){
   const sk = sprSkin(s), th = sprTheme();
@@ -4101,6 +4139,7 @@ function showGoalsChoice(){
    Tabs
    ============================================================ */
 function switchTab(tab){
+  if(tab === 'progress' && state.tab !== 'progress'){ advanceLineup(); renderProgress(); }   /* v111: new puller each visit */
   state.tab = tab;
   $$('nav button').forEach(b=>{ b.classList.toggle('active', b.dataset.tab===tab); b.setAttribute('aria-current', b.dataset.tab===tab ? 'page' : 'false'); });
   $$('.screen').forEach(s=>s.classList.remove('active'));
@@ -5515,7 +5554,8 @@ function renderProgress(){
       <h3 style="display:flex;align-items:center;gap:8px">Community rankings · PRs
         <span class="h3-side" style="float:none;margin-left:auto">coming soon</span>
       </h3>
-      <div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:13px;line-height:1.65">
+      <div style="text-align:center;padding:14px 8px;color:var(--muted);font-size:13px;line-height:1.65">
+        ${personaLineup()}
         🌐 <b style="color:var(--ink-2)">No community data yet.</b><br>
         Rankings stay empty until more users join and opt in.<br>
         Your PRs are already being tracked — the moment the community goes live, you're ranked from day one.
