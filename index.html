@@ -3334,7 +3334,7 @@ function updateHud(){
     `💤 Recovery ${state.hasWearable ? state.recovery.score+'%' : 'N/A'}`,
     `🍽 ${state.macros.cal.v.toLocaleString()} / ${state.goalsKnown ? state.macros.cal.t.toLocaleString()+' kcal' : 'N/A'}`,
     `🔥 ~${state.burned}${state.goalsKnown ? ' / '+state.burnGoal : ''} kcal`,
-    `🏋️ ${state.workoutsWtd} / ${state.workoutsGoal||'N/A'} this wk`,
+    `🏋️ ${state.workoutsWtd} / ${state.workoutsGoal||'N/A'} this week`,
   ];
   el.textContent = views[state.hudIdx % views.length];
 }
