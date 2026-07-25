@@ -214,7 +214,6 @@
   .meal:last-child{border-bottom:none;padding-bottom:2px}
   .meal .ic{width:36px;height:36px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
   .meal .m-name{font-size:14px;font-weight:600}
-  .meal .m-sub{font-size:12px;color:var(--muted);margin-top:1px}
   .meal .m-cal{margin-left:auto;font-size:13px;color:var(--ink-2);font-weight:600;white-space:nowrap}
   .suggest{
     background:linear-gradient(160deg,#14291f,#1a1a19 75%);border:1px solid rgba(25,158,112,.4);
@@ -266,14 +265,12 @@
   .p-card .p-d{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35}
   .mem{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--hairline);font-size:13px;color:var(--ink-2);line-height:1.45;align-items:flex-start}
   .mem:last-child{border-bottom:none}
-  .mem .m-ic{flex:none;font-size:14px;margin-top:1px}
   .mem .del{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;flex:none;padding:0 2px}
   .wear{display:flex;align-items:center;gap:12px}
   .wear .w-ic{width:38px;height:38px;border-radius:11px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:17px}
   .wear .w-n{font-size:14px;font-weight:600}
   .wear .w-s{font-size:12px;color:var(--good);margin-top:1px}
   /* ---------- train: active / upcoming / completed ---------- */
-  .exercise.upcoming{opacity:.45}
   .exercise.complete{opacity:.45;border-color:rgba(12,163,12,.4)}
   .exercise.active{border-color:rgba(57,135,229,.55);box-shadow:0 0 0 1px rgba(57,135,229,.22)}
   .set-line{display:flex;align-items:center;gap:8px;padding:11px 13px;border-radius:12px;font-size:13px;font-weight:600;margin-top:8px;border:1px dashed var(--baseline);color:var(--muted)}
@@ -300,7 +297,6 @@
   .filter-row{display:flex;gap:8px;margin:2px 0 12px}
   .f-chip{flex:1;text-align:center;font-size:12px;font-weight:600;padding:7px 0;border-radius:10px;background:var(--surface);border:1px solid var(--hairline);color:var(--muted);cursor:pointer}
   .f-chip.sel{background:rgba(57,135,229,.15);border-color:var(--accent);color:var(--accent)}
-  .tile .t-d.neg{color:#3ecf96}
   .badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   .badge{background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:12px 8px;text-align:center}
   .badge.locked{opacity:.38}
@@ -308,10 +304,7 @@
   .badge .b-n{font-size:12px;font-weight:700;margin-top:6px}
   .badge .b-s{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.35}
   /* ---------- community ---------- */
-  .post-head .u{font-size:14px;font-weight:650}
-  .post-head .t{font-size:12px;color:var(--muted);margin-top:1px}
   .act{background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;padding:0}
-  .act.liked{color:#e66767}
   .cmts.open{display:block}
   /* ---------- guided flow buttons + cardio timer + set adjuster ---------- */
   .btn-panel{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -385,7 +378,9 @@
   .sum-row .up{color:#3ecf96;font-weight:700;white-space:nowrap}
   .sum-row .dn{color:var(--warning);font-weight:700;white-space:nowrap}
   .sum-row .na{color:var(--muted);font-weight:600;white-space:nowrap}
-  #rest-overlay .ro-btn{margin-top:0;padding:10px 8px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;flex:1 1 calc(50% - 8px);white-space:nowrap}
+  #rest-overlay .ro-btn{margin-top:0;padding:10px 8px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;flex:1.4 1 auto;white-space:nowrap}
+  /* v117: undo is deliberately smaller, dimmer, and further from End Rest */
+  #rest-overlay #ro-undo{flex:0.9 1 auto;opacity:.7;background:none;margin-left:18px}
   #rest-timer.go-count{background:var(--accent);border-color:var(--accent);font-size:18px;padding:12px 26px}
   #rest-timer.go-go{background:var(--good);border-color:var(--good);font-size:18px;padding:12px 26px}
   /* date picker chip */
@@ -412,7 +407,6 @@
   .cardio-live .c-row{display:flex;gap:8px}
   .cardio-live .c-row .opt-btn.end{background:rgba(208,59,59,.15);border-color:var(--critical)}
   .adj-row{display:flex;align-items:center;gap:8px;margin-top:12px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;padding:10px}
-  .adj-row .adj-val{font-size:14px;font-weight:700;flex:1;text-align:center;font-variant-numeric:tabular-nums}
   .adj-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;flex:none;position:relative}
   /* v102: invisible halo lifts the tap target to ~44pt without changing the look */
   .adj-btn::before{content:'';position:absolute;inset:-6px}
@@ -433,7 +427,7 @@
   .spin-col button:active{background:var(--accent);color:#fff}
   .spr-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
   .mg-head{font-size:11px;font-weight:800;letter-spacing:.8px;color:var(--accent);text-transform:uppercase;margin:16px 4px 2px}
-  .set-undo{width:100%;margin-top:6px;background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:4px}
+  .set-undo{width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:6px}
   .set-undo:hover{color:var(--accent)}
   /* ---------- pixel lifter HUD animations ---------- */
   #hud-fig{width:30px;height:30px;position:relative;flex:none}
@@ -472,6 +466,10 @@
   .cal-dow{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px}
   .cal-day{font-size:12px;padding:6px 0;border-radius:8px;color:var(--ink-2);font-variant-numeric:tabular-nums;border:1px solid transparent}
   .cal-day.worked{background:rgba(57,135,229,.16);border-color:rgba(57,135,229,.45);color:var(--accent);font-weight:700}
+  /* v117: effort ratings color the calendar — red easy, yellow solid, green max */
+  .cal-day.r1{background:rgba(227,73,72,.18);border-color:rgba(227,73,72,.55);color:#e66767}
+  .cal-day.r2{background:rgba(232,193,75,.16);border-color:rgba(232,193,75,.55);color:#e8c14b}
+  .cal-day.r3{background:rgba(62,207,150,.16);border-color:rgba(62,207,150,.55);color:#3ecf96}
   .cal-day.today{border-color:var(--warning)}
   .cal-day.future{opacity:.32}
   .mem-scroll{max-height:200px;overflow-y:auto;scrollbar-width:thin;margin-right:-6px;padding-right:6px}
@@ -539,7 +537,6 @@
   #photo-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--hairline);background:var(--surface-2);color:var(--ink-2);font-size:17px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
   .msg.user img{max-width:100%;border-radius:12px;display:block;margin-top:4px}
   /* ---------- v3 additions ---------- */
-  .attach-pill .x{color:var(--muted);cursor:pointer;font-weight:700}
   .md-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--hairline);font-size:13px}
   .md-row:last-child{border-bottom:none}
   .md-row .d{color:var(--muted);width:58px;flex:none}
@@ -555,10 +552,6 @@
   .badge.sel{border-color:var(--accent)}
   .lb-f{width:52px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;padding:6px 4px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;text-align:center;font-variant-numeric:tabular-nums}
   .lb-search{width:100%;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;margin-bottom:10px}
-  .lb-row .r{color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
-  .lb-row .sub{font-size:11px;color:var(--muted);margin-top:1px}
-  .lb-row .best{font-weight:700;font-variant-numeric:tabular-nums}
-  .lb-row.you{background:rgba(57,135,229,.10);border-radius:10px;border:1px solid rgba(57,135,229,.4);padding:9px 6px}
   .str-select{background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;color:var(--ink);font-family:inherit;font-size:13px;padding:6px 8px;outline:none;font-weight:650;max-width:210px}
   .seg{display:flex;gap:8px;margin-bottom:14px}
   .seg button{flex:1;padding:9px;border-radius:10px;background:var(--surface-2);border:1px solid var(--hairline);color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
@@ -681,7 +674,22 @@
         <div class="b-stats" id="sum-stats"></div>
         <div class="section-label" style="margin:14px 0 6px">vs your last similar session</div>
         <div id="sum-list"></div>
-        <button class="ro-btn" id="sum-close" style="margin-top:16px;width:100%">Done — great work</button>
+        <div class="section-label" style="margin:14px 0 6px">Rate this workout</div>
+        <div class="seg" id="sum-stars" style="margin:0 0 8px">
+          <button data-star="1" style="flex:1">★<br><span style="font-size:10px;font-weight:600">Easy</span></button>
+          <button data-star="2" style="flex:1">★★<br><span style="font-size:10px;font-weight:600">Solid</span></button>
+          <button data-star="3" style="flex:1">★★★<br><span style="font-size:10px;font-weight:600">Max effort</span></button>
+        </div>
+        <textarea id="sum-note" placeholder="Optional notes — how it felt, niggles, anything worth remembering" style="width:100%;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;color:var(--ink);font-family:inherit;font-size:13px;padding:10px;min-height:52px;resize:vertical"></textarea>
+        <div id="sum-dist-row" style="display:none">
+          <div class="section-label" style="margin:12px 0 6px">📏 Distance covered</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="sum-dist" class="lb-f" inputmode="decimal" placeholder="0.0" style="flex:1;text-align:left;padding:10px;width:auto">
+            <b id="sum-dist-unit" style="font-size:13px;color:var(--muted);flex:none">mi</b>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:4px">Manual entry until your watch takes over — feeds your distance charts, lifetime distance, and race medals.</p>
+        </div>
+        <button class="ro-btn" id="sum-close" style="margin-top:12px;width:100%">Done — great work</button>
       </div>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -753,7 +761,8 @@ const state = {
   user: { name:'Brian', age:29, weight:186, height:`5'11"`, gender:'' },
   profileSet: { name:false, age:false, height:false, weight:false },
   recovery: { sleep:'7h 12m', sleepH:7.2, score:82, hrv:68, rhr:54 },
-  water: 0, waterTarget: 4,   // liters — your 3–4 L/day goal
+  water: 0, waterTarget: 4, waterUnit: 'L',   // stored in liters; display flips L ↔ oz
+  runGoal: null, runGoalAsked: false,   // v117: race the run/treadmill sessions build toward
   streak: 0,
   memory: [],
   macros: { cal:{v:0,t:2200}, protein:{v:0,t:190}, carbs:{v:0,t:220}, fat:{v:0,t:70} },
@@ -1087,7 +1096,7 @@ function applyPreset(key){
       if(m && m.pr !== '—'){
         e.last = m.pr;
         e.pr = parseFloat(m.pr)||0;
-        if(typeof e.target.w==='number' && e.pr) e.target.w = Math.round(e.pr/2.5)*2.5;
+        if(typeof e.target.w==='number' && e.pr) e.target.w = Math.round(e.pr/5)*5;
         e.note = '';
       } else {
         e.last = '—'; e.note = ''; e.pr = 0;
@@ -1102,12 +1111,12 @@ function applyPreset(key){
       if(e.cardioSeg) return;
       const stall = state.stalls[e.n]||0;
       if(stall >= 3 && typeof e.target.w==='number'){
-        e.target.w = Math.max(5, Math.round(e.target.w*0.9/2.5)*2.5);
+        e.target.w = Math.max(5, Math.round(e.target.w*0.9/5)*5);
         e.note = `Deload — ${stall} sessions stuck at this weight. −10% today, planned, to rebuild momentum`;
         return;
       }
       if(lowRec && typeof e.target.w==='number'){
-        e.target.w = Math.max(5, Math.round(e.target.w*0.9/2.5)*2.5);
+        e.target.w = Math.max(5, Math.round(e.target.w*0.9/5)*5);
         e.note = `Recovery ${state.recovery.score}% — loads trimmed ~10% today`;
       }
       if(shortSleep && e.comp && e.sets > 3){
@@ -1232,7 +1241,11 @@ function showFlow(key, skipMem){
 
 function handleFlowChoice(k, label){
   if(FLOW[k]){ setTimeout(()=>showFlow(k), 380); return; }
-  if(k.startsWith('c:')){ setTimeout(()=>cardioSetup(k.slice(2), label), 380); return; }
+  if(k.startsWith('c:')){
+    const ct = k.slice(2);
+    if((ct === 'run' || ct === 'tread') && !state.runGoalAsked){ setTimeout(()=>showRunGoalChoice(ct, label), 380); return; }
+    setTimeout(()=>cardioSetup(ct, label), 380); return;
+  }
   if(k==='custom'){ setTimeout(showCustomBuilder, 380); return; }
   if(k==='act:weigh'){
     showInput(); pendingIntent = 'weighin';
@@ -1473,22 +1486,74 @@ function miniRoute(dist){
 }
 let cardioT = null;
 
+/* v117: race-goal training — sessions build from the user's OWN logged history */
+const RACE_INFO = {fivek:{km:5, label:'5K'}, tenk:{km:10, label:'10K'}, half:{km:21.1, label:'Half Marathon'}, mara:{km:42.2, label:'Marathon'}};
+function runPlan(type){
+  const g = RACE_INFO[state.runGoal];
+  if(!g) return null;
+  const ds = state.strengthData[type==='run' ? 'cd_run' : 'cd_tread'];
+  const hist = ds && ds.vals.length ? ds.vals.length : 0;
+  if(!hist){
+    const dur = g.km <= 10 ? 20 : 30;
+    return {dur, speed: type==='tread' ? 5.0 : undefined, note:`Training for the ${g.label} — first session: an easy ${dur}-min base builder`};
+  }
+  const lastDur = ds.vals[ds.vals.length-1];
+  const lastKm = (ds.dist && ds.dist[ds.dist.length-1]) || 0;
+  const capMin = Math.max(25, Math.round(g.km * 11));
+  const dur = Math.max(10, Math.min(Math.round(lastDur * 1.1), capMin));
+  let speed;
+  if(type==='tread') speed = (lastKm > 0 && lastDur > 0) ? Math.min(12, +(((lastKm/1.609344)/(lastDur/60))*1.03).toFixed(1)) : 5.0;
+  const distStr = lastKm ? (state.units==='kg' ? lastKm.toFixed(1)+' km' : (lastKm*0.621371).toFixed(1)+' mi') : '';
+  return {dur, speed, note:`Training for the ${g.label} — session ${hist+1}: ${dur} min (+10% vs last)${distStr?`, last distance ${distStr}`:''}`};
+}
+function showRunGoalChoice(type, label){
+  hideInput();
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>What's the goal? Pick a race and I'll build your ${type==='run'?'runs':'treadmill sessions'} toward it — time and pace progress from your own logged sessions, starting easy.
+    <div class="btn-panel">
+      <button class="opt-btn" data-rgoal="fivek">🏁 5K</button>
+      <button class="opt-btn" data-rgoal="tenk">🏁 10K</button>
+      <button class="opt-btn" data-rgoal="half">🏅 Half Marathon</button>
+      <button class="opt-btn" data-rgoal="mara">🏆 Marathon</button>
+      <button class="opt-btn learn" data-rgoal="">No race — just moving</button>
+    </div>`;
+  chatEl.appendChild(d); scrollChat();
+  d.querySelectorAll('[data-rgoal]').forEach(b=> b.onclick = ()=>{
+    d.querySelectorAll('[data-rgoal]').forEach(x=>{ x.disabled = true; x.classList.add(x===b?'sel':'dim'); });
+    state.runGoal = b.dataset.rgoal || null;
+    state.runGoalAsked = true;
+    if(state.runGoal) state.memory.unshift({ic:'🎯', t:`Training goal: ${RACE_INFO[state.runGoal].label} — run/treadmill sessions build toward it`});
+    renderYou();
+    setTimeout(()=> cardioSetup(type, label), 380);
+  });
+}
+
 function cardioSetup(type, label){
   const [name, , gps] = CARDIO_TARGETS[type];
   const cfg = CARDIO_CFG[type];
+  const plan = (type === 'run' || type === 'tread') ? runPlan(type) : null;
+  const dv = c => (plan && plan[c.k] != null) ? plan[c.k] : c.v;
   const d = document.createElement('div');
   d.className = 'msg bot';
   d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span><b>${name}</b> — dial in your session. I'll track the clock${gps?' and the GPS':''}; you just move.
+    ${plan?`<div style="font-size:12px;color:var(--accent);font-weight:600;margin-top:8px">🎯 ${plan.note}</div>`:''}
     <div class="ctl-row" style="flex-wrap:wrap;gap:12px">
-      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${c.v}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
+      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${dv(c)}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
     </div>
+    ${(type==='run'||type==='tread')?`<div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" id="rg-change" style="flex:1 1 100%;max-width:100%">🎯 ${state.runGoal?`Goal: ${RACE_INFO[state.runGoal].label}`:'No race goal'} — change</button></div>`:''}
     <div class="seg" style="margin:10px 0 0">
       <button class="sel" data-cmode="down">⏱ Countdown</button>
       <button data-cmode="up">∞ Open timer</button>
     </div>
     <div class="btn-panel"><button class="opt-btn learn" id="cs-back">← Go back</button><button class="opt-btn begin" style="flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);height:44px;font-size:14px;padding:6px 10px">▶ Begin now</button></div>`;
   chatEl.appendChild(d); scrollChat();
-  const vals = Object.fromEntries(cfg.map(c=>[c.k, c.v]));
+  const rgc = d.querySelector('#rg-change');
+  if(rgc) rgc.onclick = ()=>{
+    d.querySelectorAll('button,input').forEach(x=>x.disabled = true);
+    showRunGoalChoice(type, label);
+  };
+  const vals = Object.fromEntries(cfg.map(c=>[c.k, dv(c)]));
   vals.mode = 'down';
   d.querySelectorAll('[data-cmode]').forEach(mb=> mb.onclick = ()=>{
     vals.mode = mb.dataset.cmode;
@@ -1574,7 +1639,12 @@ function endCardio(){
     cds.dist.push(+cardioKm(c).toFixed(2));
     cds.weeks = cds.weeks || [];
     cds.weeks.push(simDate().toLocaleDateString('en-US',{month:'short', day:'numeric'}));
+    /* v118: machine cardio's speed×time distance counts toward lifetime km too (GPS credited above) */
+    if(!c.gps){ const akm = +cardioKm(c).toFixed(2); if(akm > 0) state.lifeKm = +((state.lifeKm||0) + akm).toFixed(2); }
   }
+  /* v119: EVERY cardio session offers manual distance entry — short sessions that
+     didn't auto-record get a fresh dataset entry when a real distance comes in */
+  pendingDist = {key: 'cd_' + c.type, sec: c.sec, recorded: !!(cds && c.sec >= 30), cal: Math.round(c.cal), hr: maxHr||0};
   /* v80: lifetime distance + cardio-type coverage */
   if(c.gps && c.dist > 0) state.lifeKm = +((state.lifeKm||0) + c.dist).toFixed(2);
   state.cardioTypes = state.cardioTypes || [];
@@ -1630,8 +1700,8 @@ function endCardio(){
       + `<div class="sum-row" style="font-weight:700"><span>🏃 ${CARDIO_TARGETS[c.type][0]} — ${mins}:${String(s).padStart(2,'0')}</span><span class="up">${c.gps? c.dist.toFixed(2)+' km' : (c.cfg.filter(cc=>cc.k!=='dur').map(cc=>`${cc.lab} ${c.vals[cc.k]}${cc.unit}`).join(' · ')||'timed')}</span></div>
          <div class="sum-row"><span>Cardio calories (est.)</span><span style="color:#eb6834;font-weight:700">🔥 ~${Math.round(c.cal)} kcal</span></div>
          ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}`;
-    $('#sum-overlay').classList.add('on');
-    addMsg(`Full session logged: <b>${state.sessionName}</b> (${liftMins} min · ${doneSets}/${totSets} sets) + <b>${CARDIO_TARGETS[c.type][0]}</b> (${mins} min ${s}s) — <b>~${liftCal + Math.round(c.cal)} kcal</b> total${maxHr?`, peak ♥ ${maxHr}`:''}. Summary is on screen; refuel window is open.`, 'bot');
+    openSummary();
+    pendingSummaryMsg = `Full session logged: <b>${state.sessionName}</b> (${liftMins} min · ${doneSets}/${totSets} sets) + <b>${CARDIO_TARGETS[c.type][0]}</b> (${mins} min ${s}s) — <b>~${liftCal + Math.round(c.cal)} kcal</b> total${maxHr?`, peak ♥ ${maxHr}`:''}. Saved to your training calendar.`;
     toast(`🏁 ${state.sessionName} + cardio complete`);
     state.cardio = null;
     renderTrain();
@@ -1649,11 +1719,11 @@ function endCardio(){
     + `<div class="sum-row"><span>Calories burned (session est.)</span><span style="color:#eb6834;font-weight:700">🔥 ~${Math.round(c.cal)} kcal</span></div>
        ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}
        <div class="sum-row"><span>vs last ${c.name}</span><span class="na">N/A — first logged session</span></div>`;
-  $('#sum-overlay').classList.add('on');
+  openSummary();
 
-  addMsg(c.gps
+  pendingSummaryMsg = c.gps
     ? `${pick(flav().open)} <b>${c.name}</b> logged: <b>${c.dist.toFixed(2)} km</b> in ${mins}:${String(s).padStart(2,'0')} · avg <b>${fmtPace(c.sec/Math.max(c.dist,0.001))}/km</b> ${maxHr?` · peak ♥ ${maxHr}`:''}.\n${miniRoute(c.dist.toFixed(2))}\nRoute saved — pace trends live on the Progress tab.`
-    : `${pick(flav().open)} <b>${c.name}</b> logged: ${mins} min ${s}s at ${cardioTargetStr(c.cfg, c.vals, c.mode)} ${maxHr?`· peak ♥ ${maxHr}. `:''}Counts toward your daily steps and deficit.`, 'bot');
+    : `${pick(flav().open)} <b>${c.name}</b> logged: ${mins} min ${s}s at ${cardioTargetStr(c.cfg, c.vals, c.mode)} ${maxHr?`· peak ♥ ${maxHr}. `:''}Counts toward your daily steps and deficit.`;
   toast('🏃 Cardio logged');
   state.cardio = null;
   renderTrain();
@@ -4147,6 +4217,7 @@ $('#ro-undo') && ($('#ro-undo').onclick = ()=>{
 
 /* ---------- workout session clock (start / pause / end) ---------- */
 let sessI = null;
+let sessCardObs = null;
 function sessTick(){
   if(state.sess.run && !state.sess.paused){
     /* wall-clock anchored: keeps counting while backgrounded or locked */
@@ -4327,6 +4398,7 @@ function unrecordSession(){
 function finishWorkoutSummary(){
   if(state.sessRecorded) return;
   state.sessEdit = false;
+  pendingDist = null;   /* lift-only finish — no distance to enter */
   clearInterval(sessI); hideRestOverlay();
   transientScene('recover', 14000);
   recordSession();
@@ -4359,14 +4431,75 @@ function finishWorkoutSummary(){
     + `<div class="sum-row"><span>Sets completed</span><span class="up">${doneSets} / ${totSets}</span></div>
        <div class="sum-row"><span>Calories burned (session est.)</span><span style="color:#eb6834;font-weight:700">🔥 ~${state.exercises.flatMap(e=>e.done.filter(Boolean).map(d=>d.cal||0)).reduce((a,b)=>a+b,0)} kcal</span></div>
        <div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr||'—'} bpm</span></div>`;
-  $('#sum-overlay').classList.add('on');
-  addMsg(`Workout complete: <b>${state.sessionName}</b> — ${mins} min · avg ♥ ${avgHr||'—'} · ${overall===null?'first time on this split, baseline set':(overall>=0?'up ':'down ')+Math.abs(overall)+'% on load vs last time'}. Full summary is on screen; protein window is open — you're at ${state.macros.protein.v}g of ${state.macros.protein.t}g.`, 'bot');
+  openSummary();
+  pendingSummaryMsg = `Workout complete: <b>${state.sessionName}</b> — ${mins} min · avg ♥ ${avgHr||'—'} · ${overall===null?'first time on this split, baseline set':(overall>=0?'up ':'down ')+Math.abs(overall)+'% on load vs last time'}. Saved to your training calendar; protein window is open — you're at ${state.macros.protein.v}g of ${state.macros.protein.t}g.`;
   toast(`🏁 ${state.sessionName} complete`);
 }
+/* v117: summary opens with a clean rating panel each time
+   v118: cardio sessions also get a manual distance field (until the watch takes over),
+   and the coach's recap message posts AFTER the summary closes so it's visible in chat */
+let pendingDist = null;
+let pendingSummaryMsg = null;
+function openSummary(){
+  $$('#sum-stars button').forEach(x=>x.classList.remove('sel'));
+  const n = $('#sum-note'); if(n) n.value = '';
+  const dr = $('#sum-dist-row'), di = $('#sum-dist'), du = $('#sum-dist-unit');
+  if(dr){
+    dr.style.display = pendingDist ? '' : 'none';
+    if(pendingDist && di){
+      const ds = state.strengthData[pendingDist.key];
+      const km = ds && ds.dist.length ? ds.dist[ds.dist.length-1] : 0;
+      di.value = km > 0 ? (state.units==='kg' ? +km.toFixed(2) : +(km*0.621371).toFixed(2)) : '';
+      if(du) du.textContent = state.units==='kg' ? 'km' : 'mi';
+    }
+  }
+  $('#sum-overlay').classList.add('on');
+}
+$$('#sum-stars button').forEach(b=> b.onclick = ()=>{
+  $$('#sum-stars button').forEach(x=>x.classList.toggle('sel', x===b));
+});
 $('#sum-close') && ($('#sum-close').onclick = ()=>{
+  /* rating + note land on today's latest logged session */
+  const starBtn = document.querySelector('#sum-stars button.sel');
+  const rate = starBtn ? +starBtn.dataset.star : 0;
+  const note = esc(($('#sum-note').value || '').trim().slice(0, 300));
+  if(rate || note){
+    const label = simDate().toLocaleString('en-US',{month:'short', day:'numeric'});
+    const h = state.history[label];
+    const sess = h ? (h.multi ? h.sessions[h.sessions.length-1] : h) : null;
+    if(sess){ if(rate) sess.rate = rate; if(note) sess.note = note; }
+  }
+  /* v118: save the manually-entered distance into the session's dataset */
+  if(pendingDist){
+    const v = parseFloat(($('#sum-dist') && $('#sum-dist').value) || '');
+    if(!isNaN(v) && v >= 0){
+      const km = +(state.units==='kg' ? v : v * 1.609344).toFixed(2);
+      const ds = state.strengthData[pendingDist.key];
+      if(ds && pendingDist.recorded && ds.dist.length){
+        const old = ds.dist[ds.dist.length-1] || 0;
+        ds.dist[ds.dist.length-1] = km;
+        state.lifeKm = +Math.max(0, (state.lifeKm||0) + km - old).toFixed(2);
+        if(km > 0 && km > old) checkMedals(km >= 1.609 ? {km, sec: pendingDist.sec, mileSec: Math.round(pendingDist.sec/(km/1.609344))} : {km, sec: pendingDist.sec});
+        renderProgress();
+      } else if(ds && !pendingDist.recorded && km > 0){
+        /* short session with a real distance — record it as its own entry */
+        ds.vals.push(+(pendingDist.sec/60).toFixed(1));
+        ds.hr.push(pendingDist.hr);
+        ds.cal.push(pendingDist.cal);
+        ds.dist.push(km);
+        ds.weeks = ds.weeks || [];
+        ds.weeks.push(simDate().toLocaleDateString('en-US',{month:'short', day:'numeric'}));
+        state.lifeKm = +((state.lifeKm||0) + km).toFixed(2);
+        checkMedals(km >= 1.609 ? {km, sec: pendingDist.sec, mileSec: Math.round(pendingDist.sec/(km/1.609344))} : {km, sec: pendingDist.sec});
+        renderProgress();
+      }
+    }
+    pendingDist = null;
+  }
   $('#sum-overlay').classList.remove('on');
   switchTab('coach');
   setTimeout(()=>{
+    if(pendingSummaryMsg){ addMsg(pendingSummaryMsg, 'bot'); pendingSummaryMsg = null; }
     const pLeft = proteinLeft(), cLeft = calLeft();
     addMsg(`Now the other half of the work: <b>refuel</b>. 🍗 You're at <b>${state.macros.protein.v}g of ${state.macros.protein.t}g protein</b> with ${cLeft.toLocaleString()} kcal left today.\n\nMy pick right now: ${pLeft>50?"the Chicken & Rice Power Bowl on your Fuel tab — ~55g protein in one sitting":pLeft>20?"the Greek Yogurt Protein Bowl recipe (~35g) covers most of the gap":"something light — you're basically at target"}. The <b>Fuel tab</b> has all three recipes with links.`, 'bot');
     setTimeout(()=>showFlow('root'), 1100);
@@ -4397,7 +4530,14 @@ function trainCalHTML(){
     const w = !future && state.trainedDays.includes(`${y}-${mo}-${d}`);
     if(w) worked++;
     const today = dayKey(dt) === dayKey(now);
-    cells.push(`<span class="cal-day${w?' worked':''}${today?' today':''}${future?' future':''}"${(w||today)?` data-tday="${y}-${mo}-${d}" style="cursor:pointer"`:''}>${d}</span>`);
+    let rcls = '';
+    if(w){
+      const hk = dt.toLocaleDateString('en-US',{month:'short', day:'numeric'}) + (dt.getFullYear()!==now.getFullYear() ? ' '+dt.getFullYear() : '');
+      const h = state.history[hk];
+      const rated = h ? (h.multi ? [...h.sessions].reverse().find(s=>s.rate) : (h.rate ? h : null)) : null;
+      if(rated) rcls = ' r' + rated.rate;
+    }
+    cells.push(`<span class="cal-day${w?' worked':''}${rcls}${today?' today':''}${future?' future':''}"${(w||today)?` data-tday="${y}-${mo}-${d}" style="cursor:pointer"`:''}>${d}</span>`);
   }
   return `
     <div class="card" style="margin-bottom:12px">
@@ -4413,7 +4553,7 @@ function trainCalHTML(){
         ${['M','T','W','T','F','S','S'].map(dw=>`<span class="cal-dow">${dw}</span>`).join('')}
         ${cells.join('')}
       </div>
-      <p style="font-size:11px;color:var(--muted);margin-top:10px">Blue = a training day. Tap one to open that session's full log.</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">Trained days are colored by your rating — <span style="color:#e66767">red easy</span> · <span style="color:#e8c14b">yellow solid</span> · <span style="color:#3ecf96">green max effort</span> (blue = unrated). Tap a day for the log.</p>
     </div>`;
 }
 /* history holds ONLY sessions you actually logged */
@@ -4491,7 +4631,7 @@ function reactToSet(e, w, r){
     e.note = `Beat the range — next session earns a weight jump`;
     renderTrain();
     toast(`💪 ${wStr} × ${r} — beat the range!`);
-    addMsg(`<b>${e.n}</b>: ${wStr} × ${r} — you beat your target. By your own rule, if the remaining sets land at the top too, <b>next session goes up 2.5 lb</b>. Keep the eccentrics honest.`, 'bot');
+    addMsg(`<b>${e.n}</b>: ${wStr} × ${r} — you beat your target. By your own rule, if the remaining sets land at the top too, <b>next session goes up 5 lb</b>. Keep the eccentrics honest.`, 'bot');
   } else {
     toast(`Adjusted — ${wStr} × ${r}`);
   }
@@ -4514,12 +4654,15 @@ function checkProgression(e){
   if(e.seg || e.done.length < e.sets) return;
   const top = repTop(e);
   if(e.done.every(d=>d.r >= top && d.w >= e.target.w)){
-    toast(`🎉 ${e.n}: all sets at the top — +2.5 lb next session`);
+    toast(`🎉 ${e.n}: all sets at the top — +5 lb next session`);
   }
 }
 
 /* dips & pull-ups run on assist machines too — weight may go negative */
-const wFloor = e => /dips?\b|pull-?ups?|chin-?ups?/i.test(e.n) ? -300 : 2.5;
+const wFloor = e => /dips?\b|pull-?ups?|chin-?ups?/i.test(e.n) ? -300 : 5;
+/* v117: weights step in 5s — 5 lb, or 5 kg when the app is metric */
+const wStepLb = () => state.units==='kg' ? 5/LB2KG : 5;
+const snapW = lb => state.units==='kg' ? +(Math.round(lb*LB2KG/5)*5/LB2KG).toFixed(1) : Math.round(lb/5)*5;
 
 function renderTrain(){
   const el = $('#screen-train');
@@ -4541,11 +4684,12 @@ function renderTrain(){
       ? `<div class="card empty-state"><div class="e-ic">📅</div><h4>${state.trainDate}</h4><p>No session logged on this date. <i>(In the full product, every workout you've ever done lives here — any day, any year.)</i></p></div>`
       : `
       <div class="section-label">${state.trainDate} · ${h.name} · completed${h.time?` · ${h.time}`:''}</div>
+      ${h.rate || h.note ? `<div class="card" style="font-size:13px">${h.rate?`<b style="color:${['','#e66767','#e8c14b','#3ecf96'][h.rate]}">${'★'.repeat(h.rate)}${'☆'.repeat(3-h.rate)}</b> <b>${['','Easy day','Solid work','Max effort'][h.rate]}</b>`:''}${h.note?`<div style="margin-top:${h.rate?'6px':'0'};color:var(--muted);font-size:13px;line-height:1.55">📝 ${h.note}</div>`:''}</div>` : ''}
       ${h.watch?`<div class="card" style="display:flex;gap:14px;align-items:center;font-size:13px;font-weight:600"><span>⌚ Watch session data</span>${h.watch.kcal?`<span style="color:#eb6834">🔥 ${h.watch.kcal} kcal</span>`:''}${h.watch.avg?`<span style="color:#e66767">♥ avg ${h.watch.avg}</span>`:''}${h.watch.max?`<span style="color:#e66767">peak ${h.watch.max}</span>`:''}${h.watch.dur?`<span style="color:var(--muted)">${h.watch.dur} min</span>`:''}</div>`:''}
       ${multi?`<div class="date-row" style="margin-bottom:10px">${hRaw.sessions.map((s,si)=>`<button class="f-chip ${si===Math.min(state.trainSessIdx||0, hRaw.sessions.length-1)?'sel':''}" data-sesspick="${si}" style="flex:1">${si+1}. ${s.name.split(' · ')[0]}${s.time?` · ${s.time}`:''}</button>`).join('')}</div>`:''}
-      ${h.ex.map(e=>`
+      ${h.ex.map((e,xi)=>`
         <div class="card exercise complete">
-          <div class="ex-top"><div class="ex-name">${e.n}${e.pr?'<span class="pr-flag">PR</span>':''}<span class="done-flag">✓ DONE</span></div></div>
+          <div class="ex-top"><div class="ex-name">${xi+1}. ${e.n}${e.pr?'<span class="pr-flag">PR</span>':''}<span class="done-flag">✓ DONE</span></div></div>
           <div class="sets">
             ${e.sets.map(s=>`<button class="set-btn done"><span class="chk">✓</span> ${s}</button>`).join('')}
           </div>
@@ -4626,6 +4770,8 @@ function renderTrain(){
   const sessBurn = state.exercises.flatMap(ex=>ex.done.filter(Boolean).map(d=>d.cal||0)).reduce((a,b)=>a+b,0);
   el.innerHTML = dateBar + `
     ${state.sess.run?`<div class="sess-mini" id="sess-mini"><span class="sm-time" id="sess-time-mini">${fmtSec(state.sess.sec)}</span><span>${doneSets}/${totSets} sets</span><span style="margin-left:auto;color:#eb6834">🔥 ~${sessBurn} kcal est.</span></div>`:''}
+    ${state.sessRecorded ? `<button class="see-all" id="reopen-sess" style="margin:0 0 4px">✎ Reopen session — edit &amp; re-record</button>` : ''}
+    ${state.sessEdit && !state.sessRecorded ? `<button class="see-all" id="rerecord-sess" style="margin:0 0 4px;background:var(--good);border-color:var(--good);color:#fff">🏁 Save changes — re-record session</button>` : ''}
     <div class="section-label">Today · ${state.sessionName}</div>
     <div class="card" id="sess-card" style="padding:14px 16px">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -4646,8 +4792,6 @@ function renderTrain(){
       </div>
       <p style="font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px">📋 ${RULES}</p>
     </div>
-    ${state.sessRecorded ? `<button class="see-all" id="reopen-sess" style="margin:0 0 4px">✎ Reopen session — edit &amp; re-record</button>` : ''}
-    ${state.sessEdit && !state.sessRecorded ? `<button class="see-all" id="rerecord-sess" style="margin:0 0 4px;background:var(--good);border-color:var(--good);color:#fff">🏁 Save changes — re-record session</button>` : ''}
     <div class="section-label">Today's workouts · start any of them, in any order</div>
     ${(()=>{ const exCard = (e,i)=>{
       const complete = !!e.completed;
@@ -4723,9 +4867,9 @@ function renderTrain(){
         <div class="adj-row">
           <div>
             <div style="display:flex;gap:6px;align-items:center">
-              <button class="adj-btn" id="adj-w-dn">−2.5</button>
+              <button class="adj-btn" id="adj-w-dn">−5</button>
               <input class="lb-f" id="adj-w" inputmode="decimal" style="width:58px" value="${typeof state.adj.w==='number' ? (state.units==='kg' ? +(state.adj.w*LB2KG).toFixed(1) : state.adj.w) : state.adj.w}">
-              <button class="adj-btn" id="adj-w-up">+2.5</button>
+              <button class="adj-btn" id="adj-w-up">+5</button>
             </div><div class="adj-lab">weight</div>
           </div>
           <div style="flex:1">
@@ -4762,10 +4906,14 @@ function renderTrain(){
     <div style="height:56px"></div>`;
 
   wireDatePick(el);
-  /* v102: show the sticky vitals bar only once the Session progress card is off-screen */
+  /* v102: show the sticky vitals bar only once the Session progress card is off-screen
+     v120: previous observer is disconnected so re-renders don't accumulate observers */
+  if(sessCardObs){ sessCardObs.disconnect(); sessCardObs = null; }
   const sCard = el.querySelector('#sess-card'), sMini = el.querySelector('#sess-mini');
-  if(sCard && sMini && 'IntersectionObserver' in window)
-    new IntersectionObserver(en=> sMini.classList.toggle('show', !en[0].isIntersecting), {root:el, threshold:0}).observe(sCard);
+  if(sCard && sMini && 'IntersectionObserver' in window){
+    sessCardObs = new IntersectionObserver(en=> sMini.classList.toggle('show', !en[0].isIntersecting), {root:el, threshold:0});
+    sessCardObs.observe(sCard);
+  }
   el.querySelectorAll('[data-startset]').forEach(b=> b.onclick = ()=>{
     if(state.activeSet){ toast('Finish your current set first — one at a time 😄'); return; }
     const [i,s] = b.dataset.startset.split(':').map(Number);
@@ -4858,10 +5006,10 @@ function renderTrain(){
   const rs = el.querySelector('#reopen-sess');
   if(rs) rs.onclick = ()=>{
     unrecordSession();
-    state.exercises.forEach(e=>{ if(!e.cardioSeg) e.completed = false; });
+    state.exercises.forEach(e=>{ e.completed = false; });   /* v119: cardio reopens too */
     state.sessEdit = true;
     renderTrain();
-    toast('✎ Session reopened — adjust anything, then re-record');
+    toast('✎ Session reopened — adjust or undo anything, then re-record');
   };
   const rr = el.querySelector('#rerecord-sess');
   if(rr) rr.onclick = ()=>{
@@ -4884,7 +5032,7 @@ function renderTrain(){
     const mg = NAME2MG[v] || '';
     const m = state.medals.find(x=>x.n===v);
     const pr = m && m.pr !== '—' ? parseFloat(m.pr) : 0;
-    const w = pr ? Math.round(pr/2.5)*2.5 : Math.max(2.5, Math.round((MG_BASE[mg]||60)*0.6/2.5)*2.5);
+    const w = pr ? Math.round(pr/5)*5 : Math.max(5, Math.round((MG_BASE[mg]||60)*0.6/5)*5);
     state.exercises.push({ n:v, note:'added today', last: m && m.pr !== '—' ? m.pr : '—', target:{w, r:10}, sets:3, pr:pr||0, comp:isComp(v), alt:'', why:'', done:[] });
     state.addExOpen = false; renderTrain();
     toast(`➕ ${v} added to today's session`);
@@ -4923,15 +5071,15 @@ function renderTrain(){
     if(next) toast(`✓ ${state.exercises[i].n} done — up next: ${next.n}`);
     else finishWorkoutSummary();
   });
-  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number') e.target.w = Math.max(wFloor(e), +(e.target.w-2.5).toFixed(1)); renderTrain(); });
-  el.querySelectorAll('[data-wup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wup]; if(typeof e.target.w==='number') e.target.w = +(e.target.w+2.5).toFixed(1); renderTrain(); });
+  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number') e.target.w = Math.max(wFloor(e), +(e.target.w-wStepLb()).toFixed(1)); renderTrain(); });
+  el.querySelectorAll('[data-wup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wup]; if(typeof e.target.w==='number') e.target.w = +(e.target.w+wStepLb()).toFixed(1); renderTrain(); });
   /* typed values snap to sensible increments: weight → nearest 2.5, rest → nearest 5s */
   el.querySelectorAll('[data-wval]').forEach(inp=> inp.onchange = ()=>{
     const e = state.exercises[+inp.dataset.wval];
     let v = parseFloat(inp.value);
     if(isNaN(v)){ renderTrain(); return; }
     if(state.units==='kg') v = v/LB2KG;
-    v = Math.round(v/2.5)*2.5;
+    v = snapW(v);
     e.target.w = Math.max(wFloor(e), +v.toFixed(1));
     renderTrain();
     toast(`Weight set: ${load(e.target.w)}`);
@@ -4970,9 +5118,9 @@ function renderTrain(){
     const a = state.adj, e = state.exercises[a.i];
     const paint = ()=>{ $('#adj-w').value = typeof a.w==='number' ? (state.units==='kg' ? +(a.w*LB2KG).toFixed(1) : a.w) : a.w; $('#adj-r').value = a.r; };
     const step = (k,v)=>{ if(k==='w'&&typeof a.w==='number') a.w=Math.max(-300,+(a.w+v).toFixed(1)); if(k==='r') a.r=Math.max(0,a.r+v); paint(); };
-    $('#adj-w-dn').onclick = ()=>step('w',-2.5); $('#adj-w-up').onclick = ()=>step('w',2.5);
+    $('#adj-w-dn').onclick = ()=>step('w',-wStepLb()); $('#adj-w-up').onclick = ()=>step('w',wStepLb());
     $('#adj-r-dn').onclick = ()=>step('r',-1); $('#adj-r-up').onclick = ()=>step('r',1);
-    $('#adj-w').onchange = ()=>{ let v = parseFloat($('#adj-w').value); if(!isNaN(v)){ if(state.units==='kg') v = v/LB2KG; a.w = Math.max(-300, +(Math.round(v/2.5)*2.5).toFixed(1)); } paint(); };
+    $('#adj-w').onchange = ()=>{ let v = parseFloat($('#adj-w').value); if(!isNaN(v)){ if(state.units==='kg') v = v/LB2KG; a.w = Math.max(-300, +snapW(v).toFixed(1)); } paint(); };
     $('#adj-r').onchange = ()=>{ const v = parseInt($('#adj-r').value); if(!isNaN(v)) a.r = Math.max(0, Math.min(50, v)); paint(); };
     $('#adj-save').onclick = ()=>{
       e.done[a.s] = {w:a.w, r:a.r, hr:(e.done[a.s]||{}).hr||0, cal:(e.done[a.s]||{}).cal||10};
@@ -5246,6 +5394,18 @@ function renderFuel(){
       })()}
       <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5">No logging buttons here — everything flows in from your conversation with ${state.coachName}.</p>
     </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(57,135,229,.15);font-size:16px;flex:none">💧</div>
+      <div style="flex:1;min-width:0"><div class="m-name" style="font-size:14px;font-weight:600">Water</div>
+        <div class="track" style="margin-top:6px;background:rgba(57,135,229,.15)"><div class="fill" style="width:${Math.min(100, state.water/state.waterTarget*100)}%;background:var(--accent)"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex:none">
+        <button class="adj-btn" id="water-dn">−</button>
+        <b style="font-size:13px;min-width:70px;text-align:center;font-variant-numeric:tabular-nums">${state.waterUnit==='oz' ? `${Math.round(state.water*33.814)} / ${Math.round(state.waterTarget*33.814)}` : `${+state.water.toFixed(2)} / ${state.waterTarget}`}</b>
+        <button class="adj-btn" id="water-up">＋</button>
+        <button class="adj-btn" id="water-unit" style="width:auto;padding:0 8px;font-size:11px;font-weight:700" title="Tap to switch liters / ounces">${state.waterUnit==='oz'?'oz':'L'}</button>
+      </div>
+    </div>
     <div class="card suggest">
       <h3>🧠 ${state.coachName}'s read</h3>
       ${state.goalsKnown
@@ -5281,6 +5441,11 @@ function renderFuel(){
       <p style="font-size:11px;color:var(--muted);margin-top:10px">${ALL_RECIPES.length} ideas across every cuisine and protein. Tap the card for the full recipe — picks favor high protein per calorie, whole-food carbs, sensible fat.</p>
     </div>
     <div style="height:56px"></div>`;
+  const wdn = $('#water-dn'), wup = $('#water-up'), wu = $('#water-unit');
+  const wStepL = state.waterUnit==='oz' ? 8/33.814 : 0.25;   /* 8 oz a tap, or 0.25 L */
+  if(wdn) wdn.onclick = ()=>{ state.water = Math.max(0, +(state.water - wStepL).toFixed(3)); renderFuel(); };
+  if(wup) wup.onclick = ()=>{ state.water = Math.min(12, +(state.water + wStepL).toFixed(3)); renderFuel(); if(state.water >= state.waterTarget) toast('💧 Water goal hit'); };
+  if(wu) wu.onclick = ()=>{ state.waterUnit = state.waterUnit==='oz' ? 'L' : 'oz'; renderFuel(); toast(state.waterUnit==='oz' ? 'Water in ounces — +8 oz a tap' : 'Water in liters — +0.25 L a tap'); };
   const mt = $('#micro-toggle');
   if(mt) mt.onclick = ()=>{ state.microOpen = !state.microOpen; renderFuel(); };
   const cp = $('#cuisine-pick');
@@ -5551,7 +5716,7 @@ function renderProgress(){
         <button class="${state.chartMetric==='hr'?'sel':''}" data-cmetric="hr" style="flex:1">♥ Max HR</button>
       </div>`; })()}
       ${state.chartMetric==='dist' && !(state.strengthData[state.strengthKey].dist||[]).some(v=>v>0)
-        ? `<div style="text-align:center;padding:24px 12px;color:var(--muted);font-size:13px;line-height:1.55">📏 No distance logged for this activity yet.<br>GPS sessions (outdoor runs &amp; rides) and speed-based machines (treadmill, indoor bike) record it automatically.</div>`
+        ? `<div style="text-align:center;padding:16px 12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite(exScene(state.strengthKey, state.strengthData[state.strengthKey].mg),92)}<br>No distance logged for this activity yet.<br>Machines with speed record it automatically — or enter it yourself when a session ends.</div>`
         : state.chartMetric==='hr' && !state.strengthData[state.strengthKey].hr.some(v=>v>0)
         ? `<div style="text-align:center;padding:16px 12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite('heartbeat',96)}<br>No heart-rate data yet.<br>Connect a watch (Apple Watch, Whoop, Garmin) and every set logs its bpm.</div>`
         : state.strengthData[state.strengthKey].vals.length
@@ -5970,10 +6135,14 @@ function stateSnapshot(){
   return {...state, apiKey:null, cardio:null, activeSet:null, adj:null, swapSel:null,
     sess:{run:false, paused:false, sec:0}, trainCalOpen:false, trainDate:'Today', dayOffset:0, addExOpen:false};
 }
+let lastSaved = '';
 function saveState(){
   if(!state.onboarded || naviWiping) return;
   try{
-    localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, day: dayKey(new Date()), s: stateSnapshot()}));
+    const payload = JSON.stringify({v:1, day: dayKey(new Date()), s: stateSnapshot()});
+    if(payload === lastSaved) return;   /* v120: idle ticks skip the disk write — battery-friendly */
+    lastSaved = payload;
+    localStorage.setItem(SAVE_KEY, payload);
   }catch(e){ /* storage unavailable/full — run in-memory */ }
 }
 setInterval(()=>{ if(!document.hidden) saveState(); }, 5000);
