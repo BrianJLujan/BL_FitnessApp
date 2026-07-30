@@ -2134,7 +2134,7 @@ function showObForm(edit){
         <div class="wd-row">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day=>`<button type="button" class="wd-chip" data-wd="${day}">${day}</button>`).join('')}</div>
       </div>
       <div class="ob-row">
-        <div class="ob-field"><label>Gender</label>
+        <div class="ob-field"><label>User gender</label>
           <select id="ob-gender"><option value="">Select…</option><option>Male</option><option>Female</option></select></div>
         <div class="ob-field"><label>Nationality <span style="text-transform:none;font-weight:500">(optional)</span></label>
           <select id="ob-nat"><option value="">Select…</option>${['United States','Mexico','Canada','Brazil','Argentina','Colombia','United Kingdom','Ireland','France','Germany','Spain','Italy','Portugal','Netherlands','Sweden','Norway','Poland','Ukraine','Turkey','Israel','Saudi Arabia','UAE','Egypt','Morocco','Nigeria','Ghana','Kenya','South Africa','India','Pakistan','China','Japan','South Korea','Philippines','Vietnam','Thailand','Indonesia','Australia','New Zealand'].map(c=>`<option>${c}</option>`).join('')}<option>Other</option><option>Prefer not to say</option></select></div>
