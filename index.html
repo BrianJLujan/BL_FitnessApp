@@ -13,6 +13,7 @@
 <meta name="theme-color" content="#0d0d0d">
 <link rel="apple-touch-icon" href="navi-icon.png">
 <link rel="icon" type="image/png" href="navi-icon.png">
+<link rel="preconnect" href="https://api.anthropic.com">
 <style>
   :root{
     --page:#0d0d0d;
@@ -58,6 +59,8 @@
   body.light input.f-chip[type=date]{color-scheme:light}
   body.light #sum-overlay{background:rgba(244,244,241,.92)}
   body.light .toast{box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  /* v127: white sprite shoes vanish on light surfaces — go black in light mode */
+  body.light rect.sh{fill:#1a1a1a}
   /* ---------- phone frame ---------- */
   #phone{
     width:100%;max-width:412px;height:100dvh;max-height:880px;
@@ -108,12 +111,10 @@
   /* ---------- chat ---------- */
   #chat-scroll{flex:1;overflow-y:auto;padding:8px 16px 12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:none}
   #chat-scroll::-webkit-scrollbar{display:none}
-  .msg{max-width:82%;padding:11px 14px;border-radius:18px;font-size:15px;line-height:1.45;white-space:pre-wrap;animation:pop .18s ease}
+  .msg{position:relative;max-width:82%;padding:11px 14px;border-radius:18px;font-size:15px;line-height:1.45;white-space:pre-wrap;animation:pop .18s ease}
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .msg.bot{background:var(--surface);border:1px solid var(--hairline);border-bottom-left-radius:6px;align-self:center;width:94%;max-width:94%;color:var(--ink)}
+  .msg.bot{background:var(--surface);border:1px solid var(--hairline);border-bottom-left-radius:6px;align-self:center;width:94%;max-width:94%;color:var(--ink);padding-right:30px}
   .msg.user{background:var(--accent);border-bottom-right-radius:6px;align-self:flex-end}
-  .msg{position:relative}
-  .msg.bot{padding-right:30px}
   .msg-back{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;opacity:.55;padding:2px;line-height:1}
   .msg-back:hover{opacity:1;color:var(--accent)}
   .msg .tag{display:block;font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:5px;text-transform:uppercase}
@@ -192,14 +193,6 @@
   .set-btn.done{border:1px solid rgba(12,163,12,.5);background:rgba(12,163,12,.10);color:var(--ink);border-style:solid}
   .set-btn.done .chk{color:var(--good);font-weight:800}
   .pr-flag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;color:#0d0d0d;background:var(--warning);border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:2px}
-  #rest-timer{
-    position:absolute;left:50%;bottom:86px;transform:translateX(-50%);
-    background:var(--surface-3);border:1px solid var(--hairline);border-radius:999px;
-    padding:9px 18px;font-size:14px;font-weight:700;display:none;align-items:center;gap:8px;z-index:5;
-    box-shadow:0 8px 24px rgba(0,0,0,.5);
-  }
-  #rest-timer.on{display:flex}
-  #rest-timer span{color:var(--accent);font-variant-numeric:tabular-nums}
   /* ---------- fuel meters ---------- */
   .meter{margin-bottom:14px}
   .meter:last-child{margin-bottom:2px}
@@ -242,7 +235,7 @@
   #tooltip b{color:var(--ink);font-weight:650}
   /* ---------- profile ---------- */
   .prof-head{display:flex;align-items:center;gap:14px;padding:6px 4px 16px}
-  .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3987e5,#9085e9);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+  .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3987e5,#9085e9);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;cursor:pointer;background-size:cover;background-position:center;position:relative}
   .prof-head .p-name{font-size:18px;font-weight:700}
   .prof-head .p-sub{font-size:13px;color:var(--muted);margin-top:2px}
   .goal-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;scroll-behavior:smooth}
@@ -298,14 +291,13 @@
   .f-chip{flex:1;text-align:center;font-size:12px;font-weight:600;padding:7px 0;border-radius:10px;background:var(--surface);border:1px solid var(--hairline);color:var(--muted);cursor:pointer}
   .f-chip.sel{background:rgba(57,135,229,.15);border-color:var(--accent);color:var(--accent)}
   .badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .badge{background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:12px 8px;text-align:center}
+  .badge{background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer}
   .badge.locked{opacity:.38}
   .badge .b-e{font-size:24px}
   .badge .b-n{font-size:12px;font-weight:700;margin-top:6px}
   .badge .b-s{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.35}
   /* ---------- community ---------- */
   .act{background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;padding:0}
-  .cmts.open{display:block}
   /* ---------- guided flow buttons + cardio timer + set adjuster ---------- */
   .btn-panel{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
   /* v57: exactly 3 options → 2 up top, 3rd spans the full row */
@@ -353,8 +345,6 @@
   .sess-mini.show{opacity:1;transform:none;visibility:visible;pointer-events:auto}
   .sess-mini .sm-time{font-variant-numeric:tabular-nums;color:var(--accent);font-size:14px}
   body.light .sess-mini{box-shadow:0 8px 20px rgba(0,0,0,.12)}
-  .sess-btn.start{background:var(--good);border-color:var(--good);color:#fff}
-  .sess-btn.stop{background:rgba(208,59,59,.15);border-color:var(--critical)}
   /* v115: rest is a floating mini window — the session stays adjustable behind it */
   #rest-overlay{
     position:absolute;left:14px;right:14px;bottom:8px;z-index:45;display:none;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;
@@ -365,7 +355,6 @@
   #rest-overlay .ro-label{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);flex:1 1 100%}
   #rest-overlay .ro-count{font-size:40px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;flex:1 1 100%}
   #rest-overlay.go .ro-count{color:var(--warning)}
-  #rest-overlay .ro-sub{display:none}
   #sum-overlay{position:absolute;inset:0;z-index:46;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,.9);backdrop-filter:blur(8px);padding:20px}
   #sum-overlay.on{display:flex}
   .sum-card{background:var(--surface);border:1px solid var(--hairline);border-radius:20px;padding:20px;width:100%;max-height:80%;overflow-y:auto}
@@ -381,8 +370,6 @@
   #rest-overlay .ro-btn{margin-top:0;padding:10px 8px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface-3);color:var(--ink);font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;flex:1.4 1 auto;white-space:nowrap}
   /* v117: undo is deliberately smaller, dimmer, and further from End Rest */
   #rest-overlay #ro-undo{flex:0.9 1 auto;opacity:.7;background:none;margin-left:18px}
-  #rest-timer.go-count{background:var(--accent);border-color:var(--accent);font-size:18px;padding:12px 26px}
-  #rest-timer.go-go{background:var(--good);border-color:var(--good);font-size:18px;padding:12px 26px}
   /* date picker chip */
   input.f-chip[type=date]{color-scheme:dark;font-family:inherit;background:var(--surface);outline:none}
   /* custom builder */
@@ -415,7 +402,6 @@
   .adj-lab{font-size:11px;color:var(--muted);text-align:center;margin-top:3px}
   .spr-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
   .spr-lab{width:52px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-  .swatch.sel{border-color:#fff;box-shadow:0 0 0 2px var(--accent)}
   .cwheel{width:44px;height:30px;border:1px solid var(--hairline);border-radius:8px;background:var(--surface-2);padding:2px;cursor:pointer}
   .ob-spin{display:flex;min-width:0;align-items:stretch;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
   .ob-spin:focus-within{border-color:var(--accent)}
@@ -434,7 +420,7 @@
   #hud-fig svg{position:absolute;inset:0}
   #spr-rest{display:none}
   #hud-fig.rest #spr-active{display:none}
-  #hud-fig.rest #spr-rest{display:block}
+  #hud-fig.rest #spr-rest{display:block;animation:restBreathe 2.4s steps(2) infinite}
   @keyframes bbLift{0%{transform:translateY(0)}25%{transform:translateY(3px)}55%{transform:translateY(-2px)}80%{transform:translateY(1px)}100%{transform:translateY(0)}}
   @keyframes hudJump{0%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}55%{transform:translateY(0)}70%{transform:translateY(-2px)}85%{transform:translateY(0)}}
   @keyframes hudBounce{0%,100%{transform:translateY(0) scaleY(1)}40%{transform:translateY(1px) scaleY(.92)}70%{transform:translateY(-3px) scaleY(1.04)}}
@@ -452,7 +438,6 @@
   #hud-fig.rest #sweat1{animation:sweatDrip 1.6s steps(4) infinite}
   #hud-fig.rest #sweat2{animation:sweatDrip 1.6s steps(4) .8s infinite}
   @keyframes restBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
-  #hud-fig.rest #spr-rest{animation:restBreathe 2.4s steps(2) infinite}
   /* ---------- v22: two-frame scenes, training calendar, memory scroll ---------- */
   [data-scene="pushup"] #sB{animation:scnFrA 1.1s steps(1) infinite}
   [data-scene="pushup"] #sC{animation:scnFrB 1.1s steps(1) infinite}
@@ -466,10 +451,10 @@
   .cal-dow{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px}
   .cal-day{font-size:12px;padding:6px 0;border-radius:8px;color:var(--ink-2);font-variant-numeric:tabular-nums;border:1px solid transparent}
   .cal-day.worked{background:rgba(57,135,229,.16);border-color:rgba(57,135,229,.45);color:var(--accent);font-weight:700}
-  /* v117: effort ratings color the calendar — red easy, yellow solid, green max */
-  .cal-day.r1{background:rgba(227,73,72,.18);border-color:rgba(227,73,72,.55);color:#e66767}
+  /* v117/v124: effort ratings color the calendar — green easy, yellow solid, red max effort */
+  .cal-day.r1{background:rgba(62,207,150,.16);border-color:rgba(62,207,150,.55);color:#3ecf96}
   .cal-day.r2{background:rgba(232,193,75,.16);border-color:rgba(232,193,75,.55);color:#e8c14b}
-  .cal-day.r3{background:rgba(62,207,150,.16);border-color:rgba(62,207,150,.55);color:#3ecf96}
+  .cal-day.r3{background:rgba(227,73,72,.18);border-color:rgba(227,73,72,.55);color:#e66767}
   .cal-day.today{border-color:var(--warning)}
   .cal-day.future{opacity:.32}
   .mem-scroll{max-height:200px;overflow-y:auto;scrollbar-width:thin;margin-right:-6px;padding-right:6px}
@@ -548,7 +533,6 @@
   /* v107: expanded list — the collapse control floats translucently so it's always in reach */
   .see-all.float-less{position:sticky;bottom:14px;z-index:30;background:rgba(18,20,26,.68);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.3)}
   body.light .see-all.float-less{background:rgba(255,255,255,.68);box-shadow:0 6px 18px rgba(0,0,0,.12)}
-  .badge{cursor:pointer}
   .badge.sel{border-color:var(--accent)}
   .lb-f{width:52px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;padding:6px 4px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;text-align:center;font-variant-numeric:tabular-nums}
   .lb-search{width:100%;background:var(--surface-2);border:1px solid var(--hairline);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;margin-bottom:10px}
@@ -570,7 +554,6 @@
   .micro .mi-track{flex:1;height:7px;border-radius:999px;background:rgba(57,135,229,.15);overflow:hidden}
   .micro .mi-fill{height:100%;border-radius:999px;background:var(--accent)}
   .micro .mi-v{font-size:12px;color:var(--muted);width:38px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
-  .avatar{cursor:pointer;background-size:cover;background-position:center;position:relative}
   .avatar .cam{position:absolute;right:-3px;bottom:-3px;width:20px;height:20px;border-radius:50%;background:var(--surface-3);border:1px solid var(--hairline);font-size:10px;display:flex;align-items:center;justify-content:center}
   .date-row{display:flex;gap:8px;margin:2px 0 12px;overflow-x:auto;scrollbar-width:none}
   .date-row::-webkit-scrollbar{display:none}
@@ -611,7 +594,7 @@
             <rect x="5" y="6" width="1" height="1" fill="#f0b27a"/><rect x="10" y="6" width="1" height="1" fill="#f0b27a"/>
             <rect x="6" y="9" width="4" height="1" fill="#1f2430"/>
             <rect x="6" y="10" width="1" height="3" fill="#f0b27a"/><rect x="9" y="10" width="1" height="3" fill="#f0b27a"/>
-            <rect x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+            <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
           </g>
         </svg>
         <svg id="spr-rest" viewBox="0 0 16 16" width="30" height="30" shape-rendering="crispEdges" aria-label="Resting">
@@ -659,11 +642,9 @@
     <!-- PROFILE -->
     <div class="screen" id="screen-you"></div>
 
-    <div id="rest-timer">⏱ Rest <span id="rest-count">90</span>s</div>
     <div id="rest-overlay">
       <div class="ro-label" id="ro-label">COOLDOWN</div>
       <div class="ro-count" id="ro-count">150</div>
-      <div class="ro-sub" id="ro-sub">next set loads automatically</div>
       <button class="ro-btn" id="ro-end">▶ End Rest</button>
       <button class="ro-btn" id="ro-undo" style="opacity:.85">↩ Undo set</button>
     </div>
@@ -762,13 +743,12 @@ const state = {
   profileSet: { name:false, age:false, height:false, weight:false },
   recovery: { sleep:'7h 12m', sleepH:7.2, score:82, hrv:68, rhr:54 },
   water: 0, waterTarget: 4, waterUnit: 'L',   // stored in liters; display flips L ↔ oz
-  runGoal: null, runGoalAsked: false,   // v117: race the run/treadmill sessions build toward
+  runGoal: null, runGoalAsked: false, runTarget: null,   // v117/v122: race + target time the sessions build toward
   streak: 0,
   memory: [],
   macros: { cal:{v:0,t:2200}, protein:{v:0,t:190}, carbs:{v:0,t:220}, fat:{v:0,t:70} },
   meals: [],
   exercises: [],
-  strength: { weeks:['May 18','May 25','Jun 1','Jun 8','Jun 15','Jun 22','Jun 29','Jul 6'] },
   strengthKey: 'incline',
   chartMetric: 'val',
   chartRangeKey: '3 months',
@@ -887,58 +867,67 @@ function dayKey(d){ return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; 
 const LB2KG = 0.45359237;
 function bw(lb){ return state.units==='kg' ? `${Math.round(lb*LB2KG)} kg` : `${lb} lb`; }
 function load(w){ return (typeof w==='number') ? (state.units==='kg' ? `${Math.round(w*LB2KG*2)/2} kg` : `${w} lb`) : w; }
-const RULES = 'Compounds 4 × 8–10 · isolation 4 × 10–12 · rest 2–3 min / 60–90 s · +weight once every set hits the top of the range · 2–3 s eccentrics';
+const RULES = 'Compounds 3–4 × 8–10 · isolation 3 × 10–15 · rest 2 min / 60–90 s · ≤25 working sets · +weight once every set hits the top of the range · 2–3 s eccentrics';
 const CARDIO = { n:'Treadmill', seg:true, cardioSeg:true, sets:1, target:{w:'',r:''}, last:'—' };
 const CARDIO_SWAPS = ['Outdoor Running','Treadmill','Stair Stepper','Elliptical','Indoor Cycling','Outdoor Cycling','Swimming'];
 
 const PRESETS = {
+  /* v121: programs rebuilt on current hypertrophy evidence — each muscle ~2×/week on the
+     6-day rotation, compounds first, lengthened-bias isolation, ≤25 working sets per
+     session (abs & the cardio finisher don't count toward the cap) */
   pushA:{name:'Push A', ex:[
-    { n:'Incline Dumbbell Press', comp:true, note:'PR\'d 90 on Monday — hit 10s across all sets to earn 95', last:'90 lb × 8,8,7,7', target:{w:90,r:10}, sets:4, pr:90, alt:'Machine Chest Press', why:'same incline-press pattern, less shoulder demand' },
-    { n:'Cable Flyes', note:'', last:'27.5 lb × 12', target:{w:27.5,r:12}, sets:4, pr:30, alt:'Pec-Deck Machine', why:'same fly pattern' },
-    { n:'Standing Barbell Overhead Press', comp:true, note:'Shoulder cleared Jul 1 — controlled eccentrics', last:'105 lb × 9', target:{w:105,r:10}, sets:4, pr:110, alt:'Seated DB Shoulder Press', why:'same press, more shoulder-stable' },
-    { n:'Cable Lateral Raises', note:'', last:'20 lb × 12', target:{w:20,r:12}, sets:4, pr:22.5, alt:'DB Lateral Raise', why:'same movement, free weights' },
-    { n:'Cable Pushdowns', note:'', last:'55 lb × 12', target:{w:55,r:12}, sets:4, pr:60, alt:'DB Skullcrushers', why:'same triceps bias' },
-    { n:'Dips', comp:true, note:'', last:'BW × 12', target:{w:0,r:12}, sets:4, pr:0, alt:'Close-Grip Push-ups', why:'same lower-chest/triceps bias' },
+    { n:'Barbell Bench Press', comp:true, note:'', last:'—', target:{w:95,r:8}, sets:4, pr:0, alt:'Machine Chest Press', why:'same press, no spotter needed' },
+    { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'—', target:{w:65,r:8}, sets:3, pr:0, alt:'Seated DB Shoulder Press', why:'same press, more shoulder-stable' },
+    { n:'Incline Dumbbell Press', comp:true, note:'', last:'—', target:{w:50,r:10}, sets:3, pr:0, alt:'Incline Barbell Press', why:'same upper-chest bias' },
+    { n:'Cable Flyes', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'Pec-Deck Machine', why:'same fly pattern under constant tension' },
+    { n:'Cable Lateral Raises', note:'', last:'—', target:{w:15,r:12}, sets:3, pr:0, alt:'DB Lateral Raise', why:'same side-delt bias' },
+    { n:'Overhead Cable Triceps Extensions', note:'', last:'—', target:{w:40,r:12}, sets:3, pr:0, alt:'Skullcrushers', why:'same long-head stretch' },
+    { n:'Cable Pushdowns', note:'', last:'—', target:{w:50,r:12}, sets:3, pr:0, alt:'Bench Dips', why:'same triceps focus' },
     CARDIO]},
   pullA:{name:'Pull A', ex:[
-    { n:'Pull-ups', comp:true, note:'', last:'BW × 10,9,8,8', target:{w:0,r:10}, sets:4, pr:0, alt:'Lat Pulldown', why:'same vertical pull' },
-    { n:'T-Bar Rows', comp:true, note:'', last:'115 lb × 10', target:{w:115,r:10}, sets:4, pr:125, alt:'Chest-Supported Row', why:'same row, lower-back friendly' },
-    { n:'Seated Cable Rows', comp:true, note:'', last:'150 lb × 10', target:{w:150,r:10}, sets:4, pr:160, alt:'Single-Arm DB Row', why:'same horizontal pull' },
-    { n:'Rear Cable Flyes', note:'Shoulder insurance — stay strict', last:'15 lb × 12', target:{w:15,r:12}, sets:4, pr:17.5, alt:'Reverse Pec-Deck', why:'same rear-delt bias' },
-    { n:'Incline Dumbbell Curls', note:'', last:'30 lb × 10', target:{w:30,r:10}, sets:4, pr:35, alt:'Seated DB Curls', why:'similar stretch position' },
-    { n:'Preacher Curls', note:'', last:'60 lb × 10', target:{w:60,r:10}, sets:4, pr:65, alt:'Cable Curls', why:'same strict-form bias' },
+    { n:'T-Bar Rows', comp:true, note:'', last:'—', target:{w:90,r:8}, sets:4, pr:0, alt:'Chest-Supported Row', why:'same row, lower-back friendly' },
+    { n:'Pull-ups', comp:true, note:'', last:'—', target:{w:0,r:8}, sets:3, pr:0, alt:'Lat Pulldown', why:'same vertical pull' },
+    { n:'Lat Pulldown', comp:true, note:'', last:'—', target:{w:100,r:10}, sets:3, pr:0, alt:'Neutral-Grip Pulldown', why:'same lat bias, friendlier grip' },
+    { n:'Seated Cable Rows', comp:true, note:'', last:'—', target:{w:110,r:10}, sets:3, pr:0, alt:'Single-Arm DB Row', why:'same horizontal pull' },
+    { n:'Rear Cable Flyes', note:'', last:'—', target:{w:15,r:15}, sets:3, pr:0, alt:'Reverse Pec-Deck', why:'same rear-delt bias' },
+    { n:'Incline Dumbbell Curls', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'Incline Cable Curls', why:'same lengthened-position stretch' },
+    { n:'Preacher Curls', note:'', last:'—', target:{w:45,r:12}, sets:3, pr:0, alt:'EZ-Bar Curl', why:'same strict-form bias' },
     CARDIO]},
   legsA:{name:'Legs A', ex:[
-    { n:'Barbell Squats', comp:true, note:'All 4 sets hit 10 last time — today we load 255', last:'250 lb × 10,10,10,10', target:{w:255,r:10}, sets:4, pr:255, alt:'Leg Press', why:'same quad-dominant pattern' },
-    { n:'Romanian Deadlifts', comp:true, note:'2–3 s on the way down', last:'225 lb × 10,9,9,8', target:{w:225,r:10}, sets:4, pr:225, alt:'Back Extension', why:'same hinge pattern' },
-    { n:'Hip Thrusts', comp:true, note:'', last:'275 lb × 10', target:{w:275,r:10}, sets:4, pr:285, alt:'Glute Bridge', why:'same glute drive' },
-    { n:'Leg Curls', note:'', last:'110 lb × 10', target:{w:110,r:10}, sets:4, pr:115, alt:'Nordic Curl', why:'same hamstring bias' },
-    { n:'Leg Extensions', note:'', last:'130 lb × 10', target:{w:130,r:10}, sets:4, pr:140, alt:'Sissy Squat', why:'same quad isolation' },
-    { n:'Standing Calf Raises', note:'', last:'180 lb × 15', target:{w:180,r:15}, sets:4, pr:190, alt:'Seated Calf Raise', why:'soleus bias, same muscle group' },
+    { n:'Barbell Squats', comp:true, note:'', last:'—', target:{w:135,r:8}, sets:4, pr:0, alt:'Hack Squat', why:'same quad-dominant pattern' },
+    { n:'Romanian Deadlifts', comp:true, note:'', last:'—', target:{w:135,r:10}, sets:3, pr:0, alt:'Stiff-Leg Deadlift', why:'same hinge pattern' },
+    { n:'Leg Press', comp:true, note:'', last:'—', target:{w:180,r:10}, sets:3, pr:0, alt:'Bulgarian Split Squat', why:'same quad drive' },
+    { n:'Leg Curls', note:'', last:'—', target:{w:90,r:12}, sets:3, pr:0, alt:'Seated Leg Curl', why:'same hamstring bias' },
+    { n:'Leg Extensions', note:'', last:'—', target:{w:90,r:12}, sets:3, pr:0, alt:'Sissy Squat', why:'same quad isolation' },
+    { n:'Standing Calf Raises', note:'', last:'—', target:{w:135,r:12}, sets:4, pr:0, alt:'Leg-Press Calf Raise', why:'same stretch-focused calf work' },
+    { n:'Hanging Leg Raise', note:'', last:'—', target:{w:0,r:12}, sets:3, pr:0, alt:'Cable Crunch', why:'same core flexion — bonus, not counted' },
     CARDIO]},
   pushB:{name:'Push B', ex:[
-    { n:'Incline Dumbbell Press', comp:true, note:'', last:'90 lb × 8,8,7,7', target:{w:90,r:10}, sets:4, pr:90, alt:'Machine Chest Press', why:'same pattern, less shoulder demand' },
-    { n:'Dips', comp:true, note:'', last:'BW × 10', target:{w:0,r:10}, sets:4, pr:0, alt:'Close-Grip Push-ups', why:'same bias' },
-    { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'105 lb × 9', target:{w:105,r:10}, sets:4, pr:110, alt:'Seated DB Shoulder Press', why:'more shoulder-stable' },
-    { n:'Cable Lateral Raises', note:'', last:'20 lb × 12', target:{w:20,r:12}, sets:4, pr:22.5, alt:'DB Lateral Raise', why:'same movement' },
-    { n:'Overhead Cable Triceps Extensions', note:'Long-head bias — big stretch', last:'42.5 lb × 12', target:{w:42.5,r:12}, sets:4, pr:47.5, alt:'DB Skullcrushers', why:'same long-head bias' },
-    { n:'Cable Pushdowns', note:'', last:'55 lb × 12', target:{w:55,r:12}, sets:4, pr:60, alt:'Bench Dips', why:'same triceps focus' },
+    { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'—', target:{w:65,r:8}, sets:4, pr:0, alt:'Machine Shoulder Press', why:'same press, fixed path' },
+    { n:'Incline Barbell Press', comp:true, note:'', last:'—', target:{w:95,r:8}, sets:3, pr:0, alt:'Incline Dumbbell Press', why:'same incline pattern' },
+    { n:'Flat Dumbbell Bench', comp:true, note:'', last:'—', target:{w:45,r:10}, sets:3, pr:0, alt:'Machine Chest Press', why:'same press, deeper stretch' },
+    { n:'Pec-Deck Machine', note:'', last:'—', target:{w:90,r:12}, sets:3, pr:0, alt:'Cable Flyes', why:'same fly pattern' },
+    { n:'DB Lateral Raise', note:'', last:'—', target:{w:15,r:12}, sets:3, pr:0, alt:'Machine Lateral Raise', why:'same side-delt bias' },
+    { n:'Skullcrushers', note:'', last:'—', target:{w:40,r:12}, sets:3, pr:0, alt:'JM Press', why:'same triceps bias' },
+    { n:'Dips', comp:true, note:'', last:'—', target:{w:0,r:10}, sets:3, pr:0, alt:'Bench Dips', why:'same lower-chest/triceps bias' },
     CARDIO]},
   pullB:{name:'Pull B', ex:[
-    { n:'Pull-ups', comp:true, note:'', last:'BW × 10,9,8,8', target:{w:0,r:10}, sets:4, pr:0, alt:'Lat Pulldown', why:'same vertical pull' },
-    { n:'T-Bar Rows', comp:true, note:'', last:'115 lb × 10', target:{w:115,r:10}, sets:4, pr:125, alt:'Chest-Supported Row', why:'lower-back friendly' },
-    { n:'Seated Cable Rows', comp:true, note:'', last:'150 lb × 10', target:{w:150,r:10}, sets:4, pr:160, alt:'Single-Arm DB Row', why:'same pull' },
-    { n:'Rear Cable Flyes', note:'', last:'15 lb × 12', target:{w:15,r:12}, sets:4, pr:17.5, alt:'Reverse Pec-Deck', why:'same rear-delt bias' },
-    { n:'Incline Cable Curls', note:'', last:'25 lb × 10', target:{w:25,r:10}, sets:4, pr:30, alt:'Incline DB Curls', why:'same stretch position' },
-    { n:'Preacher Hammer Curls', note:'', last:'50 lb × 10', target:{w:50,r:10}, sets:4, pr:55, alt:'Rope Hammer Curls', why:'same brachialis bias' },
+    { n:'Weighted Pull-up', comp:true, note:'', last:'—', target:{w:0,r:6}, sets:4, pr:0, alt:'Assisted Pull-up', why:'same movement, scaled load' },
+    { n:'Chest-Supported Row', comp:true, note:'', last:'—', target:{w:90,r:10}, sets:3, pr:0, alt:'Meadows Row', why:'same row, strict torso' },
+    { n:'Neutral-Grip Pulldown', comp:true, note:'', last:'—', target:{w:100,r:10}, sets:3, pr:0, alt:'Lat Pulldown', why:'same vertical pull' },
+    { n:'Single-Arm DB Row', comp:true, note:'', last:'—', target:{w:50,r:10}, sets:3, pr:0, alt:'Seated Cable Rows', why:'same pull, unilateral' },
+    { n:'Reverse Pec-Deck', note:'', last:'—', target:{w:90,r:15}, sets:3, pr:0, alt:'Face Pulls', why:'same rear-delt bias' },
+    { n:'Standing Cable Curls', note:'', last:'—', target:{w:40,r:12}, sets:3, pr:0, alt:'Bayesian Cable Curl', why:'same constant-tension curl' },
+    { n:'Hammer Curls', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'Preacher Hammer Curls', why:'same brachialis bias' },
     CARDIO]},
   legsB:{name:'Legs B', ex:[
-    { n:'Barbell Squats', comp:true, note:'', last:'250 lb × 10,10,10,10', target:{w:255,r:10}, sets:4, pr:255, alt:'Leg Press', why:'same pattern' },
-    { n:'Romanian Deadlifts', comp:true, note:'', last:'225 lb × 10,9,9,8', target:{w:225,r:10}, sets:4, pr:225, alt:'Back Extension', why:'same hinge' },
-    { n:'Hip Thrusts', comp:true, note:'', last:'275 lb × 10', target:{w:275,r:10}, sets:4, pr:285, alt:'Glute Bridge', why:'same glute drive' },
-    { n:'Leg Curls', note:'', last:'110 lb × 10', target:{w:110,r:10}, sets:4, pr:115, alt:'Nordic Curl', why:'same hamstrings' },
-    { n:'Leg Extensions', note:'', last:'130 lb × 10', target:{w:130,r:10}, sets:4, pr:140, alt:'Sissy Squat', why:'same quad isolation' },
-    { n:'Standing Calf Raises', note:'', last:'180 lb × 15', target:{w:180,r:15}, sets:4, pr:190, alt:'Seated Calf Raise', why:'same muscles' },
+    { n:'Hack Squat', comp:true, note:'', last:'—', target:{w:135,r:10}, sets:4, pr:0, alt:'Front Squat', why:'same quad-dominant pattern' },
+    { n:'Hip Thrusts', comp:true, note:'', last:'—', target:{w:135,r:10}, sets:3, pr:0, alt:'Glute Bridge', why:'same glute drive' },
+    { n:'Bulgarian Split Squat', comp:true, note:'', last:'—', target:{w:40,r:10}, sets:3, pr:0, alt:'Walking Lunges', why:'same unilateral pattern' },
+    { n:'Lying Leg Curl', note:'', last:'—', target:{w:90,r:12}, sets:3, pr:0, alt:'Nordic Curl', why:'same hamstring bias' },
+    { n:'Leg Extensions', note:'', last:'—', target:{w:90,r:15}, sets:3, pr:0, alt:'Sissy Squat', why:'same quad isolation' },
+    { n:'Seated Calf Raise', note:'', last:'—', target:{w:90,r:15}, sets:4, pr:0, alt:'Standing Calf Raises', why:'same soleus bias' },
+    { n:'Cable Crunch', note:'', last:'—', target:{w:40,r:12}, sets:3, pr:0, alt:'Ab-Wheel Rollout', why:'same core flexion — bonus, not counted' },
     CARDIO]},
   recoveryDay:{name:'Sunday Recovery', seg:[
     'Rest from lifting — no exceptions',
@@ -947,18 +936,13 @@ const PRESETS = {
     'Foam roll — as needed',
     'Meal prep for the week',
     'Lights out early — 8–9 h sleep target']},
-  chest:{name:'Chest Day · Bro Split', ex:[
-    { n:'Barbell Bench Press', comp:true, note:'', last:'185 lb × 8', target:{w:185,r:10}, sets:4, pr:190, alt:'Machine Chest Press', why:'same press, no spotter needed' },
-    { n:'Incline Dumbbell Press', comp:true, note:'', last:'85 lb × 10', target:{w:85,r:10}, sets:4, pr:85, alt:'Machine Incline Press', why:'same pattern' },
-    { n:'Dips', comp:true, note:'', last:'BW × 10', target:{w:0,r:10}, sets:4, pr:0, alt:'Close-Grip Push-ups', why:'same lower-chest bias' },
-    { n:'Cable Flyes', note:'', last:'27.5 lb × 12', target:{w:27.5,r:12}, sets:4, pr:32.5, alt:'Pec-Deck Machine', why:'same fly pattern' },
-    CARDIO]},
   fullA:{name:'Full Body A', ex:[
-    { n:'Barbell Squats', comp:true, note:'', last:'225 lb × 10', target:{w:230,r:10}, sets:4, pr:255, alt:'Leg Press', why:'same pattern' },
-    { n:'Incline Dumbbell Press', comp:true, note:'', last:'85 lb × 10', target:{w:85,r:10}, sets:4, pr:85, alt:'Machine Chest Press', why:'same press' },
-    { n:'T-Bar Rows', comp:true, note:'', last:'115 lb × 10', target:{w:115,r:10}, sets:4, pr:125, alt:'Chest-Supported Row', why:'lower-back friendly' },
-    { n:'Romanian Deadlifts', comp:true, note:'', last:'205 lb × 10', target:{w:215,r:10}, sets:4, pr:225, alt:'Back Extension', why:'same hinge' },
-    { n:'Standing Calf Raises', note:'', last:'180 lb × 15', target:{w:180,r:15}, sets:4, pr:190, alt:'Seated Calf Raise', why:'same muscles' },
+    { n:'Barbell Squats', comp:true, note:'', last:'—', target:{w:135,r:8}, sets:3, pr:0, alt:'Leg Press', why:'same quad-dominant pattern' },
+    { n:'Barbell Bench Press', comp:true, note:'', last:'—', target:{w:95,r:8}, sets:3, pr:0, alt:'Machine Chest Press', why:'same press' },
+    { n:'Seated Cable Rows', comp:true, note:'', last:'—', target:{w:110,r:10}, sets:3, pr:0, alt:'Chest-Supported Row', why:'same horizontal pull' },
+    { n:'Romanian Deadlifts', comp:true, note:'', last:'—', target:{w:135,r:10}, sets:3, pr:0, alt:'Stiff-Leg Deadlift', why:'same hinge' },
+    { n:'Cable Lateral Raises', note:'', last:'—', target:{w:15,r:12}, sets:3, pr:0, alt:'DB Lateral Raise', why:'same side-delt bias' },
+    { n:'EZ-Bar Curl', note:'', last:'—', target:{w:45,r:12}, sets:3, pr:0, alt:'Standing Cable Curls', why:'same curl pattern' },
     CARDIO]},
   runZ2:{name:'Zone 2 Run · 40 min', seg:['Warm-up walk — 5 min','Zone 2 run — 30 min (conversational pace, HR 130–145)','Cool-down walk — 5 min']},
   runInt:{name:'Interval Run · 35 min', seg:['Warm-up jog — 10 min','8 × 30s hard / 90s easy','Cool-down jog — 8 min']},
@@ -969,38 +953,43 @@ const PRESETS = {
   pilFull:{name:'Pilates Full Body · 35 min', seg:['Warm-up flow — 5 min','Lower-body series — 10 min','Core block — 10 min','Upper-body & back — 7 min','Cool-down — 3 min']},
 };
 
-/* bro-split + extra full-body days (built from the same exercise pool) */
+/* bro-split + extra full-body days (v121 — same evidence base, ≤25 working sets) */
 PRESETS.broChest = {name:'Chest & Tris', ex:[
-  { n:'Barbell Bench Press', comp:true, note:'', last:'185 lb × 8', target:{w:185,r:10}, sets:4, pr:190, alt:'Machine Chest Press', why:'same press, no spotter needed' },
-  { n:'Incline Dumbbell Press', comp:true, note:'', last:'90 lb × 8', target:{w:90,r:10}, sets:4, pr:90, alt:'Machine Incline Press', why:'same pattern' },
-  { n:'Cable Flyes', note:'', last:'27.5 lb × 12', target:{w:27.5,r:12}, sets:4, pr:30, alt:'Pec-Deck Machine', why:'same fly pattern' },
-  { n:'Dips', comp:true, note:'', last:'BW × 12', target:{w:0,r:12}, sets:4, pr:0, alt:'Close-Grip Push-ups', why:'same bias' },
-  { n:'Cable Pushdowns', note:'', last:'55 lb × 12', target:{w:55,r:12}, sets:4, pr:60, alt:'Bench Dips', why:'same triceps focus' },
-  { n:'Overhead Cable Triceps Extensions', note:'', last:'42.5 lb × 12', target:{w:42.5,r:12}, sets:4, pr:47.5, alt:'DB Skullcrushers', why:'same long-head bias' },
+    { n:'Barbell Bench Press', comp:true, note:'', last:'—', target:{w:95,r:8}, sets:4, pr:0, alt:'Machine Chest Press', why:'same press, no spotter needed' },
+    { n:'Incline Dumbbell Press', comp:true, note:'', last:'—', target:{w:50,r:10}, sets:3, pr:0, alt:'Incline Barbell Press', why:'same upper-chest bias' },
+    { n:'Cable Flyes', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'Pec-Deck Machine', why:'same fly pattern' },
+    { n:'Dips', comp:true, note:'', last:'—', target:{w:0,r:10}, sets:3, pr:0, alt:'Weighted Dips', why:'same lower-chest/triceps bias' },
+    { n:'Overhead Cable Triceps Extensions', note:'', last:'—', target:{w:40,r:12}, sets:3, pr:0, alt:'Skullcrushers', why:'same long-head stretch' },
+    { n:'Cable Pushdowns', note:'', last:'—', target:{w:50,r:12}, sets:3, pr:0, alt:'Cross-Body Extension', why:'same triceps focus' },
   CARDIO]};
 PRESETS.broBack = {name:'Back & Bis', ex: PRESETS.pullA.ex};
 PRESETS.broShoulders = {name:'Shoulders', ex:[
-  { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'105 lb × 9', target:{w:105,r:10}, sets:4, pr:110, alt:'Seated DB Shoulder Press', why:'more shoulder-stable' },
-  { n:'Cable Lateral Raises', note:'', last:'20 lb × 12', target:{w:20,r:12}, sets:4, pr:22.5, alt:'DB Lateral Raise', why:'same movement' },
-  { n:'Rear Cable Flyes', note:'', last:'15 lb × 12', target:{w:15,r:12}, sets:4, pr:17.5, alt:'Reverse Pec-Deck', why:'same rear-delt bias' },
-  { n:'DB Front Raises', note:'', last:'17.5 lb × 12', target:{w:17.5,r:12}, sets:4, pr:20, alt:'Cable Front Raise', why:'same movement' },
-  { n:'Barbell Shrugs', note:'', last:'185 lb × 12', target:{w:185,r:12}, sets:4, pr:195, alt:'DB Shrugs', why:'same traps focus' },
+    { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'—', target:{w:65,r:8}, sets:4, pr:0, alt:'Machine Shoulder Press', why:'same press, fixed path' },
+    { n:'Seated DB Shoulder Press', comp:true, note:'', last:'—', target:{w:40,r:10}, sets:3, pr:0, alt:'Machine Shoulder Press', why:'same press, more stable' },
+    { n:'Cable Lateral Raises', note:'', last:'—', target:{w:15,r:12}, sets:4, pr:0, alt:'Lean-In Lateral Raise', why:'same side-delt bias, longer range' },
+    { n:'Rear Cable Flyes', note:'', last:'—', target:{w:15,r:15}, sets:3, pr:0, alt:'Face Pulls', why:'same rear-delt bias' },
+    { n:'DB Front Raises', note:'', last:'—', target:{w:15,r:12}, sets:2, pr:0, alt:'Cable Front Raise', why:'same front-delt bias' },
+    { n:'Barbell Shrugs', note:'', last:'—', target:{w:135,r:12}, sets:3, pr:0, alt:'DB Shrugs', why:'same traps focus' },
   CARDIO]};
 PRESETS.broLegs = {name:'Legs · Bro Split', ex: PRESETS.legsA.ex};
+PRESETS.chest = {name:'Chest Day', ex: PRESETS.broChest.ex};
 PRESETS.fullB = {name:'Full Body B', ex:[
-  { n:'Barbell Squats', comp:true, note:'', last:'250 lb × 10', target:{w:255,r:10}, sets:4, pr:255, alt:'Leg Press', why:'same pattern' },
-  { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'105 lb × 9', target:{w:105,r:10}, sets:4, pr:110, alt:'Seated DB Shoulder Press', why:'more stable' },
-  { n:'Seated Cable Rows', comp:true, note:'', last:'150 lb × 10', target:{w:150,r:10}, sets:4, pr:160, alt:'Single-Arm DB Row', why:'same pull' },
-  { n:'Leg Curls', note:'', last:'110 lb × 10', target:{w:110,r:10}, sets:4, pr:115, alt:'Nordic Curl', why:'same hamstrings' },
-  { n:'Cable Pushdowns', note:'', last:'55 lb × 12', target:{w:55,r:12}, sets:4, pr:60, alt:'Bench Dips', why:'same triceps' },
+    { n:'Standing Barbell Overhead Press', comp:true, note:'', last:'—', target:{w:65,r:8}, sets:3, pr:0, alt:'Seated DB Shoulder Press', why:'same press' },
+    { n:'Lat Pulldown', comp:true, note:'', last:'—', target:{w:100,r:10}, sets:3, pr:0, alt:'Pull-ups', why:'same vertical pull' },
+    { n:'Leg Press', comp:true, note:'', last:'—', target:{w:180,r:10}, sets:3, pr:0, alt:'Hack Squat', why:'same quad drive' },
+    { n:'Leg Curls', note:'', last:'—', target:{w:90,r:12}, sets:3, pr:0, alt:'Seated Leg Curl', why:'same hamstring bias' },
+    { n:'Cable Flyes', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'Dumbbell Fly', why:'same fly pattern' },
+    { n:'Cable Pushdowns', note:'', last:'—', target:{w:50,r:12}, sets:3, pr:0, alt:'Bench Dips', why:'same triceps focus' },
   CARDIO]};
 PRESETS.fullC = {name:'Full Body C', ex:[
-  { n:'Romanian Deadlifts', comp:true, note:'', last:'225 lb × 10', target:{w:225,r:10}, sets:4, pr:225, alt:'Back Extension', why:'same hinge' },
-  { n:'Incline Dumbbell Press', comp:true, note:'', last:'90 lb × 8', target:{w:90,r:10}, sets:4, pr:90, alt:'Machine Chest Press', why:'same press' },
-  { n:'T-Bar Rows', comp:true, note:'', last:'115 lb × 10', target:{w:115,r:10}, sets:4, pr:125, alt:'Chest-Supported Row', why:'lower-back friendly' },
-  { n:'Leg Extensions', note:'', last:'130 lb × 10', target:{w:130,r:10}, sets:4, pr:140, alt:'Sissy Squat', why:'same quads' },
-  { n:'Preacher Curls', note:'', last:'60 lb × 10', target:{w:60,r:10}, sets:4, pr:65, alt:'Cable Curls', why:'same strict form' },
+    { n:'Hip Thrusts', comp:true, note:'', last:'—', target:{w:135,r:10}, sets:3, pr:0, alt:'Glute Bridge', why:'same glute drive' },
+    { n:'Incline Dumbbell Press', comp:true, note:'', last:'—', target:{w:50,r:10}, sets:3, pr:0, alt:'Machine Chest Press', why:'same press' },
+    { n:'Pull-ups', comp:true, note:'', last:'—', target:{w:0,r:8}, sets:3, pr:0, alt:'Lat Pulldown', why:'same vertical pull' },
+    { n:'Bulgarian Split Squat', comp:true, note:'', last:'—', target:{w:40,r:10}, sets:3, pr:0, alt:'Walking Lunges', why:'same unilateral pattern' },
+    { n:'Rear Cable Flyes', note:'', last:'—', target:{w:15,r:15}, sets:3, pr:0, alt:'Reverse Pec-Deck', why:'same rear-delt bias' },
+    { n:'Hammer Curls', note:'', last:'—', target:{w:25,r:12}, sets:3, pr:0, alt:'EZ-Bar Curl', why:'same curl pattern' },
   CARDIO]};
+
 
 /* ------------------------------------------------------------------
    Exercise library — curated from Jeff Nippard & Dr. Mike Israetel (RP)
@@ -1475,6 +1464,54 @@ function cardioTargetStr(cfg, vals, mode){
   return cfg.filter(c=>!(c.k==='dur' && mode==='up')).map(c=>`${c.lab} ${vals[c.k]}${c.unit}`).join(' · ') + (mode==='up' ? (cfg.length>1?' · ':'') + 'open timer' : '');
 }
 const fmtPace = p => `${Math.floor(p/60)}'${String(Math.round(p%60)).padStart(2,'0')}"`;
+/* v122: race target times */
+const fmtRaceT = s => { s = Math.round(s); const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60; return h ? `${h}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}` : `${m}:${String(ss).padStart(2,'0')}`; };
+function parseRaceT(str){
+  const p = String(str||'').trim().split(':').map(x=>x.trim()).filter(x=>x!=='').map(Number);
+  if(!p.length || p.length > 3 || p.some(x=>isNaN(x)||x<0)) return null;
+  const sec = p.length===3 ? p[0]*3600+p[1]*60+p[2] : p.length===2 ? p[0]*60+p[1] : p[0]*60;
+  return (sec > 0 && sec < 24*3600) ? Math.round(sec) : null;
+}
+/* Riegel projection off the user's own recent logged sessions — no data, no number */
+function raceProjection(){
+  const g = RACE_INFO[state.runGoal]; if(!g) return null;
+  let best = null;
+  ['cd_run','cd_tread'].forEach(k=>{
+    const ds = state.strengthData[k]; if(!ds || !ds.dist) return;
+    for(let i = Math.max(0, ds.dist.length-3); i < ds.dist.length; i++){
+      const km = ds.dist[i], min = ds.vals[i];
+      if(km >= 1 && min > 0){
+        const proj = (min*60) * Math.pow(g.km/km, 1.06);
+        if(best === null || proj < best) best = proj;
+      }
+    }
+  });
+  return best ? Math.round(best) : null;
+}
+/* projection from ONE just-finished session */
+function sessProjection(c){
+  if(!(c.type==='run' || c.type==='tread') || !state.runGoal) return null;
+  const g = RACE_INFO[state.runGoal];
+  const km = c.gps ? c.dist : cardioKm(c);
+  if(km < 1 || c.sec < 60) return null;
+  return {label: g.label, km: g.km, proj: Math.round(c.sec * Math.pow(g.km/km, 1.06))};
+}
+function raceGoalRow(c){
+  const p = sessProjection(c); if(!p) return '';
+  const tgt = state.runTarget;
+  const under = tgt && p.proj <= tgt;
+  return `<div class="sum-row"><span>🎯 Projected ${p.label}</span><span class="${under?'up':'na'}">${fmtRaceT(p.proj)}${tgt ? (under ? ' · under target!' : ' vs ' + fmtRaceT(tgt) + ' target') : ''}</span></div>`;
+}
+function raceGoalMsg(c){
+  const p = sessProjection(c); if(!p) return '';
+  const tgt = state.runTarget;
+  if(!tgt) return `\n🎯 On this pace you'd finish the ${p.label} in about <b>${fmtRaceT(p.proj)}</b>.`;
+  const gap = p.proj - tgt;
+  return gap <= 0
+    ? `\n🎯 Projected ${p.label}: <b>${fmtRaceT(p.proj)}</b> — UNDER your ${fmtRaceT(tgt)} target. Hold this fitness and race day is yours.`
+    : `\n🎯 Projected ${p.label}: <b>${fmtRaceT(p.proj)}</b> vs your <b>${fmtRaceT(tgt)}</b> target — <b>${fmtRaceT(gap)}</b> left to shave. Keep stacking sessions.`;
+}
+const RACE_TGT_PRESETS = {fivek:['35:00','30:00','25:00','22:00'], tenk:['1:10:00','1:00:00','55:00','50:00'], half:['2:30:00','2:15:00','2:00:00','1:45:00'], mara:['5:00:00','4:30:00','4:00:00','3:30:00']};
 function miniRoute(dist){
   return `<svg viewBox="0 0 320 110" style="width:100%;border-radius:10px;background:#20201f;border:1px solid var(--hairline);margin-top:8px">
     <path d="M0 35 H320 M0 75 H320 M80 0 V110 M160 0 V110 M240 0 V110" stroke="#2c2c2a" stroke-width="1"/>
@@ -1491,20 +1528,31 @@ const RACE_INFO = {fivek:{km:5, label:'5K'}, tenk:{km:10, label:'10K'}, half:{km
 function runPlan(type){
   const g = RACE_INFO[state.runGoal];
   if(!g) return null;
+  const tgt = state.runTarget;
+  const tgtStr = tgt ? ` (target ${fmtRaceT(tgt)})` : '';
   const ds = state.strengthData[type==='run' ? 'cd_run' : 'cd_tread'];
   const hist = ds && ds.vals.length ? ds.vals.length : 0;
   if(!hist){
     const dur = g.km <= 10 ? 20 : 30;
-    return {dur, speed: type==='tread' ? 5.0 : undefined, note:`Training for the ${g.label} — first session: an easy ${dur}-min base builder`};
+    return {dur, speed: type==='tread' ? 5.0 : undefined, note:`Training for the ${g.label}${tgtStr} — first session: an easy ${dur}-min base builder`};
   }
   const lastDur = ds.vals[ds.vals.length-1];
   const lastKm = (ds.dist && ds.dist[ds.dist.length-1]) || 0;
   const capMin = Math.max(25, Math.round(g.km * 11));
   const dur = Math.max(10, Math.min(Math.round(lastDur * 1.1), capMin));
   let speed;
-  if(type==='tread') speed = (lastKm > 0 && lastDur > 0) ? Math.min(12, +(((lastKm/1.609344)/(lastDur/60))*1.03).toFixed(1)) : 5.0;
+  if(type==='tread'){
+    speed = (lastKm > 0 && lastDur > 0) ? Math.min(12, +(((lastKm/1.609344)/(lastDur/60))*1.03).toFixed(1)) : 5.0;
+    /* v122: steady sessions build toward goal pace, not past it */
+    if(tgt){ const goalMph = +((g.km/1.609344)/(tgt/3600)).toFixed(1); if(goalMph >= 1 && speed > goalMph) speed = goalMph; }
+  }
   const distStr = lastKm ? (state.units==='kg' ? lastKm.toFixed(1)+' km' : (lastKm*0.621371).toFixed(1)+' mi') : '';
-  return {dur, speed, note:`Training for the ${g.label} — session ${hist+1}: ${dur} min (+10% vs last)${distStr?`, last distance ${distStr}`:''}`};
+  let projStr = '';
+  if(tgt){
+    const proj = raceProjection();
+    if(proj) projStr = proj <= tgt ? ` · projected ${fmtRaceT(proj)} — under target, hold it` : ` · projected ${fmtRaceT(proj)}, ${fmtRaceT(proj - tgt)} to shave`;
+  }
+  return {dur, speed, note:`Training for the ${g.label}${tgtStr} — session ${hist+1}: ${dur} min (+10% vs last)${distStr?`, last distance ${distStr}`:''}${projStr}`};
 }
 function showRunGoalChoice(type, label){
   hideInput();
@@ -1523,10 +1571,44 @@ function showRunGoalChoice(type, label){
     d.querySelectorAll('[data-rgoal]').forEach(x=>{ x.disabled = true; x.classList.add(x===b?'sel':'dim'); });
     state.runGoal = b.dataset.rgoal || null;
     state.runGoalAsked = true;
-    if(state.runGoal) state.memory.unshift({ic:'🎯', t:`Training goal: ${RACE_INFO[state.runGoal].label} — run/treadmill sessions build toward it`});
+    if(!state.runGoal){
+      state.runTarget = null;
+      state.memory = state.memory.filter(m=>!(m.ic==='🎯' && /Training goal:/.test(m.t)));
+      renderYou();
+      setTimeout(()=> cardioSetup(type, label), 380);
+      return;
+    }
+    setTimeout(()=> showRunTargetChoice(type, label), 380);
+  });
+}
+/* v122: optional target time — presets per race, custom mm:ss, or none */
+function showRunTargetChoice(type, label){
+  const g = RACE_INFO[state.runGoal];
+  const proj = raceProjection();
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span><b>${g.label}</b> locked in. Got a target time? I'll pace your sessions to get you to it — then under it.${proj ? ` Off your recent sessions you'd project about <b>${fmtRaceT(proj)}</b> today.` : ''}
+    <div class="btn-panel">
+      ${RACE_TGT_PRESETS[state.runGoal].map(t=>`<button class="opt-btn" data-rtgt="${t}">⏱ Sub ${t}</button>`).join('')}
+    </div>
+    <div class="ctl-row" style="margin-top:8px"><span class="ctl">Custom <input class="lb-f" id="rt-custom" inputmode="numeric" placeholder="${g.km <= 10 ? '27:30' : '1:52:00'}" style="width:74px"> <button class="adj-btn" id="rt-set" style="width:auto;padding:0 12px">Set</button></span></div>
+    <div class="btn-panel"><button class="opt-btn learn" data-rtgt="">No target — just finish strong</button></div>`;
+  chatEl.appendChild(d); scrollChat();
+  const done = (sec, btn)=>{
+    d.querySelectorAll('button').forEach(x=>{ x.disabled = true; x.classList.add(btn ? (x===btn ? 'sel' : 'dim') : 'dim'); });
+    const inp = d.querySelector('#rt-custom'); if(inp) inp.disabled = true;
+    state.runTarget = sec;
+    state.memory = state.memory.filter(m=>!(m.ic==='🎯' && /Training goal:/.test(m.t)));
+    state.memory.unshift({ic:'🎯', t:`Training goal: ${g.label}${sec ? ` — target ${fmtRaceT(sec)}` : ''} — sessions build toward it`});
     renderYou();
     setTimeout(()=> cardioSetup(type, label), 380);
-  });
+  };
+  d.querySelectorAll('[data-rtgt]').forEach(b=> b.onclick = ()=> done(b.dataset.rtgt ? parseRaceT(b.dataset.rtgt) : null, b));
+  d.querySelector('#rt-set').onclick = ()=>{
+    const sec = parseRaceT(d.querySelector('#rt-custom').value);
+    if(!sec){ toast('Enter a time like 25:00 or 1:45:00'); return; }
+    done(sec, null);
+  };
 }
 
 function cardioSetup(type, label){
@@ -1541,7 +1623,7 @@ function cardioSetup(type, label){
     <div class="ctl-row" style="flex-wrap:wrap;gap:12px">
       ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${dv(c)}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
     </div>
-    ${(type==='run'||type==='tread')?`<div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" id="rg-change" style="flex:1 1 100%;max-width:100%">🎯 ${state.runGoal?`Goal: ${RACE_INFO[state.runGoal].label}`:'No race goal'} — change</button></div>`:''}
+    ${(type==='run'||type==='tread')?`<div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" id="rg-change" style="flex:1 1 100%;max-width:100%">🎯 ${state.runGoal?`Goal: ${RACE_INFO[state.runGoal].label}${state.runTarget?' · sub '+fmtRaceT(state.runTarget):''}`:'No race goal'} — change</button></div>`:''}
     <div class="seg" style="margin:10px 0 0">
       <button class="sel" data-cmode="down">⏱ Countdown</button>
       <button data-cmode="up">∞ Open timer</button>
@@ -1555,6 +1637,15 @@ function cardioSetup(type, label){
   };
   const vals = Object.fromEntries(cfg.map(c=>[c.k, dv(c)]));
   vals.mode = 'down';
+  /* v123: heads-up when session time is dialed to (or below) the last logged one */
+  const nCds = state.strengthData['cd_'+type];
+  const lastDur = nCds && nCds.vals.length ? nCds.vals[nCds.vals.length-1] : null;
+  let durNudged = false;
+  const durNudge = ()=>{
+    if(lastDur == null || durNudged || !(vals.dur <= lastDur)) return;
+    durNudged = true;
+    toast(`⏱ Last ${name} session: ${+lastDur.toFixed(1)} min — matching or beating it is how you improve. Your call!`, 3600);
+  };
   d.querySelectorAll('[data-cmode]').forEach(mb=> mb.onclick = ()=>{
     vals.mode = mb.dataset.cmode;
     d.querySelectorAll('[data-cmode]').forEach(x=>x.classList.toggle('sel', x===mb));
@@ -1562,13 +1653,13 @@ function cardioSetup(type, label){
     if(dw) dw.style.display = vals.mode==='up' ? 'none' : '';
   });
   cfg.forEach(c=>{
-    d.querySelector(`[data-cdn="${c.k}"]`).onclick = ()=>{ vals[c.k] = Math.max(c.k==='inc' ? 0 : c.step, +(vals[c.k]-c.step).toFixed(1)); d.querySelector(`[data-cv="${c.k}"]`).value = vals[c.k]; };
+    d.querySelector(`[data-cdn="${c.k}"]`).onclick = ()=>{ vals[c.k] = Math.max(c.k==='inc' ? 0 : c.step, +(vals[c.k]-c.step).toFixed(1)); d.querySelector(`[data-cv="${c.k}"]`).value = vals[c.k]; if(c.k==='dur') durNudge(); };
     d.querySelector(`[data-cup="${c.k}"]`).onclick = ()=>{ vals[c.k] = +(vals[c.k]+c.step).toFixed(1); d.querySelector(`[data-cv="${c.k}"]`).value = vals[c.k]; };
     d.querySelector(`[data-cv="${c.k}"]`).onchange = ev=>{
       let v = parseFloat(ev.target.value);
       if(isNaN(v)){ ev.target.value = vals[c.k]; return; }
       v = c.k==='dur' ? Math.max(1, Math.round(v)) : c.k==='speed' ? Math.max(0.1, Math.round(v*10)/10) : c.k==='inc' ? Math.max(0, Math.round(v*2)/2) : Math.max(c.step, Math.round(v));
-      vals[c.k] = v; ev.target.value = v;
+      vals[c.k] = v; ev.target.value = v; if(c.k==='dur') durNudge();
     };
   });
   d.querySelector('#cs-back').onclick = ()=>{
@@ -1653,6 +1744,16 @@ function endCardio(){
   if(c.gps && c.dist > 0){
     checkMedals(c.dist >= 1.609 ? { km: c.dist, sec: c.sec, mileSec: Math.round(c.sec/(c.dist/1.609)) } : { km: c.dist, sec: c.sec });
   }
+  /* v122: covered the race distance under the target in a real session → celebrate */
+  if((c.type==='run' || c.type==='tread') && state.runGoal && state.runTarget){
+    const rg = RACE_INFO[state.runGoal];
+    const rkm = c.gps ? c.dist : cardioKm(c);
+    if(rkm >= rg.km * 0.99 && (c.sec * (rg.km / rkm)) <= state.runTarget){
+      toast(`🏆 ${rg.label} target beaten!`);
+      if(!state.memory.some(m=>m.ic==='🏆' && m.t.includes(`${rg.label} target`)))
+        state.memory.unshift({ic:'🏆', t:`Beat the ${rg.label} target (${fmtRaceT(state.runTarget)}) in a real session`});
+    }
+  }
   if(c.segIdx==null){
     state.workoutsWtd++;
     const dk = dayKey(simDate());
@@ -1699,9 +1800,9 @@ function endCardio(){
       + rows.map(r=>`<div class="sum-row"><span>${r.n}</span><span class="${r.delta===null?'na':r.delta>0?'up':r.delta<0?'dn':'na'}">${r.delta===null?'N/A — first time':(r.delta>0?'+':'')+r.delta+'% weight'}</span></div>`).join('')
       + `<div class="sum-row" style="font-weight:700"><span>🏃 ${CARDIO_TARGETS[c.type][0]} — ${mins}:${String(s).padStart(2,'0')}</span><span class="up">${c.gps? c.dist.toFixed(2)+' km' : (c.cfg.filter(cc=>cc.k!=='dur').map(cc=>`${cc.lab} ${c.vals[cc.k]}${cc.unit}`).join(' · ')||'timed')}</span></div>
          <div class="sum-row"><span>Cardio calories (est.)</span><span style="color:#eb6834;font-weight:700">🔥 ~${Math.round(c.cal)} kcal</span></div>
-         ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}`;
+         ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}${raceGoalRow(c)}`;
     openSummary();
-    pendingSummaryMsg = `Full session logged: <b>${state.sessionName}</b> (${liftMins} min · ${doneSets}/${totSets} sets) + <b>${CARDIO_TARGETS[c.type][0]}</b> (${mins} min ${s}s) — <b>~${liftCal + Math.round(c.cal)} kcal</b> total${maxHr?`, peak ♥ ${maxHr}`:''}. Saved to your training calendar.`;
+    pendingSummaryMsg = `Full session logged: <b>${state.sessionName}</b> (${liftMins} min · ${doneSets}/${totSets} sets) + <b>${CARDIO_TARGETS[c.type][0]}</b> (${mins} min ${s}s) — <b>~${liftCal + Math.round(c.cal)} kcal</b> total${maxHr?`, peak ♥ ${maxHr}`:''}. Saved to your training calendar.${raceGoalMsg(c)}`;
     toast(`🏁 ${state.sessionName} + cardio complete`);
     state.cardio = null;
     renderTrain();
@@ -1718,12 +1819,12 @@ function endCardio(){
     + (c.gps? `<div class="sum-row"><span>Avg pace</span><span class="up">${fmtPace(c.sec/Math.max(c.dist,0.001))}/km</span></div>` : `<div class="sum-row"><span>Settings</span><span class="na">${cardioTargetStr(c.cfg, c.vals, c.mode)}</span></div>`)
     + `<div class="sum-row"><span>Calories burned (session est.)</span><span style="color:#eb6834;font-weight:700">🔥 ~${Math.round(c.cal)} kcal</span></div>
        ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}
-       <div class="sum-row"><span>vs last ${c.name}</span><span class="na">N/A — first logged session</span></div>`;
+       ${raceGoalRow(c)}<div class="sum-row"><span>vs last ${c.name}</span><span class="na">N/A — first logged session</span></div>`;
   openSummary();
 
   pendingSummaryMsg = c.gps
-    ? `${pick(flav().open)} <b>${c.name}</b> logged: <b>${c.dist.toFixed(2)} km</b> in ${mins}:${String(s).padStart(2,'0')} · avg <b>${fmtPace(c.sec/Math.max(c.dist,0.001))}/km</b> ${maxHr?` · peak ♥ ${maxHr}`:''}.\n${miniRoute(c.dist.toFixed(2))}\nRoute saved — pace trends live on the Progress tab.`
-    : `${pick(flav().open)} <b>${c.name}</b> logged: ${mins} min ${s}s at ${cardioTargetStr(c.cfg, c.vals, c.mode)} ${maxHr?`· peak ♥ ${maxHr}. `:''}Counts toward your daily steps and deficit.`;
+    ? `${pick(flav().open)} <b>${c.name}</b> logged: <b>${c.dist.toFixed(2)} km</b> in ${mins}:${String(s).padStart(2,'0')} · avg <b>${fmtPace(c.sec/Math.max(c.dist,0.001))}/km</b> ${maxHr?` · peak ♥ ${maxHr}`:''}.\n${miniRoute(c.dist.toFixed(2))}\nRoute saved — pace trends live on the Progress tab.${raceGoalMsg(c)}`
+    : `${pick(flav().open)} <b>${c.name}</b> logged: ${mins} min ${s}s at ${cardioTargetStr(c.cfg, c.vals, c.mode)} ${maxHr?`· peak ♥ ${maxHr}. `:''}Counts toward your daily steps and deficit.${raceGoalMsg(c)}`;
   toast('🏃 Cardio logged');
   state.cardio = null;
   renderTrain();
@@ -1888,7 +1989,7 @@ const PERSONAS = {
     open:['Noted — logging that.','Interesting data point.','Processing your inputs.'],
     push:'Research shows consistency beats intensity for long-term hypertrophy. Adherence is the variable that matters most.',
     close:['The data supports your trajectory.','Signal over noise — keep logging.']},
-  tough:{e:'🔥', t:'Tough Love', d:'Direct, no excuses, high standards',
+  tough:{e:'🔥', t:'Tough', d:'Direct, no excuses, high standards',
     open:['Alright, listen.','Good. Now stay locked in.','No shortcuts today.'],
     push:'You didn\'t come this far to be average. Get it done.',
     close:['Excuses don\'t build muscle.','Earn it.']},
@@ -1896,7 +1997,7 @@ const PERSONAS = {
     open:['Copy that.','Roger.','Understood, soldier.'],
     push:'Discipline equals freedom. Execute the mission — no deviations.',
     close:['Dismissed. Report back after training.','Stay mission-ready.']},
-  bodybuilder:{e:'🏆', t:'Elite Bodybuilder', d:'Old-school iron wisdom, mind-muscle',
+  bodybuilder:{e:'🏆', t:'Bodybuilder', d:'Old-school iron wisdom, mind-muscle',
     open:['Yeah buddy!','Light weight!','That\'s what I\'m talking about.'],
     push:'Everybody wants to be a bodybuilder, but nobody wants to lift this heavy-ass weight. Feel every rep.',
     close:['Ain\'t nothin\' but a peanut.','Stay hungry.']},
@@ -1967,7 +2068,7 @@ function answerQuestion(t){
   if(/(jeff nippard|dr\.?\s?mike|israetel|renaissance periodization|\brp\b|source|where.{0,15}(info|data)|research|stud(y|ies)|science|evidence|peer.?review)/.test(t))
     return `Everything I program is anchored to peer-reviewed exercise and nutrition science:\n\n• <b>Volume</b>: ~10–20 hard sets/muscle/week (dose-response meta-analyses, Schoenfeld et al.)\n• <b>Protein</b>: 1.6–2.2 g/kg/day (Morton et al. 2018, BJSM meta-analysis — your ${state.macros.protein.t} g target sits here)\n• <b>Rep targets</b>: anywhere from 5–30 reps grows muscle similarly when sets approach failure (Schoenfeld et al. 2021)\n• <b>Long-muscle-length work</b>: lengthened-position training matches or beats full ROM in recent trials and 2024–25 meta-analyses (Maeo et al.; Wolf et al. 2025) — why your plan favors incline curls, overhead extensions, and seated leg curls\n• <b>Rest</b>: ≥2 min on compounds beats short rest (Grgic et al. 2018)\n\n<i>In the full product every recommendation links to its DOI so you can read the source yourself.</i>`;
   if(/(training rules|my rules|progression rule|when.{0,15}(increase|add) weight|how long.{0,15}rest|rest between)/.test(t))
-    return `Your training rules, as I have them:\n\n• <b>Compounds</b> — 4 × 8–10, rest 2–3 min\n• <b>Isolation</b> — 4 × 10–12, rest 60–90 s\n• <b>Progression</b> — add weight only when <i>every</i> set reaches the top of the rep range with good form\n• <b>Tempo</b> — 2–3 s controlled eccentrics\n• <b>Cardio</b> — incline treadmill after every lift: incline 6+, 3.0–3.5 mph, 30 min\n• <b>Deload</b> — only if performance and recovery noticeably decline\n\nI enforce these automatically — rest timers, targets, and weight jumps all follow them.`;
+    return `Your training rules, as I have them:\n\n• <b>Compounds</b> — 3–4 × 8–10, rest 2 min\n• <b>Isolation</b> — 3 × 10–15, rest 60–90 s\n• <b>Volume cap</b> — ≤25 working sets per session (abs & cardio don't count)\n• <b>Progression</b> — add weight only when <i>every</i> set reaches the top of the rep range with good form\n• <b>Tempo</b> — 2–3 s controlled eccentrics\n• <b>Cardio</b> — incline treadmill after every lift: incline 6+, 3.0–3.5 mph, 30 min\n• <b>Deload</b> — only if performance and recovery noticeably decline\n\nI enforce these automatically — rest timers, targets, and weight jumps all follow them.`;
   if(/(how many|how much).{0,15}steps|step goal|daily activity/.test(t))
     return `Your daily activity goal is <b>10,000–12,000 steps</b>, plus the 30-min incline walk after every lift. On Sundays the walk <i>is</i> the workout: 8–12K steps easy.`;
   if(/progressive overload/.test(t))
@@ -2010,12 +2111,20 @@ function showObForm(edit){
   hideInput();
   const d = document.createElement('div');
   d.className = 'msg bot';
-  d.innerHTML = `<span class="tag">Your AI Performance Coach</span>Welcome. 👋 I'm your AI performance coach — training, nutrition, sleep, and recovery in one place.\n\nSet up your profile — after this, everything happens through conversation.
+  d.innerHTML = `<span class="tag">Your AI Performance Coach</span>Welcome. 👋 I'm <b>NAVI</b> — your AI performance coach. Training, nutrition, sleep and recovery in one place.\n\nJust your name and we're rolling — everything else is optional, now or later.
     <div class="ob-form">
       <div class="ob-row">
         <div class="ob-field"><label>Your name</label><input id="ob-name" placeholder="e.g. Brian"></div>
-        <div class="ob-field"><label>Coach's name</label><input id="ob-coach" placeholder="e.g. NAVI, Atlas, Rex"></div>
       </div>
+      <div class="ob-row">
+        <div class="ob-field"><label>Coaching personality</label>
+          <select id="ob-persona">${Object.entries(PERSONAS).map(([k,p])=>`<option value="${k}" ${state.personality===k?'selected':''}>${p.e} ${p.t}</option>`).join('')}</select></div>
+        <div class="ob-field"><label>Coach — male / female</label>
+          <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>Female</option></select></div>
+      </div>
+      <div style="text-align:center;margin:2px 0 0"><svg id="ob-spr-prev" viewBox="1 0.4 14 13.6" width="136" height="132" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:6px;display:block;margin:0 auto"></svg><div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:4px">Your coach · live preview</div></div>
+      <button type="button" class="see-all" id="ob-more" style="margin:0">${edit?'▴ Profile details':'➕ Add your details — age, height, weight (optional)'}</button>
+      <div id="ob-optional" style="display:${edit?'':'none'}">
       <div class="ob-row">
         <div class="ob-field"><label>Age</label><div class="ob-spin"><input id="ob-age" inputmode="numeric" placeholder="29"><div class="spin-col"><button type="button" data-obstep="a:1">▲</button><button type="button" data-obstep="a:-1">▼</button></div></div></div>
         <div class="ob-field"><label>Height</label><div class="ob-spin"><input id="ob-height" placeholder="5'11&quot;"><div class="spin-col"><button type="button" data-obstep="h:1">▲</button><button type="button" data-obstep="h:-1">▼</button></div></div></div>
@@ -2030,16 +2139,18 @@ function showObForm(edit){
         <div class="ob-field"><label>Nationality <span style="text-transform:none;font-weight:500">(optional)</span></label>
           <select id="ob-nat"><option value="">Select…</option>${['United States','Mexico','Canada','Brazil','Argentina','Colombia','United Kingdom','Ireland','France','Germany','Spain','Italy','Portugal','Netherlands','Sweden','Norway','Poland','Ukraine','Turkey','Israel','Saudi Arabia','UAE','Egypt','Morocco','Nigeria','Ghana','Kenya','South Africa','India','Pakistan','China','Japan','South Korea','Philippines','Vietnam','Thailand','Indonesia','Australia','New Zealand'].map(c=>`<option>${c}</option>`).join('')}<option>Other</option><option>Prefer not to say</option></select></div>
       </div>
-      <div class="ob-row">
-        <div class="ob-field"><label>Coaching personality</label>
-          <select id="ob-persona">${Object.entries(PERSONAS).map(([k,p])=>`<option value="${k}" ${state.personality===k?'selected':''}>${p.e} ${p.t}</option>`).join('')}</select></div>
-        <div class="ob-field"><label>Coach — male / female</label>
-          <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>Female</option></select></div>
       </div>
-      <div style="text-align:center;margin:2px 0 0"><svg id="ob-spr-prev" viewBox="1 0.4 14 13.6" width="136" height="132" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:6px;display:block;margin:0 auto"></svg><div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:4px">Your coach · live preview</div></div>
       <button class="ob-submit" id="ob-go">Create profile →</button>
     </div>`;
   chatEl.appendChild(d); scrollChat();
+  const obMore = d.querySelector('#ob-more');
+  if(obMore) obMore.onclick = ()=>{
+    const opt = d.querySelector('#ob-optional');
+    const open = opt.style.display !== 'none';
+    opt.style.display = open ? 'none' : '';
+    obMore.textContent = open ? '➕ Add your details — age, height, weight (optional)' : '▴ Hide details';
+    scrollChat();
+  };
   const wdMap = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
   d.querySelectorAll('.wd-chip').forEach(c=> c.onclick = ()=> c.classList.toggle('sel'));
   /* v83: coach personality + build chosen at intake, with a live sprite preview */
@@ -2090,7 +2201,6 @@ function showObForm(edit){
   });
   if(edit){
     d.querySelector('#ob-name').value = state.user.name || '';
-    d.querySelector('#ob-coach').value = state.coachName || '';
     d.querySelector('#ob-age').value = state.user.age || '';
     d.querySelector('#ob-height').value = state.user.height || '';
     d.querySelector('#ob-weight').value = state.user.weight ? (state.units==='kg' ? Math.round(state.user.weight*LB2KG)+' kg' : state.user.weight+' lb') : '';
@@ -2100,9 +2210,8 @@ function showObForm(edit){
   d.querySelector('#ob-go').onclick = ()=>{
     const v = id => d.querySelector(id).value.trim();
     if(edit){
-      const nm = esc(v('#ob-name')).slice(0,40), cn = esc(v('#ob-coach')).slice(0,40);
+      const nm = esc(v('#ob-name')).slice(0,40);
       if(nm){ state.user.name = nm; state.profileSet.name = true; }
-      if(cn) state.coachName = cn.replace(/\b\w/g,c=>c.toUpperCase());
       if(v('#ob-age')){ const a = parseInt(v('#ob-age')); if(a > 0){ state.user.age = Math.min(120, a); state.profileSet.age = true; } }
       if(v('#ob-height') && !/-/.test(v('#ob-height'))){ state.user.height = esc(v('#ob-height')).slice(0,12); state.profileSet.height = true; }
       if(v('#ob-gender')) state.user.gender = v('#ob-gender');
@@ -2119,11 +2228,10 @@ function showObForm(edit){
       setTimeout(()=>showFlow('root'), 900);
       return;
     }
-    if(!v('#ob-name') || !v('#ob-coach')){ toast('Name and coach name are required'); return; }
-    ob.name = esc(v('#ob-name')).slice(0,40); ob.coach = esc(v('#ob-coach')).slice(0,40);
+    if(!v('#ob-name')){ toast('Your name is required'); return; }
+    ob.name = esc(v('#ob-name')).slice(0,40);
     state.user.name = ob.name;
     state.profileSet.name = true;
-    state.coachName = ob.coach.replace(/\b\w/g,c=>c.toUpperCase());
     if(v('#ob-age')){ const a = parseInt(v('#ob-age')); if(a > 0){ state.user.age = Math.min(120, a); state.profileSet.age = true; } }
     if(v('#ob-height') && !/-/.test(v('#ob-height'))){ state.user.height = v('#ob-height'); state.profileSet.height = true; }
     if(v('#ob-gender')) state.user.gender = v('#ob-gender');
@@ -2147,7 +2255,7 @@ function showObForm(edit){
 }
 
 /* ---------- returning user: pick up right where we left off ---------- */
-/* ---------- v33: how NAVI reaches you — mock lock-screen ---------- */
+/* ---------- PR celebration overlay (confetti + trophy) ---------- */
 /* ---------- v33: PR celebration — every previous version of you couldn't lift this ---------- */
 function celebratePR(e, w){
   const ov = document.createElement('div');
@@ -2221,17 +2329,17 @@ function sprTheme(){
 const DEFAULT_SPR = {...state.spr};
 const THEME_DEFAULTS = {
   athlete:   {},
-  scientist: {coat:'#f2f2ec', glasses:'#2f3542', skin:'#7a4a2b', hair:'#241812'},
+  scientist: {coat:'#f2f2ec', glasses:'#2f3542', skin:'#7a4a2b', hair:'#241812', pants:'#2b3a5e'},
   general:   {uniform:'#5b6e3f', hat:'#46552f', strap:'#4a3826', pants:'#3e4a2b'},
   arnold:    {hair:'#e8c14b', skin:'#dda173', shirt:'#2b2b2b', trunks:'#7a3df0'},
   punk:      {hair:'#e0347c', vest:'#1c1c1c', studs:'#c9ced6', flannel:'#c0392b', shirt:'#f2f2ee'},
 };
 const SPR_ROWS = {
   athlete:   [['skin','Skin tone'],['hair','Hair'],['shirt','Shirt'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
-  scientist: [['skin','Skin tone'],['hair','Hair'],['glasses','Lab visor'],['coat','Lab coat'],['shirt','Shirt under coat'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
+  scientist: [['skin','Skin tone'],['hair','Hair'],['glasses','Lab visor'],['coat','Lab coat'],['shirt','Shirt under coat'],['pants','Slacks'],['socks','Socks'],['weights','Weights']],
   general:   [['skin','Skin tone'],['hair','Buzz cut'],['uniform','Uniform'],['strap','Bullet strap'],['pants','Trousers'],['socks','Socks'],['weights','Weights']],
   arnold:    [['skin','Skin tan'],['hair','Hair'],['shirt','Tank top'],['trunks','Shorts'],['socks','Socks'],['weights','Weights']],
-  punk:      [['skin','Skin tone'],['hair','Mohawk'],['vest','Leather vest'],['studs','Spikes & studs'],['flannel','Waist flannel'],['shirt','Undershirt'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
+  punk:      [['skin','Skin tone'],['hair','Mohawk'],['vest','Leather vest'],['studs','Spikes & studs'],['flannel','Waist flannel'],['pants','Cut-off jorts'],['shirt','Undershirt'],['socks','Socks'],['weights','Weights']],
 };
 /* scenes receive a themed view of the sprite: outfit colors swap in by character */
 function themedSpr(){
@@ -2362,11 +2470,18 @@ function bodyCore(s){
   }
   const bottom = th==='arnold' ? (s.trunks||s.pants) : s.pants;
   const legFill = th==='arnold' ? sk : bottom;
-  return headPx(s,7,4) + torso + `
+  /* v125: punk wears cut-off jorts — denim stops high, white frayed edge, bare legs */
+  const legs = th==='punk' ? `
     <rect x="6" y="9" width="4" height="1" fill="${bottom}"/>
-    <rect x="6" y="10" width="1" height="2" fill="${legFill}"/><rect x="9" y="10" width="1" height="2" fill="${legFill}"/>
+    <rect x="6" y="10" width="1" height="0.7" fill="${bottom}"/><rect x="9" y="10" width="1" height="0.7" fill="${bottom}"/>
+    <rect x="6" y="10.7" width="0.4" height="0.45" fill="#fcfcfb"/><rect x="6.55" y="10.7" width="0.45" height="0.28" fill="#fcfcfb"/>
+    <rect x="9" y="10.7" width="0.45" height="0.28" fill="#fcfcfb"/><rect x="9.55" y="10.7" width="0.45" height="0.45" fill="#fcfcfb"/>
+    <rect x="6" y="11.15" width="1" height="0.85" fill="${sk}"/><rect x="9" y="11.15" width="1" height="0.85" fill="${sk}"/>` : `
+    <rect x="6" y="9" width="4" height="1" fill="${bottom}"/>
+    <rect x="6" y="10" width="1" height="2" fill="${legFill}"/><rect x="9" y="10" width="1" height="2" fill="${legFill}"/>`;
+  return headPx(s,7,4) + torso + legs + `
     <rect x="6" y="12" width="1" height="1" fill="${s.socks}"/><rect x="9" y="12" width="1" height="1" fill="${s.socks}"/>
-    <rect x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>`;
+    <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>`;
 }
 const SCENES = {
   /* overhead press — the classic (also the You-tab default) */
@@ -2383,7 +2498,7 @@ const SCENES = {
       <rect x="6" y="9" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="10" width="1" height="2" fill="${s.pants}"/><rect x="9" y="10" width="1" height="2" fill="${s.pants}"/>
       <rect x="6" y="12" width="1" height="1" fill="${s.socks}"/><rect x="9" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* front double biceps — Train tab, between sessions */
   flex: s => { const sk = sprSkin(s); return `
@@ -2401,14 +2516,14 @@ const SCENES = {
       ${headPx(s,11,6,'r')}
       <rect x="4" y="8" width="7" height="2" fill="${s.shirt}"/>
       <rect x="1" y="8" width="3" height="1" fill="${s.pants}"/>
-      <rect x="1" y="9" width="1" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="1" y="9" width="1" height="1" fill="#fcfcfb"/>
       <rect x="5" y="10" width="1" height="3" fill="${sk}"/><rect x="9" y="10" width="1" height="3" fill="${sk}"/>
     </g>
     <g id="sC">
       ${headPx(s,11,9,'r')}
       <rect x="4" y="11" width="7" height="2" fill="${s.shirt}"/>
       <rect x="1" y="11" width="3" height="1" fill="${s.pants}"/>
-      <rect x="1" y="12" width="1" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="1" y="12" width="1" height="1" fill="#fcfcfb"/>
       <rect x="5" y="13" width="1" height="1" fill="${sk}"/><rect x="9" y="13" width="1" height="1" fill="${sk}"/>
     </g>`; },
   /* jump rope — You tab */
@@ -2444,7 +2559,7 @@ const SCENES = {
       <rect x="11" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="11" y="9" width="1" height="3" fill="${s.pants}"/><rect x="13" y="9" width="1" height="3" fill="${s.pants}"/>
       <rect x="11" y="12" width="1" height="1" fill="${s.socks}"/><rect x="13" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="10" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="13" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="10" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="13" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       <rect x="7" y="3" width="1" height="1" fill="#eef4ee"/>
@@ -2463,7 +2578,7 @@ const SCENES = {
       ${headPx(s,3,9)}
       <rect x="5" y="9" width="4" height="2" fill="${s.shirt}"/>
       <rect x="9" y="9" width="2" height="2" fill="${s.pants}"/>
-      <rect x="11" y="9" width="1" height="1" fill="${s.socks}"/><rect x="12" y="9" width="1" height="2" fill="#fcfcfb"/>
+      <rect x="11" y="9" width="1" height="1" fill="${s.socks}"/><rect class="sh" x="12" y="9" width="1" height="2" fill="#fcfcfb"/>
     </g>
     <g id="sB">
       <rect x="6" y="7" width="1" height="2" fill="${sk}"/><rect x="8" y="7" width="1" height="2" fill="${sk}"/>
@@ -2497,8 +2612,8 @@ const SCENES = {
       <rect x="7" y="5" width="3" height="3" fill="${s.shirt}"/>
       <rect x="10" y="6" width="1" height="1" fill="${sk}"/><rect x="6" y="6" width="1" height="1" fill="${sk}"/>
       <rect x="7" y="8" width="3" height="1" fill="${s.pants}"/>
-      <rect x="9" y="9" width="1" height="2" fill="${s.pants}"/><rect x="10" y="11" width="2" height="1" fill="#fcfcfb"/>
-      <rect x="6" y="9" width="1" height="2" fill="${s.pants}"/><rect x="5" y="11" width="2" height="1" fill="#fcfcfb"/>
+      <rect x="9" y="9" width="1" height="2" fill="${s.pants}"/><rect class="sh" x="10" y="11" width="2" height="1" fill="#fcfcfb"/>
+      <rect x="6" y="9" width="1" height="2" fill="${s.pants}"/><rect class="sh" x="5" y="11" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* freestyle in open water */
   swim: s => { const sk = sprSkin(s); return `
@@ -2528,7 +2643,7 @@ const SCENES = {
       <rect x="10" y="5" width="1" height="2" fill="${sk}"/>
       <rect x="5" y="6" width="2" height="2" fill="${s.pants}"/>
       <rect x="6" y="8" width="1" height="2" fill="${s.pants}"/>
-      <rect x="6" y="10" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="6" y="10" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* stairmaster climb */
   stair: s => { const sk = sprSkin(s); return `
@@ -2542,9 +2657,9 @@ const SCENES = {
       <rect x="7" y="4" width="3" height="3" fill="${s.shirt}"/>
       <rect x="10" y="4" width="1" height="1" fill="${sk}"/>
       <rect x="8" y="7" width="1" height="3" fill="${s.pants}"/>
-      <rect x="8" y="10" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="8" y="10" width="2" height="1" fill="#fcfcfb"/>
       <rect x="10" y="7" width="1" height="1" fill="${s.pants}"/>
-      <rect x="10" y="8" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="10" y="8" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* elliptical glide */
   ellip: s => { const sk = sprSkin(s); return `
@@ -2558,7 +2673,7 @@ const SCENES = {
       <rect x="5" y="4" width="3" height="3" fill="${s.shirt}"/>
       <rect x="8" y="5" width="3" height="1" fill="${sk}"/>
       <rect x="5" y="7" width="1" height="4" fill="${s.pants}"/><rect x="7" y="7" width="1" height="3" fill="${s.pants}"/>
-      <rect x="4" y="11" width="2" height="1" fill="#fcfcfb"/><rect x="7" y="10" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="4" y="11" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="7" y="10" width="2" height="1" fill="#fcfcfb"/>
       <rect x="4" y="12" width="3" height="1" fill="#1f2430"/><rect x="7" y="11" width="3" height="1" fill="#1f2430"/>
     </g>`; },
   /* ---------- v54: one animation per muscle group ---------- */
@@ -2569,13 +2684,13 @@ const SCENES = {
       ${headPx(s,2,10)}
       <rect x="4" y="11" width="5" height="2" fill="${s.shirt}"/>
       <rect x="9" y="9" width="1" height="3" fill="${s.pants}"/><rect x="10" y="9" width="1" height="1" fill="${s.pants}"/>
-      <rect x="10" y="11" width="2" height="2" fill="#fcfcfb"/>
+      <rect class="sh" x="10" y="11" width="2" height="2" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,4,8)}
       <rect x="4" y="10" width="2" height="1" fill="${s.shirt}"/><rect x="5" y="11" width="2" height="1" fill="${s.shirt}"/><rect x="6" y="12" width="3" height="1" fill="${s.shirt}"/>
       <rect x="9" y="9" width="1" height="3" fill="${s.pants}"/><rect x="10" y="9" width="1" height="1" fill="${s.pants}"/>
-      <rect x="10" y="11" width="2" height="2" fill="#fcfcfb"/>
+      <rect class="sh" x="10" y="11" width="2" height="2" fill="#fcfcfb"/>
     </g>`; },
   /* seated cable row — Back / Horizontal Pull */
   mgRow: s => { const sk = sprSkin(s); return `
@@ -2590,7 +2705,7 @@ const SCENES = {
       <rect x="6" y="7" width="3" height="1" fill="${sk}"/>
       <rect x="9" y="7" width="3" height="0.7" fill="#9aa4b2"/>
       <rect x="4" y="9" width="2" height="2" fill="${s.pants}"/><rect x="6" y="9" width="3" height="1" fill="${s.pants}"/>
-      <rect x="9" y="10" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9" y="10" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,2,4,'r')}
@@ -2598,7 +2713,7 @@ const SCENES = {
       <rect x="5" y="7" width="1" height="1" fill="${sk}"/>
       <rect x="6" y="7" width="6" height="0.7" fill="#9aa4b2"/>
       <rect x="4" y="9" width="2" height="2" fill="${s.pants}"/><rect x="6" y="9" width="3" height="1" fill="${s.pants}"/>
-      <rect x="9" y="10" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9" y="10" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* dead-hang pull-up — Back / Vertical Pull */
   mgPullup: s => { const sk = sprSkin(s); return `
@@ -2612,7 +2727,7 @@ const SCENES = {
       <rect x="6" y="7" width="4" height="3" fill="${s.shirt}"/>
       <rect x="6" y="10" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="11" width="1" height="2" fill="${s.pants}"/><rect x="9" y="11" width="1" height="2" fill="${s.pants}"/>
-      <rect x="6" y="13" width="1" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="1" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="6" y="13" width="1" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="1" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       <rect x="5" y="3" width="1" height="1" fill="${sk}"/><rect x="10" y="3" width="1" height="1" fill="${sk}"/>
@@ -2620,7 +2735,7 @@ const SCENES = {
       <rect x="6" y="4.6" width="4" height="3" fill="${s.shirt}"/>
       <rect x="6" y="7.6" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.6" width="1" height="2" fill="${s.pants}"/><rect x="9" y="8.6" width="1" height="2" fill="${s.pants}"/>
-      <rect x="5.4" y="10.2" width="1.2" height="1" fill="#fcfcfb"/><rect x="9.4" y="10.2" width="1.2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.4" y="10.2" width="1.2" height="1" fill="#fcfcfb"/><rect class="sh" x="9.4" y="10.2" width="1.2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* calf raises on the block — Calves */
   mgCalf: s => { const sk = sprSkin(s); return `
@@ -2635,7 +2750,7 @@ const SCENES = {
       <rect x="4.5" y="8" width="1.5" height="1" fill="${s.weights}"/><rect x="10" y="8" width="1.5" height="1" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="2" fill="${s.pants}"/><rect x="9" y="9" width="1" height="2" fill="${s.pants}"/>
-      <rect x="5.5" y="11" width="2" height="1" fill="#fcfcfb"/><rect x="8.5" y="11" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.5" y="11" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.5" y="11" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2)}
@@ -2644,7 +2759,7 @@ const SCENES = {
       <rect x="4.5" y="7" width="1.5" height="1" fill="${s.weights}"/><rect x="10" y="7" width="1.5" height="1" fill="${s.weights}"/>
       <rect x="6" y="7" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8" width="1" height="2" fill="${s.pants}"/><rect x="9" y="8" width="1" height="2" fill="${s.pants}"/>
-      <rect x="5.8" y="10" width="1.6" height="1" fill="#fcfcfb"/><rect x="8.8" y="10" width="1.6" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.8" y="10" width="1.6" height="1" fill="#fcfcfb"/><rect class="sh" x="8.8" y="10" width="1.6" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* cable fly squeeze — Chest / Fly */
   mgFly: s => { const sk = sprSkin(s); return `
@@ -2655,7 +2770,7 @@ const SCENES = {
       <rect x="2" y="4.6" width="1" height="1.6" fill="${s.weights}"/><rect x="13" y="4.6" width="1" height="1.6" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,3)}
@@ -2664,7 +2779,7 @@ const SCENES = {
       <rect x="6.4" y="3.8" width="1.2" height="1.2" fill="${s.weights}"/><rect x="8.4" y="3.8" width="1.2" height="1.2" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* plate front raise — Front Delts */
   mgFront: s => { const sk = sprSkin(s); return `
@@ -2676,7 +2791,7 @@ const SCENES = {
       <rect x="6.6" y="8" width="1.8" height="1.8" fill="${s.weights}"/>
       <rect x="4" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="4" y="9" width="1" height="3" fill="${s.pants}"/><rect x="6" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="3.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="5.5" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="3.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="5.5" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,5,3,'r')}
@@ -2685,7 +2800,7 @@ const SCENES = {
       <rect x="10" y="4.8" width="1.8" height="1.8" fill="${s.weights}"/>
       <rect x="4" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="4" y="9" width="1" height="3" fill="${s.pants}"/><rect x="6" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="3.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="5.5" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="3.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="5.5" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* barbell hip thrust off the bench — Glutes */
   mgGlute: s => { const sk = sprSkin(s); return `
@@ -2699,7 +2814,7 @@ const SCENES = {
       <rect x="7" y="10" width="2" height="1" fill="${s.pants}"/>
       <rect x="7" y="8" width="2" height="2" fill="${s.weights}"/>
       <rect x="9" y="10" width="1" height="3" fill="${s.pants}"/>
-      <rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,2,5.6)}
@@ -2707,7 +2822,7 @@ const SCENES = {
       <rect x="7" y="8" width="2" height="1" fill="${s.pants}"/>
       <rect x="7" y="6" width="2" height="2" fill="${s.weights}"/>
       <rect x="9" y="9" width="1" height="4" fill="${s.pants}"/>
-      <rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* RDL hip hinge — Hamstrings */
   mgHam: s => { const sk = sprSkin(s); return `
@@ -2719,7 +2834,7 @@ const SCENES = {
       <rect x="7.6" y="8" width="2" height="2" fill="${s.weights}"/>
       <rect x="5" y="7" width="3" height="1" fill="${s.pants}"/>
       <rect x="5" y="8" width="1" height="4" fill="${s.pants}"/><rect x="7" y="8" width="1" height="4" fill="${s.pants}"/>
-      <rect x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,9,4,'r')}
@@ -2727,7 +2842,7 @@ const SCENES = {
       <rect x="9" y="7" width="1" height="2" fill="${sk}"/>
       <rect x="8.4" y="9" width="2" height="2" fill="${s.weights}"/>
       <rect x="5" y="7.4" width="1" height="4.6" fill="${s.pants}"/><rect x="6.6" y="7.4" width="1" height="4.6" fill="${s.pants}"/>
-      <rect x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="6.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="6.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* bent-over reverse fly — Rear Delts */
   mgRear: s => { const sk = sprSkin(s); return `
@@ -2738,7 +2853,7 @@ const SCENES = {
       <rect x="5" y="7.6" width="1" height="2" fill="${sk}"/><rect x="7.6" y="7.6" width="1" height="2" fill="${sk}"/>
       <rect x="4.4" y="9.6" width="1.6" height="1" fill="${s.weights}"/><rect x="7.2" y="9.6" width="1.6" height="1" fill="${s.weights}"/>
       <rect x="9" y="7" width="1" height="6" fill="${s.pants}"/>
-      <rect x="8.8" y="12" width="2.2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="8.8" y="12" width="2.2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,3,4,'r')}
@@ -2746,7 +2861,7 @@ const SCENES = {
       <rect x="4.6" y="7.2" width="1" height="1" fill="${sk}"/><rect x="7.8" y="7.2" width="1" height="1" fill="${sk}"/>
       <rect x="2.8" y="6.4" width="1.6" height="1" fill="${s.weights}"/><rect x="9" y="6.4" width="1.6" height="1" fill="${s.weights}"/>
       <rect x="9" y="7" width="1" height="6" fill="${s.pants}"/>
-      <rect x="8.8" y="12" width="2.2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="8.8" y="12" width="2.2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* dumbbell lateral raise — Side Delts */
   mgSide: s => { const sk = sprSkin(s); return `
@@ -2758,7 +2873,7 @@ const SCENES = {
       <rect x="4.4" y="8" width="1.6" height="1" fill="${s.weights}"/><rect x="10" y="8" width="1.6" height="1" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,3)}
@@ -2767,7 +2882,7 @@ const SCENES = {
       <rect x="2" y="4.2" width="1" height="1.8" fill="${s.weights}"/><rect x="13" y="4.2" width="1" height="1.8" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* heavy barbell shrug — Traps */
   mgTrap: s => { const sk = sprSkin(s); return `
@@ -2780,7 +2895,7 @@ const SCENES = {
       <rect x="2" y="8.4" width="1" height="2.2" fill="${s.weights}"/><rect x="13" y="8.4" width="1" height="2.2" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,3)}
@@ -2791,7 +2906,7 @@ const SCENES = {
       <rect x="2" y="7.4" width="1" height="2.2" fill="${s.weights}"/><rect x="13" y="7.4" width="1" height="2.2" fill="${s.weights}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* cable pushdown lockout — Triceps */
   mgTri: s => { const sk = sprSkin(s); return `
@@ -2808,7 +2923,7 @@ const SCENES = {
       <rect x="12.4" y="2.6" width="0.7" height="2" fill="#9aa4b2"/>
       <rect x="5" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="5" y="9" width="1" height="3" fill="${s.pants}"/><rect x="7" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,6,3,'r')}
@@ -2818,7 +2933,7 @@ const SCENES = {
       <rect x="12.4" y="2.6" width="0.7" height="5" fill="#9aa4b2"/>
       <rect x="5" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="5" y="9" width="1" height="3" fill="${s.pants}"/><rect x="7" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="4.5" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="6.5" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* toweling off on the bench — rest pauses & post-workout summary */
   recover: s => { const sk = sprSkin(s); return `
@@ -2839,7 +2954,7 @@ const SCENES = {
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="10" width="1" height="3" fill="${s.pants}"/><rect x="9" y="10" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5.4" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="8.6" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.4" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.6" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2.6)}
@@ -2852,7 +2967,7 @@ const SCENES = {
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="10" width="1" height="3" fill="${s.pants}"/><rect x="9" y="10" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5.4" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="8.6" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.4" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.6" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* v61: loading plates on the bar — Train tab, between sessions */
   plateload: s => { const sk = sprSkin(s); return `
@@ -2870,7 +2985,7 @@ const SCENES = {
       <rect x="7" y="4.4" width="1.5" height="3.6" fill="${s.weights}"/>
       <rect x="10" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="10" y="9" width="1" height="4" fill="${s.pants}"/><rect x="12" y="9" width="1" height="4" fill="${s.pants}"/>
-      <rect x="9.6" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="11.6" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9.6" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="11.6" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,11,3)}
@@ -2879,7 +2994,7 @@ const SCENES = {
       <rect x="5" y="5.5" width="1.5" height="4" fill="${s.weights}"/>
       <rect x="10" y="8" width="3" height="1" fill="${s.pants}"/>
       <rect x="10" y="9" width="1" height="4" fill="${s.pants}"/><rect x="12" y="9" width="1" height="4" fill="${s.pants}"/>
-      <rect x="9.6" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="11.6" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9.6" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="11.6" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* v61: scale victory — Progress tab */
   scalewin: s => { const sk = sprSkin(s); return `
@@ -2894,7 +3009,7 @@ const SCENES = {
       <rect x="5" y="5.6" width="1" height="2.4" fill="${sk}"/><rect x="10" y="5.6" width="1" height="2.4" fill="${sk}"/>
       <rect x="6" y="8.4" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9.4" width="1" height="2.2" fill="${s.pants}"/><rect x="9" y="9.4" width="1" height="2.2" fill="${s.pants}"/>
-      <rect x="5.6" y="10.8" width="2" height="0.9" fill="#fcfcfb"/><rect x="8.4" y="10.8" width="2" height="0.9" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="10.8" width="2" height="0.9" fill="#fcfcfb"/><rect class="sh" x="8.4" y="10.8" width="2" height="0.9" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2.8)}
@@ -2905,7 +3020,7 @@ const SCENES = {
       <rect x="6" y="4.8" width="4" height="3" fill="${s.shirt}"/>
       <rect x="6" y="7.8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.8" width="1" height="2.8" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="2.8" fill="${s.pants}"/>
-      <rect x="5.6" y="10.8" width="2" height="0.9" fill="#fcfcfb"/><rect x="8.4" y="10.8" width="2" height="0.9" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="10.8" width="2" height="0.9" fill="#fcfcfb"/><rect class="sh" x="8.4" y="10.8" width="2" height="0.9" fill="#fcfcfb"/>
     </g>`; },
   /* v61: character-select pedestal — You tab, the coach you built */
   pedestal: s => { const sk = sprSkin(s); return `
@@ -2925,7 +3040,7 @@ const SCENES = {
       <rect x="10" y="4.8" width="1" height="2.4" fill="${sk}"/>
       <rect x="6" y="7.6" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.6" width="1" height="2.4" fill="${s.pants}"/><rect x="9" y="8.6" width="1" height="2.4" fill="${s.pants}"/>
-      <rect x="5.6" y="10.9" width="2" height="0.9" fill="#fcfcfb"/><rect x="8.4" y="10.9" width="2" height="0.9" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="10.9" width="2" height="0.9" fill="#fcfcfb"/><rect class="sh" x="8.4" y="10.9" width="2" height="0.9" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2.6,'r')}
@@ -2933,7 +3048,7 @@ const SCENES = {
       <rect x="9.6" y="4.8" width="1" height="2.2" fill="${sk}"/>
       <rect x="6.4" y="7.6" width="3.2" height="1" fill="${s.pants}"/>
       <rect x="6.6" y="8.6" width="1" height="2.4" fill="${s.pants}"/><rect x="8.4" y="8.6" width="1" height="2.4" fill="${s.pants}"/>
-      <rect x="6.4" y="10.9" width="2" height="0.9" fill="#fcfcfb"/><rect x="8.2" y="10.9" width="2" height="0.9" fill="#fcfcfb"/>
+      <rect class="sh" x="6.4" y="10.9" width="2" height="0.9" fill="#fcfcfb"/><rect class="sh" x="8.2" y="10.9" width="2" height="0.9" fill="#fcfcfb"/>
     </g>`; },
   /* v62: getting bigger & flexing — Progress tab */
   grow: s => { const sk = sprSkin(s); const bra = s.sex==='f'; return `
@@ -2943,7 +3058,7 @@ const SCENES = {
       <rect x="5" y="5" width="1" height="2" fill="${sk}"/><rect x="10" y="5" width="1" height="2" fill="${sk}"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2)}
@@ -2963,7 +3078,7 @@ const SCENES = {
       <rect x="6.6" y="9.6" width="0.8" height="0.7" fill="${s.shirt}"/><rect x="9" y="9.8" width="0.8" height="0.7" fill="${s.shirt}"/>
       <rect x="5.8" y="8.2" width="4.4" height="1" fill="${s.pants}"/>
       <rect x="5.8" y="9.2" width="1.1" height="2.8" fill="${s.pants}"/><rect x="9.1" y="9.2" width="1.1" height="2.8" fill="${s.pants}"/>
-      <rect x="5.3" y="12" width="2.1" height="1" fill="#fcfcfb"/><rect x="8.6" y="12" width="2.1" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.3" y="12" width="2.1" height="1" fill="#fcfcfb"/><rect class="sh" x="8.6" y="12" width="2.1" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* v62: tailor's fitting — You tab, getting measured for the build you chose */
   tailor: s => { const sk = sprSkin(s); return `
@@ -2980,7 +3095,7 @@ const SCENES = {
       <rect x="11" y="6.5" width="0.6" height="2.2" fill="#ffd75e"/>
       <rect x="6" y="8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7,2.6)}
@@ -2991,7 +3106,7 @@ const SCENES = {
       <rect x="4.4" y="9" width="0.6" height="2.2" fill="#ffd75e"/>
       <rect x="6" y="8" width="4" height="0.1" fill="${s.pants}"/>
       <rect x="6" y="9" width="1" height="3" fill="${s.pants}"/><rect x="9" y="9" width="1" height="3" fill="${s.pants}"/>
-      <rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* v65/v85: friendly wave — themed body detail per personality */
   wave: s => { const sk = sprSkin(s); const th = sprTheme();
@@ -3020,7 +3135,10 @@ const SCENES = {
       <rect x="7.55" y="7.9" width="0.9" height="0.7" fill="#a93226"/>
       <rect x="7.25" y="8.8" width="0.95" height="1.6" fill="${s.flannel||'#c0392b'}"/><rect x="8.3" y="8.8" width="0.8" height="1.2" fill="#a93226"/>
       <rect x="7.4" y="9.3" width="0.4" height="0.4" fill="#8e2620"/><rect x="8.45" y="9.1" width="0.35" height="0.35" fill="#8e2620"/>
-      <rect x="6" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="3.2" fill="${s.pants}"/>`;
+      <rect x="6" y="8.8" width="1" height="1.1" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="1.1" fill="${s.pants}"/>
+      <rect x="6" y="9.9" width="0.4" height="0.42" fill="#fcfcfb"/><rect x="6.55" y="9.9" width="0.45" height="0.26" fill="#fcfcfb"/>
+      <rect x="9" y="9.9" width="0.45" height="0.26" fill="#fcfcfb"/><rect x="9.55" y="9.9" width="0.45" height="0.42" fill="#fcfcfb"/>
+      <rect x="6" y="10.32" width="1" height="1.68" fill="${sk}"/><rect x="9" y="10.32" width="1" height="1.68" fill="${sk}"/>`;
       if(big) return `
       <rect x="5.3" y="4.4" width="5.4" height="1.2" fill="${sk}"/>
       <rect x="6.2" y="4.4" width="0.8" height="1.4" fill="${s.shirt}"/><rect x="9" y="4.4" width="0.8" height="1.4" fill="${s.shirt}"/>
@@ -3046,8 +3164,8 @@ const SCENES = {
         + (spikes ? `<rect x="4.75" y="6.15" width="1.5" height="0.55" fill="#1c1c1c"/><rect x="4.4" y="6.2" width="0.38" height="0.38" fill="${s.studs||'#c9ced6'}"/><rect x="4.55" y="5.75" width="0.34" height="0.34" fill="${s.studs||'#c9ced6'}"/>` : '')
 ;
     const shoes = big
-      ? `<rect x="5.9" y="12" width="2.1" height="1" fill="#fcfcfb"/><rect x="8.1" y="12" width="2.1" height="1" fill="#fcfcfb"/>`
-      : `<rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>`;
+      ? `<rect class="sh" x="5.9" y="12" width="2.1" height="1" fill="#fcfcfb"/><rect class="sh" x="8.1" y="12" width="2.1" height="1" fill="#fcfcfb"/>`
+      : `<rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>`;
     const waveArmA = big
       ? `<rect x="10.4" y="1.7" width="1.3" height="1.2" fill="${sk}"/><rect x="10.3" y="2.9" width="1.3" height="1.8" fill="${sk}"/><rect x="10.05" y="4.4" width="1" height="1" fill="${sk}"/>`
       : `<rect x="10.2" y="2" width="1.1" height="1.1" fill="${sk}"/>` + (slv?`<rect x="10" y="3" width="1" height="1.2" fill="${slv}"/><rect x="10" y="4.2" width="1" height="0.7" fill="${sk}"/>`:`<rect x="10" y="3" width="1" height="1.8" fill="${sk}"/>`)
@@ -3088,7 +3206,7 @@ const SCENES = {
       <rect x="5.8" y="4.4" width="4" height="3.2" fill="${s.shirt}"/>
       <rect x="6" y="7.6" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.6" width="1" height="3.4" fill="${s.pants}"/><rect x="9" y="8.6" width="1" height="3.4" fill="${s.pants}"/>
-      <rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       ${headPx(s,7.4,2.4)}
@@ -3099,7 +3217,7 @@ const SCENES = {
       <rect x="6.2" y="4.4" width="4" height="3.2" fill="${s.shirt}"/>
       <rect x="6" y="7.6" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.6" width="1" height="3.4" fill="${s.pants}"/><rect x="9" y="8.6" width="1" height="3.4" fill="${s.pants}"/>
-      <rect x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5.6" y="12" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.4" y="12" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* v63: out for a walk — You tab */
   stroll: s => { const sk = sprSkin(s); return `
@@ -3110,8 +3228,8 @@ const SCENES = {
       <rect x="9" y="5.6" width="1" height="2" fill="${sk}"/>
       <rect x="5.4" y="6.2" width="1" height="1.8" fill="${sk}"/>
       <rect x="6" y="8" width="3" height="1" fill="${s.pants}"/>
-      <rect x="8" y="9" width="1" height="2" fill="${s.pants}"/><rect x="8.8" y="11" width="2" height="1" fill="#fcfcfb"/>
-      <rect x="6" y="9" width="1" height="2" fill="${s.pants}"/><rect x="4.4" y="11" width="2" height="1" fill="#fcfcfb"/>
+      <rect x="8" y="9" width="1" height="2" fill="${s.pants}"/><rect class="sh" x="8.8" y="11" width="2" height="1" fill="#fcfcfb"/>
+      <rect x="6" y="9" width="1" height="2" fill="${s.pants}"/><rect class="sh" x="4.4" y="11" width="2" height="1" fill="#fcfcfb"/>
       <rect x="8" y="11" width="1" height="1" fill="${s.pants}"/><rect x="6" y="11" width="1" height="1" fill="${s.pants}"/>
     </g>
     <g id="sC">
@@ -3120,8 +3238,8 @@ const SCENES = {
       <rect x="5.4" y="5.4" width="1" height="2" fill="${sk}"/>
       <rect x="9" y="6" width="1" height="1.8" fill="${sk}"/>
       <rect x="6" y="7.8" width="3" height="1" fill="${s.pants}"/>
-      <rect x="7.2" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="6.8" y="12" width="2" height="1" fill="#fcfcfb"/>
-      <rect x="7.8" y="8.8" width="1" height="1.6" fill="${s.pants}"/><rect x="8.6" y="10" width="1" height="1" fill="${s.pants}"/><rect x="9.4" y="10.4" width="1.8" height="1" fill="#fcfcfb"/>
+      <rect x="7.2" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect class="sh" x="6.8" y="12" width="2" height="1" fill="#fcfcfb"/>
+      <rect x="7.8" y="8.8" width="1" height="1.6" fill="${s.pants}"/><rect x="8.6" y="10" width="1" height="1" fill="${s.pants}"/><rect class="sh" x="9.4" y="10.4" width="1.8" height="1" fill="#fcfcfb"/>
     </g>`; },
   /* refueling — plays when a meal gets logged */
   eat: s => { const sk = sprSkin(s); return `
@@ -3135,7 +3253,7 @@ const SCENES = {
       <rect x="9" y="9" width="3" height="1" fill="${s.pants}"/>
       <rect x="9" y="10" width="1" height="2" fill="${s.pants}"/><rect x="11" y="10" width="1" height="2" fill="${s.pants}"/>
       <rect x="9" y="12" width="1" height="1" fill="${s.socks}"/><rect x="11" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="8" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="11" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="8" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="11" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sB">
       <rect x="8" y="7" width="1" height="1" fill="${sk}"/>
@@ -3207,7 +3325,7 @@ const SCENES = {
       <rect x="10" y="9" width="3" height="1" fill="${s.pants}"/>
       <rect x="10" y="10" width="1" height="2" fill="${s.pants}"/><rect x="12" y="10" width="1" height="2" fill="${s.pants}"/>
       <rect x="10" y="12" width="1" height="1" fill="${s.socks}"/><rect x="12" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="12" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="12" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       <rect x="2" y="9" width="4" height="1" fill="#1f2430"/>
@@ -3231,7 +3349,7 @@ const SCENES = {
       <rect x="6" y="9" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="10" width="1" height="2" fill="${s.pants}"/><rect x="9" y="10" width="1" height="2" fill="${s.pants}"/>
       <rect x="6" y="12" width="1" height="1" fill="${s.socks}"/><rect x="9" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>
     <g id="sC">
       <rect x="1.5" y="0.2" width="1.5" height="2.8" fill="${s.weights}"/>
@@ -3245,7 +3363,7 @@ const SCENES = {
       <rect x="6" y="9" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="10" width="1" height="2" fill="${s.pants}"/><rect x="9" y="10" width="1" height="2" fill="${s.pants}"/>
       <rect x="6" y="12" width="1" height="1" fill="${s.socks}"/><rect x="9" y="12" width="1" height="1" fill="${s.socks}"/>
-      <rect x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
+      <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
 };
 const MG2SCENE = {
@@ -3529,11 +3647,9 @@ function coachReply(text){
     return { text:`Done — I generated a "<b>${label}</b>" backdrop for our chat. ✨ Describe any vibe — "miami sunset", "deep forest", "midnight" — and I'll re-skin this space to match.` };
   }
 
-  /* rename the coach */
+  /* v125: the coach's name is the brand — renames politely declined */
   if(/(call you|your name (is|to)|rename you|name you)/.test(t)){
-    const nm = (text.match(/(?:call you|name you|your name (?:is|to))\s+([a-z0-9 ]{2,20})/i)||[])[1];
-    if(nm){ state.coachName = nm.trim().replace(/\b\w/g,c=>c.toUpperCase()); updateHeader(); renderFuel(); renderYou();
-      return { text:`<b>${state.coachName}</b> — has a ring to it. That's me from now on. 🤝` }; }
+    return { text:`Appreciate it, but I'm <b>NAVI</b> — it's who I am. 🤖 You can change my personality and look any time under <b>You → Edit profile</b>.` };
   }
 
   /* morning briefing preview */
@@ -3950,6 +4066,8 @@ const chatEl = $('#chat-scroll'), inputEl = $('#chat-input');
 let chatBreakAt = 0;
 function applyChatVisibility(){
   const msgs = [...chatEl.children].filter(el => el.id !== 'hist-toggle');
+  /* v126: cap the on-screen transcript — a marathon session can't bloat the DOM */
+  if(msgs.length > 150) msgs.splice(0, msgs.length - 150).forEach(m => m.remove());
   const now = Date.now();
   msgs.forEach(m => { if(!m.dataset.ts) m.dataset.ts = now; });
   /* walk back from the newest: extend the bundle while gaps are ≤3 s and no user action splits it */
@@ -4152,9 +4270,9 @@ $$('nav button').forEach(b=> b.onclick = ()=>switchTab(b.dataset.tab));
    Toast + rest timer
    ============================================================ */
 let toastT;
-function toast(msg){
+function toast(msg, ms){
   const t = $('#toast'); t.textContent = msg; t.classList.add('on');
-  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('on'), 2200);
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('on'), ms || 2200);
 }
 let restI;
 function hideRestOverlay(){
@@ -4553,7 +4671,7 @@ function trainCalHTML(){
         ${['M','T','W','T','F','S','S'].map(dw=>`<span class="cal-dow">${dw}</span>`).join('')}
         ${cells.join('')}
       </div>
-      <p style="font-size:11px;color:var(--muted);margin-top:10px">Trained days are colored by your rating — <span style="color:#e66767">red easy</span> · <span style="color:#e8c14b">yellow solid</span> · <span style="color:#3ecf96">green max effort</span> (blue = unrated). Tap a day for the log.</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">Trained days are colored by your rating — <span style="color:#3ecf96">green easy</span> · <span style="color:#e8c14b">yellow solid</span> · <span style="color:#e66767">red max effort</span> (blue = unrated). Tap a day for the log.</p>
     </div>`;
 }
 /* history holds ONLY sessions you actually logged */
@@ -4662,6 +4780,16 @@ function checkProgression(e){
 const wFloor = e => /dips?\b|pull-?ups?|chin-?ups?/i.test(e.n) ? -300 : 5;
 /* v117: weights step in 5s — 5 lb, or 5 kg when the app is metric */
 const wStepLb = () => state.units==='kg' ? 5/LB2KG : 5;
+/* v123: friendly progressive-overload heads-up — once per exercise per session,
+   only when a REAL previous weight exists. Never blocks anything. */
+function growthNudge(e){
+  const lastW = parseFloat(e.last);
+  if(isNaN(lastW) || typeof e.target.w !== 'number' || e.grNudged) return false;
+  if(e.target.w > lastW) return false;
+  e.grNudged = true;
+  toast(`📈 Last time: ${load(lastW)} on ${e.n} — matching or beating it is what drives growth. Your call!`, 3600);
+  return true;
+}
 const snapW = lb => state.units==='kg' ? +(Math.round(lb*LB2KG/5)*5/LB2KG).toFixed(1) : Math.round(lb/5)*5;
 
 function renderTrain(){
@@ -4684,7 +4812,7 @@ function renderTrain(){
       ? `<div class="card empty-state"><div class="e-ic">📅</div><h4>${state.trainDate}</h4><p>No session logged on this date. <i>(In the full product, every workout you've ever done lives here — any day, any year.)</i></p></div>`
       : `
       <div class="section-label">${state.trainDate} · ${h.name} · completed${h.time?` · ${h.time}`:''}</div>
-      ${h.rate || h.note ? `<div class="card" style="font-size:13px">${h.rate?`<b style="color:${['','#e66767','#e8c14b','#3ecf96'][h.rate]}">${'★'.repeat(h.rate)}${'☆'.repeat(3-h.rate)}</b> <b>${['','Easy day','Solid work','Max effort'][h.rate]}</b>`:''}${h.note?`<div style="margin-top:${h.rate?'6px':'0'};color:var(--muted);font-size:13px;line-height:1.55">📝 ${h.note}</div>`:''}</div>` : ''}
+      ${h.rate || h.note ? `<div class="card" style="font-size:13px">${h.rate?`<b style="color:${['','#3ecf96','#e8c14b','#e66767'][h.rate]}">${'★'.repeat(h.rate)}${'☆'.repeat(3-h.rate)}</b> <b>${['','Easy day','Solid work','Max effort'][h.rate]}</b>`:''}${h.note?`<div style="margin-top:${h.rate?'6px':'0'};color:var(--muted);font-size:13px;line-height:1.55">📝 ${h.note}</div>`:''}</div>` : ''}
       ${h.watch?`<div class="card" style="display:flex;gap:14px;align-items:center;font-size:13px;font-weight:600"><span>⌚ Watch session data</span>${h.watch.kcal?`<span style="color:#eb6834">🔥 ${h.watch.kcal} kcal</span>`:''}${h.watch.avg?`<span style="color:#e66767">♥ avg ${h.watch.avg}</span>`:''}${h.watch.max?`<span style="color:#e66767">peak ${h.watch.max}</span>`:''}${h.watch.dur?`<span style="color:var(--muted)">${h.watch.dur} min</span>`:''}</div>`:''}
       ${multi?`<div class="date-row" style="margin-bottom:10px">${hRaw.sessions.map((s,si)=>`<button class="f-chip ${si===Math.min(state.trainSessIdx||0, hRaw.sessions.length-1)?'sel':''}" data-sesspick="${si}" style="flex:1">${si+1}. ${s.name.split(' · ')[0]}${s.time?` · ${s.time}`:''}</button>`).join('')}</div>`:''}
       ${h.ex.map((e,xi)=>`
@@ -4828,7 +4956,7 @@ function renderTrain(){
           ${typeof e.target.w==='number'?`<span class="ctl"><span>Weight</span><button class="adj-btn" data-wdn="${i}">−</button><input class="lb-f" data-wval="${i}" inputmode="decimal" value="${state.units==='kg' ? +(e.target.w*LB2KG).toFixed(1) : e.target.w}"><button class="adj-btn" data-wup="${i}">＋</button><span style="font-size:11px;color:var(--muted)">${state.units==='kg'?'kg':'lb'}</span></span>`:''}
           <span class="ctl"><span>Sets</span><button class="adj-btn" data-setsdn="${i}">−</button><input class="lb-f" data-setsval="${i}" inputmode="numeric" value="${e.sets}"><button class="adj-btn" data-setsup="${i}">＋</button><span></span></span>
           <span class="ctl"><span>Reps</span><button class="adj-btn" data-repsdn="${i}">−</button><input class="lb-f" data-repsval="${i}" inputmode="numeric" value="${repTop(e)}"><button class="adj-btn" data-repsup="${i}">＋</button><span></span></span>
-          <span class="ctl"><span>Rest</span><button class="adj-btn" data-restdn="${i}">−</button><input class="lb-f" data-restval="${i}" inputmode="numeric" value="${e.restSec || (e.comp?150:75)}"><button class="adj-btn" data-restup="${i}">＋</button><span style="font-size:11px;color:var(--muted)">s</span></span>
+          <span class="ctl"><span>Rest</span><button class="adj-btn" data-restdn="${i}">−</button><input class="lb-f" data-restval="${i}" inputmode="numeric" value="${e.restSec || (e.comp?120:75)}"><button class="adj-btn" data-restup="${i}">＋</button><span style="font-size:11px;color:var(--muted)">s</span></span>
         </div>`:''}
         ${Array.from({length:e.sets},(_,s)=>{
           const d = e.done[s];
@@ -4941,7 +5069,7 @@ function renderTrain(){
     const isPR = typeof e.target.w==='number' && e.target.w > parseFloat(e.last);
     renderTrain();
     renderFuel();
-    if(e.done.length < e.sets) startRest(e.restSec || (e.comp?150:75));   // custom, else 2.5 min compound / 75 s isolation
+    if(e.done.length < e.sets) startRest(e.restSec || (e.comp?120:75));   // custom, else 2 min compound / 75 s isolation
     if(isPR && s===0){ celebratePR(e, e.target.w); }
     else toast(`Set ${s+1}: ${load(e.target.w)} × ${top}${hr?` · ♥ ${hr}`:''} — tap the row to adjust`);
     checkProgression(e);
@@ -5071,7 +5199,7 @@ function renderTrain(){
     if(next) toast(`✓ ${state.exercises[i].n} done — up next: ${next.n}`);
     else finishWorkoutSummary();
   });
-  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number') e.target.w = Math.max(wFloor(e), +(e.target.w-wStepLb()).toFixed(1)); renderTrain(); });
+  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number'){ e.target.w = Math.max(wFloor(e), +(e.target.w-wStepLb()).toFixed(1)); growthNudge(e); } renderTrain(); });
   el.querySelectorAll('[data-wup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wup]; if(typeof e.target.w==='number') e.target.w = +(e.target.w+wStepLb()).toFixed(1); renderTrain(); });
   /* typed values snap to sensible increments: weight → nearest 2.5, rest → nearest 5s */
   el.querySelectorAll('[data-wval]').forEach(inp=> inp.onchange = ()=>{
@@ -5082,7 +5210,7 @@ function renderTrain(){
     v = snapW(v);
     e.target.w = Math.max(wFloor(e), +v.toFixed(1));
     renderTrain();
-    toast(`Weight set: ${load(e.target.w)}`);
+    if(!growthNudge(e)) toast(`Weight set: ${load(e.target.w)}`);
   });
   el.querySelectorAll('[data-setsval]').forEach(inp=> inp.onchange = ()=>{
     const e = state.exercises[+inp.dataset.setsval];
@@ -5102,8 +5230,8 @@ function renderTrain(){
     if(!isNaN(v)) e.restSec = Math.min(600, Math.max(15, Math.round(v/5)*5));
     renderTrain();
   });
-  el.querySelectorAll('[data-restdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.restdn]; e.restSec = Math.max(15, (e.restSec || (e.comp?150:75)) - 15); renderTrain(); });
-  el.querySelectorAll('[data-restup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.restup]; e.restSec = Math.min(300, (e.restSec || (e.comp?150:75)) + 15); renderTrain(); });
+  el.querySelectorAll('[data-restdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.restdn]; e.restSec = Math.max(15, (e.restSec || (e.comp?120:75)) - 15); renderTrain(); });
+  el.querySelectorAll('[data-restup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.restup]; e.restSec = Math.min(300, (e.restSec || (e.comp?120:75)) + 15); renderTrain(); });
   el.querySelectorAll('[data-setsdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.setsdn]; e.sets = Math.max(Math.max(1, e.done.length), e.sets-1); renderTrain(); });
   el.querySelectorAll('[data-setsup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.setsup]; e.sets = Math.min(8, e.sets+1); renderTrain(); });
   el.querySelectorAll('[data-repsdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.repsdn]; e.target.r = Math.max(1, repTop(e)-1); renderTrain(); });
@@ -5832,9 +5960,8 @@ function renderYou(){
     <div class="card">
       <div style="display:flex;gap:8px">
         <div style="flex:1"><label style="display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Your name</label><input id="edit-uname" class="lb-search" style="margin:0" placeholder="N/A — set your name" value="${state.profileSet.name ? state.user.name : ''}"></div>
-        <div style="flex:1"><label style="display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Coach's name</label><input id="edit-cname" class="lb-search" style="margin:0" placeholder="e.g. NAVI, Atlas" value="${state.coachName}"></div>
       </div>
-      <button class="adj-save" id="edit-names-save" style="width:100%;margin-top:8px">Save names</button>
+      <button class="adj-save" id="edit-names-save" style="width:100%;margin-top:8px">Save name</button>
       <p style="font-size:11px;color:var(--muted);margin-top:8px">Weight, height, age and weigh-in days: type <b>"edit profile"</b> in the coach tab and the full setup card reopens.</p>
     </div>
     <div class="section-label">Current goal</div>
@@ -6038,11 +6165,9 @@ function renderYou(){
   const ens = $('#edit-names-save');
   if(ens) ens.onclick = ()=>{
     const un = esc($('#edit-uname').value.trim()).slice(0,40);
-    const cn = esc($('#edit-cname').value.trim()).slice(0,40);
     if(un && un.toUpperCase() !== 'N/A'){ state.user.name = un; state.profileSet.name = true; }
-    if(cn) state.coachName = cn.replace(/\b\w/g,c=>c.toUpperCase());
     updateHeader(); renderYou(); renderFuel(); renderTrain(); renderProgress();
-    toast('✓ Names updated');
+    toast('✓ Name updated');
   };
   $$('#screen-you [data-sprsex]').forEach(b=> b.onclick = ()=>{ state.spr.sex = b.dataset.sprsex; renderSprite(); renderYou(); toast({m:'Your coach is ready',f:'Your coach is ready',r:'🤖 Cyborg coach online — systems nominal'}[state.spr.sex]); });
   $$('#screen-you [data-sprk]').forEach(inp=>{
@@ -6146,20 +6271,19 @@ function saveState(){
   }catch(e){ /* storage unavailable/full — run in-memory */ }
 }
 setInterval(()=>{ if(!document.hidden) saveState(); }, 5000);
-/* v50: coming back from another app / lock screen — snap every timer to real elapsed time */
-document.addEventListener('visibilitychange', ()=>{
-  if(document.hidden) return;
-  if(state.sess.run && !state.sess.paused) sessTick();
-});
 /* keep the screen awake during an active session so timers stay live (best-effort) */
 let wakeLock = null;
 async function holdWake(){
   try{ if('wakeLock' in navigator && (state.sess.run || (state.cardio && state.cardio.on))) wakeLock = await navigator.wakeLock.request('screen'); }catch(e){}
 }
-document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) holdWake(); });
 setInterval(()=>{ if(!wakeLock && (state.sess.run || (state.cardio && state.cardio.on))) holdWake(); }, 4000);
 addEventListener('pagehide', saveState);
-document.addEventListener('visibilitychange', ()=>{ if(document.hidden) saveState(); });
+/* v126: one visibility handler — save on hide; on return snap timers to real time + re-arm wake lock */
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ saveState(); return; }
+  if(state.sess.run && !state.sess.paused) sessTick();
+  holdWake();
+});
 
 let bootNewDay = false;
 (function restoreState(){
@@ -6169,6 +6293,8 @@ let bootNewDay = false;
     const saved = JSON.parse(raw);
     if(!saved || !saved.s || !saved.s.onboarded) return;
     Object.assign(state, saved.s);
+    state.coachName = 'NAVI';   /* v125: NAVI branding is fixed — older saves with custom names fold back */
+    delete state.strength;      /* v126: retired unused key from older saves */
     /* saves from before v67 have no profileSet — an onboarded profile counts as fully set */
     if(!state.profileSet) state.profileSet = {name:true, age:true, height:true, weight:true};
     ensureCardioDS();   /* v104: older saves gain the per-activity cardio datasets */
