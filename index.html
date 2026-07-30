@@ -3290,6 +3290,7 @@ const SCENES = {
     const sleeper = lift => `
       <rect x="3.7" y="${8.9+lift}" width="1.4" height="1.4" fill="${sk}"/>
       <rect x="3.5" y="${8.7+lift}" width="1.6" height="0.5" fill="${s.hair}"/>
+      ${s.sex==='f'?`<rect x="3.25" y="${8.9+lift}" width="0.45" height="1.3" fill="${s.hair}"/><rect x="4.6" y="${9.82+lift}" width="0.5" height="0.25" fill="#d81b60"/>`:''}
       <rect x="4.55" y="${9.5+lift}" width="0.45" height="0.2" fill="#1c1c1c"/>
       <rect x="5.3" y="9.5" width="7.2" height="1.1" fill="${s.shirt}"/>
       <rect x="5.3" y="${9.15+lift}" width="1.9" height="0.45" fill="${s.shirt}"/>
@@ -3405,6 +3406,14 @@ function renderSprite(){
     const f = r.getAttribute('fill');
     if(r.hasAttribute('data-skin') || f==='#f0b27a' || f==='#9aa4b2'){ r.setAttribute('data-skin','1'); r.setAttribute('fill', skin); }
   });
+  /* v128: the rest-pose icon follows the coach's gender too */
+  const restSvg = document.querySelector('#spr-rest');
+  if(restSvg){
+    let lip = restSvg.querySelector('#rest-lip');
+    if(state.spr.sex==='f' && !lip){
+      restSvg.insertAdjacentHTML('beforeend', '<rect id="rest-lip" x="7.35" y="4.45" width="0.9" height="0.32" fill="#d81b60"/>');
+    } else if(state.spr.sex!=='f' && lip){ lip.remove(); }
+  }
   /* profile square always wears the (base) shirt color; text flips for contrast */
   const logo = $('.logo');
   if(logo){ logo.style.background = state.spr.shirt; logo.style.color = contrastText(state.spr.shirt); }
