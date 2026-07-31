@@ -115,8 +115,6 @@
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .msg.bot{background:var(--surface);border:1px solid var(--hairline);border-bottom-left-radius:6px;align-self:center;width:94%;max-width:94%;color:var(--ink);padding-right:30px}
   .msg.user{background:var(--accent);border-bottom-right-radius:6px;align-self:flex-end}
-  .msg-back{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;opacity:.55;padding:2px;line-height:1}
-  .msg-back:hover{opacity:1;color:var(--accent)}
   .msg .tag{display:block;font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--accent);margin-bottom:5px;text-transform:uppercase}
   .msg.user .tag{display:none}
   .msg b{font-weight:650}
@@ -321,6 +319,24 @@
   .opt-btn.learn{flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);min-width:110px;height:44px;padding:6px 10px;font-size:12px;font-weight:600;background:none;border-color:var(--hairline);color:var(--muted)}
   /* ---------- onboarding form ---------- */
   .ob-form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  /* v132: sample dialogue speaks FROM the sprite — comic bubble + typewriter */
+  .ob-say{position:relative;background:var(--surface-2);border:1px solid var(--hairline);border-radius:12px;padding:8px 11px;font-size:13px;line-height:1.45;color:var(--ink);max-width:270px;margin:0 auto 9px;text-align:left}
+  .ob-say::before{content:'';position:absolute;bottom:-8px;left:calc(50% - 8px);border:8px solid transparent;border-bottom:0;border-top:8px solid var(--hairline)}
+  .ob-say::after{content:'';position:absolute;bottom:-6.5px;left:calc(50% - 7px);border:7px solid transparent;border-bottom:0;border-top:7px solid var(--surface-2)}
+  .ob-say .say-ghost{visibility:hidden}
+  .ob-say .say-live{position:absolute;top:8px;left:11px;right:11px;bottom:8px;overflow:hidden}
+  /* v134: scientist visor sensor sweeps; the general's cigar burns and smokes */
+  @keyframes sciScan{from{transform:translateX(0)}to{transform:translateX(-1.55px)}}
+  .sci-dot{animation:sciScan 1.5s steps(5) infinite alternate}
+  @keyframes smokeRise{0%{opacity:.9;transform:translate(0,0)}100%{opacity:0;transform:translate(.3px,-1.7px)}}
+  .smk1{animation:smokeRise 1.7s linear infinite}
+  .smk2{animation:smokeRise 1.7s linear .6s infinite}
+  .smk3{animation:smokeRise 1.7s linear 1.15s infinite}
+  @keyframes cigGlow{from{opacity:.5}to{opacity:1}}
+  .cig-tip{animation:cigGlow .8s steps(2) infinite alternate}
+  /* v134: Go back reads as an exit, not an option — small, muted, latest bubble only */
+  .back-sub, .opt-btn.back-sub, button.back-sub{flex:0 0 auto;max-width:none;background:none;border:none;border-radius:6px;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;opacity:.6;padding:5px 2px;text-align:left}
+  .back-sub:hover{opacity:1;color:var(--accent)}
   /* v129: flex column swallows the pre-wrap newlines that were inflating the fold-out */
   #ob-optional{display:flex;flex-direction:column;gap:14px}
   .ob-row{display:flex;gap:8px}
@@ -414,6 +430,11 @@
   .spin-col button:first-child{border-bottom:1px solid var(--hairline)}
   .spin-col button:active{background:var(--accent);color:#fff}
   .spr-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .cust-h{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin:12px 0 8px}
+  .ep-lab{display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .spr-slide{flex:1;accent-color:var(--accent);min-width:0}
+  .wd-row{display:flex;gap:6px;flex-wrap:wrap}
+  .wd-row .wd-chip{flex:1 1 calc(20% - 6px);min-width:70px}
   .mg-head{font-size:11px;font-weight:800;letter-spacing:.8px;color:var(--accent);text-transform:uppercase;margin:16px 4px 2px}
   .set-undo{width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:6px}
   .set-undo:hover{color:var(--accent)}
@@ -428,6 +449,9 @@
   @keyframes hudBounce{0%,100%{transform:translateY(0) scaleY(1)}40%{transform:translateY(1px) scaleY(.92)}70%{transform:translateY(-3px) scaleY(1.04)}}
   #hud-fig.lift #bb{animation:bbLift .9s steps(5) 2}
   #hud-fig.lift #body{animation:hudBounce .9s steps(4) 2}
+  /* v149: anywhere the lift scene plays standalone, the bar actually presses — continuous reps */
+  [data-scene="lift"] #bb{animation:bbLift 1.1s steps(5) infinite}
+  [data-scene="lift"] #body{animation:hudBounce 1.1s steps(4) infinite}
   #hud-fig.jump #spr-active{animation:hudJump .8s steps(6) 2}
   @keyframes hudWalk{0%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(-2px)}60%{transform:translateX(7px)}80%{transform:translateX(3px)}100%{transform:translateX(0)}}
   #hud-fig.walk #spr-active{animation:hudWalk 2.4s steps(10)}
@@ -441,6 +465,10 @@
   #hud-fig.rest #sweat2{animation:sweatDrip 1.6s steps(4) .8s infinite}
   @keyframes restBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
   /* ---------- v22: two-frame scenes, training calendar, memory scroll ---------- */
+  [data-scene="pump"] #sB{animation:scnFrA 1.2s steps(1) infinite}
+  [data-scene="pump"] #sC{animation:scnFrB 1.2s steps(1) infinite}
+  [data-scene="spin"] #sB{animation:scnFrA .55s steps(1) infinite}
+  [data-scene="spin"] #sC{animation:scnFrB .55s steps(1) infinite}
   [data-scene="pushup"] #sB{animation:scnFrA 1.1s steps(1) infinite}
   [data-scene="pushup"] #sC{animation:scnFrB 1.1s steps(1) infinite}
   @keyframes scnFrA{0%,49.9%{opacity:1}50%,100%{opacity:0}}
@@ -737,7 +765,9 @@ const state = {
   hudIdx: 0,
   theme: 'dark',
   spr: {sex:'m', skin:'#f0b27a', eyes:'#20242c', shirt:'#e34948', pants:'#3987e5', socks:'#fcfcfb', weights:'#ff2b2b', hair:'#7a4a1f',
-        coat:'#f2f2ec', glasses:'#2f3542', uniform:'#5b6e3f', hat:'#46552f', trunks:'#7a3df0', vest:'#1c1c1c', studs:'#c9ced6'},
+        coat:'#f2f2ec', glasses:'#2f3542', uniform:'#5b6e3f', hat:'#46552f', trunks:'#7a3df0', vest:'#1c1c1c', studs:'#c9ced6',
+        /* v138: RPG customizer — build scales, styles, extra colors */
+        hscale:1, mscale:1, hairStyle:'short', beard:'none', beardC:'#5b3a21', lip:'#d81b60', outfit:'tee', acc:'none', accC:'#e8c14b'},
   cardio: null,
   sessionName: 'Push A',
   progressFilter: 'YTD',
@@ -871,7 +901,7 @@ function bw(lb){ return state.units==='kg' ? `${Math.round(lb*LB2KG)} kg` : `${l
 function load(w){ return (typeof w==='number') ? (state.units==='kg' ? `${Math.round(w*LB2KG*2)/2} kg` : `${w} lb`) : w; }
 const RULES = 'Compounds 3–4 × 8–10 · isolation 3 × 10–15 · rest 2 min / 60–90 s · ≤25 working sets · +weight once every set hits the top of the range · 2–3 s eccentrics';
 const CARDIO = { n:'Treadmill', seg:true, cardioSeg:true, sets:1, target:{w:'',r:''}, last:'—' };
-const CARDIO_SWAPS = ['Outdoor Running','Treadmill','Stair Stepper','Elliptical','Indoor Cycling','Outdoor Cycling','Swimming'];
+const CARDIO_SWAPS = ['Outdoor Running','Treadmill','Walking','Stair Stepper','Elliptical','Indoor Cycling','Outdoor Cycling','Swimming','Boxing','Pilates','Yoga'];
 
 const PRESETS = {
   /* v121: programs rebuilt on current hypertrophy evidence — each muscle ~2×/week on the
@@ -1036,7 +1066,7 @@ Object.entries(EX_LIB).forEach(([mg,list])=>list.forEach(n=>{
 ['mile','fivek','tenk','halfm','marathon'].forEach(k=> state.strengthData[k].mg = 'Cardio');
 /* v104: every cardio activity is tracked separately on the Progress tab */
 function ensureCardioDS(){
-  [['run','Outdoor Running'],['tread','Treadmill'],['stair','Stair Stepper'],['ellip','Elliptical'],['bikein','Indoor Cycling'],['bikeout','Outdoor Cycling'],['swim','Swimming']].forEach(([t,nm])=>{
+  [['run','Outdoor Running'],['tread','Treadmill'],['walk','Walking'],['stair','Stair Stepper'],['ellip','Elliptical'],['bikein','Indoor Cycling'],['bikeout','Outdoor Cycling'],['swim','Swimming'],['box','Boxing'],['pil','Pilates'],['yoga','Yoga']].forEach(([t,nm])=>{
     const k = 'cd_'+t;
     if(!state.strengthData[k]) state.strengthData[k] = {name:nm, mg:'Cardio', vals:[], reps:null, unit:'min', hr:[], cal:[], dist:[], weeks:[]};
   });
@@ -1047,7 +1077,7 @@ function ensureCardioDS(){
   delete state.strengthData.cardio;
   if(state.strengthKey === 'cardio') state.strengthKey = 'mile';
   /* canonical Cardio ordering in the picker: races first, then the activities */
-  const cOrd = ['mile','fivek','tenk','halfm','marathon','cd_run','cd_tread','cd_stair','cd_ellip','cd_bikein','cd_bikeout','cd_swim'];
+  const cOrd = ['mile','fivek','tenk','halfm','marathon','cd_run','cd_tread','cd_walk','cd_stair','cd_ellip','cd_bikein','cd_bikeout','cd_swim','cd_box','cd_pil','cd_yoga'];
   const rebuilt = {};
   Object.entries(state.strengthData).forEach(([k,v])=>{ if(!cOrd.includes(k)) rebuilt[k] = v; });
   cOrd.forEach(k=>{ if(state.strengthData[k]) rebuilt[k] = state.strengthData[k]; });
@@ -1087,7 +1117,7 @@ function applyPreset(key){
       if(m && m.pr !== '—'){
         e.last = m.pr;
         e.pr = parseFloat(m.pr)||0;
-        if(typeof e.target.w==='number' && e.pr) e.target.w = Math.round(e.pr/5)*5;
+        if(typeof e.target.w==='number' && e.pr) e.target.w = +(Math.round(e.pr/wInc(e))*wInc(e)).toFixed(1);
         e.note = '';
       } else {
         e.last = '—'; e.note = ''; e.pr = 0;
@@ -1139,7 +1169,7 @@ const FLOW = {
       info:[['ⓘ Chest & Tris','w:broChest'],['ⓘ Back & Bis','w:broBack'],['ⓘ Shoulders','w:broShoulders'],['ⓘ Legs','w:broLegs']]},
   fb:{q:`Pick today's workout:`, opts:[['Full Body A','fullA'],['Full Body B','fullB'],['Full Body C','fullC']],
       info:[['ⓘ Full Body A','w:fullA'],['ⓘ Full Body B','w:fullB'],['ⓘ Full Body C','w:fullC']]},
-  cardio:{q:`What kind of cardio?`, opts:[['Outdoor Running','c:run'],['Treadmill','c:tread'],['Stair Stepper','c:stair'],['Elliptical','c:ellip'],['Cycling','bikeKind'],['Swimming','c:swim']]},
+  cardio:{q:`What kind of cardio?`, opts:[['Outdoor Running','c:run'],['Treadmill','c:tread'],['Walking','c:walk'],['Stair Stepper','c:stair'],['Elliptical','c:ellip'],['Cycling','bikeKind'],['Swimming','c:swim'],['Boxing','c:box'],['Pilates','c:pil'],['Yoga','c:yoga']]},
   bikeKind:{q:`Indoor or outdoor?`, opts:[['🚴 Indoor Cycling','c:bikein'],['🚵 Outdoor Cycling','c:bikeout']]},
 };
 
@@ -1162,7 +1192,7 @@ function promptBubble(html, onBack){
   const d = document.createElement('div');
   d.className = 'msg bot';
   d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>${html}
-    <div class="btn-panel" style="margin-top:10px"><button class="opt-btn learn">← Go back</button></div>`;
+    <div class="btn-panel" style="margin-top:10px"><button class="back-sub">← Go back</button></div>`;
   chatEl.appendChild(d); scrollChat();
   d.querySelector('button').onclick = ()=>{
     d.querySelectorAll('button').forEach(x=>{ x.disabled = true; x.classList.add('dim'); });
@@ -1185,7 +1215,7 @@ function showFlow(key, skipMem){
         <button class="opt-btn" data-sm="cont">▶ Continue ${names[state.lastSplit]||''}</button>
         <button class="opt-btn" data-sm="diff">🔀 Something different</button>
       </div>
-      <div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" data-sm="back">← Go back</button></div>`;
+      <div class="btn-panel" style="margin-top:8px"><button class="back-sub" data-sm="back">← Go back</button></div>`;
     chatEl.appendChild(d); scrollChat();
     d.querySelectorAll('[data-sm]').forEach(b=> b.onclick = ()=>{
       d.querySelectorAll('[data-sm]').forEach(x=>{ x.disabled=true; x.classList.add(x===b?'sel':'dim'); });
@@ -1206,7 +1236,7 @@ function showFlow(key, skipMem){
   d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>${typeof node.q==='function'?node.q():node.q}
     <div class="btn-panel">${node.opts.map(([lab,k])=>`<button class="opt-btn ${k===SCHED_KEY&&state.splitChosen?'sched':''}" data-flow="${k}">${lab}</button>`).join('')}</div>
     ${node.info?`<div class="btn-panel" style="margin-top:8px">${node.info.map(([lab,k])=>`<button class="opt-btn learn" data-info="${k}">${lab}</button>`).join('')}</div>`:''}
-    ${FLOW_PARENT[key]?`<div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" data-back="${FLOW_PARENT[key]}">← Go back</button></div>`:''}`;
+    ${FLOW_PARENT[key]?`<div class="btn-panel" style="margin-top:8px"><button class="back-sub" data-back="${FLOW_PARENT[key]}">← Go back</button></div>`:''}`;
   chatEl.appendChild(d); scrollChat();
   d.querySelectorAll('[data-flow]').forEach(b=>{
     b.onclick = ()=>{
@@ -1273,7 +1303,7 @@ function handleFlowChoice(k, label){
     d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span>` + (k==='recoveryDay'
       ? `${pick(f.open)} Recovery day loaded — walk, stretch, foam roll, meal prep, early lights-out. Rest is where growth happens.`
       : `${pick(f.open)} <b>${state.sessionName}</b> is loaded — hit <b>Start set</b> on the Train tab when you're at the gym and I'll run the clock and rest timers.${freqNote} ${f.push}`)
-      + `<div class="btn-panel" style="margin-top:10px"><button class="opt-btn learn" data-gb="${from||'root'}">← Go back — pick something else</button></div>`;
+      + `<div class="btn-panel" style="margin-top:10px"><button class="back-sub" data-gb="${from||'root'}">← Go back — pick something else</button></div>`;
     chatEl.appendChild(d); scrollChat();
     d.querySelector('[data-gb]').onclick = ev=>{
       ev.target.disabled = true; ev.target.classList.add('dim');
@@ -1371,7 +1401,7 @@ function showFoodOptions(){
     <div class="btn-panel">
       <button class="opt-btn" data-food="photo" style="height:74px">📷 Take/upload a photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7)">rough — AI estimate ±20%</span></button>
       <button class="opt-btn" data-food="manual" style="height:74px">⌨️ Describe it to me<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7)">portions as you ate them</span></button>
-      <button class="opt-btn learn" data-food="back" style="flex:1 1 100%;max-width:100%">← Go back</button>
+      <button class="back-sub" data-food="back">← Go back</button>
     </div>
     <input type="file" id="food-in" accept="image/*" hidden>`;
   chatEl.appendChild(d); scrollChat();
@@ -1445,25 +1475,33 @@ const CARDIO_TARGETS = {
   bikein: ['Indoor Cycling','', false, 0],
   bikeout:['Outdoor Cycling','', true, 112],
   swim:   ['Swimming','', false, 0],
+  walk:   ['Walking','', false, 0],
+  box:    ['Boxing','', false, 0],
+  pil:    ['Pilates','', false, 0],
+  yoga:   ['Yoga','', false, 0],
 };
 const CARDIO_CFG = {
-  run:    [{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
+  run:    [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'dist',lab:'Distance',v:3.1,step:0.25,unit:' mi'}],
   tread:  [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'speed',lab:'Speed',v:3.5,step:0.1,unit:' mph'},{k:'inc',lab:'Incline',v:6,step:0.5,unit:''}],
-  stair:  [{k:'dur',lab:'Time',v:25,step:1,unit:' min'},{k:'speed',lab:'Speed',v:60,step:5,unit:' spm'}],
-  ellip:  [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'res',lab:'Resistance',v:8,step:1,unit:''}],
-  bikein: [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'speed',lab:'Speed',v:16,step:0.1,unit:' mph'},{k:'res',lab:'Resistance',v:8,step:1,unit:''}],
-  bikeout:[{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
+  stair:  [{k:'dur',lab:'Time',v:25,step:1,unit:' min'},{k:'lvl',lab:'Level',v:8,step:1,unit:''}],
+  ellip:  [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'res',lab:'Resistance',v:8,step:1,unit:''},{k:'dist',lab:'Distance',v:2,step:0.25,unit:' mi'}],
+  bikein: [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'res',lab:'Resistance',v:8,step:1,unit:''},{k:'dist',lab:'Distance',v:5,step:0.25,unit:' mi'}],
+  bikeout:[{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'dist',lab:'Distance',v:10,step:0.25,unit:' mi'}],
   swim:   [{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
+  walk:   [{k:'dur',lab:'Time',v:30,step:1,unit:' min'},{k:'dist',lab:'Distance',v:1.5,step:0.25,unit:' mi'}],
+  box:    [{k:'dur',lab:'Time',v:20,step:1,unit:' min'}],
+  pil:    [{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
+  yoga:   [{k:'dur',lab:'Time',v:30,step:1,unit:' min'}],
 };
 /* v104: distance for the session — GPS when we have it, speed × time on machines that report speed */
 function cardioKm(c){
   if(c.gps && c.dist > 0) return c.dist;
   const sp = c.vals && +c.vals.speed;
-  if(sp > 0 && (c.type==='tread' || c.type==='bikein')) return sp * 1.609344 * (c.sec/3600);
+  if(sp > 0 && c.type==='tread') return sp * 1.609344 * (c.sec/3600);
   return 0;
 }
 function cardioTargetStr(cfg, vals, mode){
-  return cfg.filter(c=>!(c.k==='dur' && mode==='up')).map(c=>`${c.lab} ${vals[c.k]}${c.unit}`).join(' · ') + (mode==='up' ? (cfg.length>1?' · ':'') + 'open timer' : '');
+  return cfg.filter(c=>!(c.k==='dur' && mode!=='down') && !(c.k==='dist' && mode!=='dist')).map(c=>`${c.lab} ${vals[c.k]}${c.unit}`).join(' · ') + (mode==='up' ? (cfg.length>1?' · ':'') + 'open timer' : mode==='dist' ? (cfg.length>1?' · ':'') + 'distance goal' : '');
 }
 const fmtPace = p => `${Math.floor(p/60)}'${String(Math.round(p%60)).padStart(2,'0')}"`;
 /* v122: race target times */
@@ -1623,14 +1661,15 @@ function cardioSetup(type, label){
   d.innerHTML = `<span class="tag">${state.coachName} · ${flav().t}</span><b>${name}</b> — dial in your session. I'll track the clock${gps?' and the GPS':''}; you just move.
     ${plan?`<div style="font-size:12px;color:var(--accent);font-weight:600;margin-top:8px">🎯 ${plan.note}</div>`:''}
     <div class="ctl-row" style="flex-wrap:wrap;gap:12px">
-      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}">${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${dv(c)}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
+      ${cfg.map(c=>`<span class="ctl" data-wrap="${c.k}"${c.k==='dist'?' style="display:none"':''}>${c.lab} <button class="adj-btn" data-cdn="${c.k}">−</button> <input class="lb-f" data-cv="${c.k}" inputmode="decimal" value="${dv(c)}" style="width:46px"> <button class="adj-btn" data-cup="${c.k}">＋</button> <span style="font-size:11px;color:var(--muted)">${c.unit.trim()}</span></span>`).join('')}
     </div>
     ${(type==='run'||type==='tread')?`<div class="btn-panel" style="margin-top:8px"><button class="opt-btn learn" id="rg-change" style="flex:1 1 100%;max-width:100%">🎯 ${state.runGoal?`Goal: ${RACE_INFO[state.runGoal].label}${state.runTarget?' · sub '+fmtRaceT(state.runTarget):''}`:'No race goal'} — change</button></div>`:''}
     <div class="seg" style="margin:10px 0 0">
       <button class="sel" data-cmode="down">⏱ Countdown</button>
-      <button data-cmode="up">∞ Open timer</button>
+      <button data-cmode="up">∞ Open</button>
+      ${['run','walk','ellip','bikein','bikeout'].includes(type)?`<button data-cmode="dist">🏁 Distance</button>`:''}
     </div>
-    <div class="btn-panel"><button class="opt-btn learn" id="cs-back">← Go back</button><button class="opt-btn begin" style="flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);height:44px;font-size:14px;padding:6px 10px">▶ Begin now</button></div>`;
+    <div class="btn-panel" style="align-items:center"><button class="back-sub" id="cs-back">← Go back</button><button class="opt-btn begin" style="flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);height:44px;font-size:14px;padding:6px 10px">▶ Begin now</button></div>`;
   chatEl.appendChild(d); scrollChat();
   const rgc = d.querySelector('#rg-change');
   if(rgc) rgc.onclick = ()=>{
@@ -1651,8 +1690,11 @@ function cardioSetup(type, label){
   d.querySelectorAll('[data-cmode]').forEach(mb=> mb.onclick = ()=>{
     vals.mode = mb.dataset.cmode;
     d.querySelectorAll('[data-cmode]').forEach(x=>x.classList.toggle('sel', x===mb));
+    /* v133: countdown → time · open → free run · distance → target distance */
     const dw = d.querySelector('[data-wrap="dur"]');
-    if(dw) dw.style.display = vals.mode==='up' ? 'none' : '';
+    if(dw) dw.style.display = vals.mode==='down' ? '' : 'none';
+    const xw = d.querySelector('[data-wrap="dist"]');
+    if(xw) xw.style.display = vals.mode==='dist' ? '' : 'none';
   });
   cfg.forEach(c=>{
     d.querySelector(`[data-cdn="${c.k}"]`).onclick = ()=>{ vals[c.k] = Math.max(c.k==='inc' ? 0 : c.step, +(vals[c.k]-c.step).toFixed(1)); d.querySelector(`[data-cv="${c.k}"]`).value = vals[c.k]; if(c.k==='dur') durNudge(); };
@@ -1660,7 +1702,7 @@ function cardioSetup(type, label){
     d.querySelector(`[data-cv="${c.k}"]`).onchange = ev=>{
       let v = parseFloat(ev.target.value);
       if(isNaN(v)){ ev.target.value = vals[c.k]; return; }
-      v = c.k==='dur' ? Math.max(1, Math.round(v)) : c.k==='speed' ? Math.max(0.1, Math.round(v*10)/10) : c.k==='inc' ? Math.max(0, Math.round(v*2)/2) : Math.max(c.step, Math.round(v));
+      v = c.k==='dur' ? Math.max(1, Math.round(v)) : c.k==='speed' ? Math.max(0.1, Math.round(v*10)/10) : c.k==='inc' ? Math.max(0, Math.round(v*2)/2) : c.k==='dist' ? Math.max(0.25, Math.round(v*4)/4) : Math.max(c.step, Math.round(v));
       vals[c.k] = v; ev.target.value = v; if(c.k==='dur') durNudge();
     };
   });
@@ -1701,6 +1743,8 @@ function cardioLive(type, name, cfg, vals){
         }
       }
       if(c.mode==='down' && c.sec >= c.dur*60){ toast('⏱ Time — session complete'); endCardio(); return; }
+      /* v133: distance-goal sessions with GPS end themselves at the target */
+      if(c.mode==='dist' && c.gps && c.vals.dist > 0 && c.dist >= c.vals.dist*1.609344){ toast('🏁 Distance reached — goal complete'); endCardio(); return; }
     }
     const cEl = $('#ct-cal');
     if(cEl) cEl.textContent = `🔥 ~${Math.round(c.cal)} kcal est.`;
@@ -1823,6 +1867,11 @@ function endCardio(){
        ${maxHr?`<div class="sum-row"><span>Peak heart rate</span><span style="color:#e66767;font-weight:700">${maxHr} bpm</span></div>`:''}
        ${raceGoalRow(c)}<div class="sum-row"><span>vs last ${c.name}</span><span class="na">N/A — first logged session</span></div>`;
   openSummary();
+  /* v133: distance-goal machine sessions pre-fill the target — adjust it if you stopped short */
+  if(c.mode==='dist' && !c.gps && c.vals && c.vals.dist > 0){
+    const dpre = $('#sum-dist');
+    if(dpre) dpre.value = state.units==='kg' ? +(c.vals.dist*1.609344).toFixed(2) : c.vals.dist;
+  }
 
   pendingSummaryMsg = c.gps
     ? `${pick(flav().open)} <b>${c.name}</b> logged: <b>${c.dist.toFixed(2)} km</b> in ${mins}:${String(s).padStart(2,'0')} · avg <b>${fmtPace(c.sec/Math.max(c.dist,0.001))}/km</b> ${maxHr?` · peak ♥ ${maxHr}`:''}.\n${miniRoute(c.dist.toFixed(2))}\nRoute saved — pace trends live on the Progress tab.${raceGoalMsg(c)}`
@@ -1835,6 +1884,10 @@ function endCardio(){
 /* ---------- post-lift cardio runs as a real live session: pause / end / adjust ---------- */
 function segCardioType(n){
   const t = n.toLowerCase();
+  if(t.includes('walk')) return 'walk';
+  if(t.includes('box')) return 'box';
+  if(t.includes('pilates')) return 'pil';
+  if(t.includes('yoga')) return 'yoga';
   if(t.includes('tread')) return 'tread';
   if(t.includes('stair')) return 'stair';
   if(t.includes('ellip')) return 'ellip';
@@ -2108,6 +2161,7 @@ function parseObWeight(raw){
   if(kg) n = Math.round(n/LB2KG);
   return (n && n > 0) ? {lb:n, kg} : null;
 }
+const NAT_LIST = ['United States','Mexico','Canada','Brazil','Argentina','Colombia','United Kingdom','Ireland','France','Germany','Spain','Italy','Portugal','Netherlands','Sweden','Norway','Poland','Ukraine','Turkey','Israel','Saudi Arabia','UAE','Egypt','Morocco','Nigeria','Ghana','Kenya','South Africa','India','Pakistan','China','Japan','South Korea','Philippines','Vietnam','Thailand','Indonesia','Australia','New Zealand'];
 /* ---------- onboarding: one-time profile form, then goals in chat ---------- */
 function showObForm(edit){
   hideInput();
@@ -2124,7 +2178,7 @@ function showObForm(edit){
         <div class="ob-field"><label>Coach — male / female</label>
           <select id="ob-csex"><option value="m" ${state.spr.sex!=='f'?'selected':''}>Male</option><option value="f" ${state.spr.sex==='f'?'selected':''}>Female</option></select></div>
       </div>
-      <div style="text-align:center;margin:2px 0 0"><svg id="ob-spr-prev" viewBox="1 0.4 14 13.6" width="136" height="132" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:6px;display:block;margin:0 auto"></svg><div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:4px">Your coach · live preview</div></div>
+      <div style="text-align:center;margin:2px 0 0"><div class="ob-say"><span class="say-ghost" id="ob-sample-g"></span><span class="say-live" id="ob-sample-t"></span></div><svg id="ob-spr-prev" viewBox="1 0.4 14 13.6" width="136" height="132" shape-rendering="crispEdges" aria-label="Coach preview" style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:6px;display:block;margin:0 auto"></svg><div style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-top:4px">Your coach · live preview</div></div>
       <button type="button" class="see-all" id="ob-more" style="margin:0">${edit?'▴ Profile details':'➕ Add your details — age, height, weight (optional)'}</button>
       <div id="ob-optional" style="display:${edit?'':'none'}">
       <div class="ob-row">
@@ -2139,7 +2193,7 @@ function showObForm(edit){
         <div class="ob-field"><label>User gender</label>
           <select id="ob-gender"><option value="">Select…</option><option>Male</option><option>Female</option></select></div>
         <div class="ob-field"><label>Nationality <span style="text-transform:none;font-weight:500">(optional)</span></label>
-          <select id="ob-nat"><option value="">Select…</option>${['United States','Mexico','Canada','Brazil','Argentina','Colombia','United Kingdom','Ireland','France','Germany','Spain','Italy','Portugal','Netherlands','Sweden','Norway','Poland','Ukraine','Turkey','Israel','Saudi Arabia','UAE','Egypt','Morocco','Nigeria','Ghana','Kenya','South Africa','India','Pakistan','China','Japan','South Korea','Philippines','Vietnam','Thailand','Indonesia','Australia','New Zealand'].map(c=>`<option>${c}</option>`).join('')}<option>Other</option><option>Prefer not to say</option></select></div>
+          <select id="ob-nat"><option value="">Select…</option>${NAT_LIST.map(c=>`<option>${c}</option>`).join('')}<option>Other</option><option>Prefer not to say</option></select></div>
       </div>
       </div>
       <button class="ob-submit" id="ob-go">Create profile →</button>
@@ -2156,18 +2210,36 @@ function showObForm(edit){
   const wdMap = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
   d.querySelectorAll('.wd-chip').forEach(c=> c.onclick = ()=> c.classList.toggle('sel'));
   /* v83: coach personality + build chosen at intake, with a live sprite preview */
-  const obPrev = ()=>{ const p = d.querySelector('#ob-spr-prev'); if(p) p.innerHTML = SCENES.wave(themedSpr()); };
+  /* v132: the sample line types itself out of the coach's mouth */
+  let obTypeT = null;
+  const obSay = ()=>{
+    const live = d.querySelector('#ob-sample-t'), ghost = d.querySelector('#ob-sample-g');
+    if(!live || !ghost) return;
+    const PP = PERSONAS[state.personality];
+    const txt = `“${PP.open[0]}  ${PP.push}”`;
+    if(live.dataset.full === txt) return;   /* sex change etc. — don't retype the same line */
+    live.dataset.full = txt;
+    ghost.textContent = txt;                 /* reserves the bubble's final size up front */
+    clearInterval(obTypeT);
+    let i = 0; live.textContent = '';
+    obTypeT = setInterval(()=>{ live.textContent = txt.slice(0, ++i); if(i >= txt.length) clearInterval(obTypeT); }, 24);
+  };
+  const obPrev = ()=>{
+    const p = d.querySelector('#ob-spr-prev'); if(p) p.innerHTML = sprWrap(SCENES.wave(themedSpr()));
+    obSay();
+  };
   /* v90: pristine palette snapshot — switching personalities never bleeds colors between them */
   const sprBase = {...state.spr};
   const obPers = d.querySelector('#ob-persona');
+  /* v136: intake picks repaint the WHOLE app live — every tab's sprites follow the dropdowns */
+  const obAll = ()=>{ obPrev(); renderSprite(); renderTrain(); renderFuel(); renderProgress(); renderYou(); };
   if(obPers) obPers.onchange = ()=>{
     state.personality = obPers.value;
-    const sex = state.spr.sex;
-    Object.assign(state.spr, sprBase, THEME_DEFAULTS[sprTheme()] || {}, {sex});
-    obPrev(); renderSprite();
+    Object.assign(state.spr, sprBase, THEME_DEFAULTS[sprTheme()] || {}, sprKeep());
+    obAll();
   };
   const obSex = d.querySelector('#ob-csex');
-  if(obSex) obSex.onchange = ()=>{ state.spr.sex = obSex.value; obPrev(); renderSprite(); };
+  if(obSex) obSex.onchange = ()=>{ state.spr.sex = obSex.value; obAll(); };
   obPrev();
   /* v54: height ±1 in / ±1 cm, weight ±1 lb / ±1 kg */
   d.querySelectorAll('[data-obstep]').forEach(b=> b.onclick = ()=>{
@@ -2329,6 +2401,16 @@ function sprTheme(){
 }
 /* v91: the factory palette — persona switches restore this before applying theme colors */
 const DEFAULT_SPR = {...state.spr};
+/* v138: these belong to the USER's coach, not the theme — persona switches keep them */
+const SPR_PERSONAL = ['sex','hscale','mscale','hairStyle','beard','beardC','eyes','lip','outfit','acc','accC'];
+const sprKeep = () => Object.fromEntries(SPR_PERSONAL.map(k=>[k, state.spr[k]]));
+/* v140: height clamps so the head never leaves the frame; muscle widens gently —
+   real mass comes from the bulk rects in bodyCore */
+const sprWrap = html => {
+  const hy = Math.min(1.1, Math.max(0.85, state.spr.hscale||1));
+  const mx = 1 + ((state.spr.mscale||1) - 1) * 0.5;
+  return (hy!==1 || mx!==1) ? `<g transform="translate(8 13.5) scale(${mx} ${hy}) translate(-8 -13.5)">${html}</g>` : html;
+};
 const THEME_DEFAULTS = {
   athlete:   {},
   scientist: {coat:'#f2f2ec', glasses:'#2f3542', skin:'#7a4a2b', hair:'#241812', pants:'#2b3a5e'},
@@ -2336,13 +2418,69 @@ const THEME_DEFAULTS = {
   arnold:    {hair:'#e8c14b', skin:'#dda173', shirt:'#2b2b2b', trunks:'#7a3df0'},
   punk:      {hair:'#e0347c', vest:'#1c1c1c', studs:'#c9ced6', flannel:'#c0392b', shirt:'#f2f2ee'},
 };
-const SPR_ROWS = {
-  athlete:   [['skin','Skin tone'],['hair','Hair'],['shirt','Shirt'],['pants','Pants'],['socks','Socks'],['weights','Weights']],
-  scientist: [['skin','Skin tone'],['hair','Hair'],['glasses','Lab visor'],['coat','Lab coat'],['shirt','Shirt under coat'],['pants','Slacks'],['socks','Socks'],['weights','Weights']],
-  general:   [['skin','Skin tone'],['hair','Buzz cut'],['uniform','Uniform'],['strap','Bullet strap'],['pants','Trousers'],['socks','Socks'],['weights','Weights']],
-  arnold:    [['skin','Skin tan'],['hair','Hair'],['shirt','Tank top'],['trunks','Shorts'],['socks','Socks'],['weights','Weights']],
-  punk:      [['skin','Skin tone'],['hair','Mohawk'],['vest','Leather vest'],['studs','Spikes & studs'],['flannel','Waist flannel'],['pants','Cut-off jorts'],['shirt','Undershirt'],['socks','Socks'],['weights','Weights']],
-};
+/* v138: per-theme color rows retired — the RPG customizer covers personal traits */
+/* v150: outfits hold in EVERY scene. Generic scenes draw a plain torso block in the
+   theme's top color; for the bodybuilder that reads as a tee — so his tank top's
+   shoulder cutouts are painted onto any torso-sized block a scene produces. */
+function outfitize(svg, s){
+  const th = sprTheme();
+  if(!s || !s.shirt || !['arnold','scientist','general','punk'].includes(th)) return svg;
+  const sk = sprSkin(s);
+  const rxEsc = c => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const blockRe = c => new RegExp('<rect x="([\\d.]+)" y="([\\d.]+)" width="([\\d.]+)" height="([\\d.]+)" fill="' + rxEsc(c) + '"/>', 'g');
+  const f2 = n => +(+n).toFixed(2);
+  svg = svg.replace(blockRe(s.shirt), (m, x, y, w, h) => {
+    x = +x; y = +y; w = +w; h = +h;
+    if(w < 2.6 || h < 1.6) return m;   /* sleeves, straps, bands, scraps keep their shape */
+    if(th === 'arnold'){
+      /* stringer tank: bare chest between shoulder straps, band at the waist */
+      const sw = f2(w * 0.26), bh = f2(Math.min(1, h * 0.34));
+      return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${sk}"/>`
+        + `<rect x="${x}" y="${y}" width="${sw}" height="${h}" fill="${s.shirt}"/><rect x="${f2(x + w - sw)}" y="${y}" width="${sw}" height="${h}" fill="${s.shirt}"/>`
+        + `<rect x="${x}" y="${f2(y + h - bh)}" width="${w}" height="${bh}" fill="${s.shirt}"/>`
+        + `<rect x="${f2(x + w/2 - 0.1)}" y="${f2(y + 0.15)}" width="0.2" height="${f2(Math.max(0.5, h - bh - 0.3))}" fill="rgba(0,0,0,.22)"/>`;
+    }
+    if(th === 'scientist'){
+      /* open coat: WHITE shirt + red tie down the middle */
+      const stw = f2(w * 0.24), stx = f2(x + (w - stw)/2);
+      const tw = 0.36, tx = f2(x + w/2 - tw/2), tl = f2(Math.min(1.8, h * 0.62));
+      return m + `<rect x="${stx}" y="${y}" width="${stw}" height="${h}" fill="#ffffff"/>`
+        + `<rect x="${f2(stx - 0.2)}" y="${y}" width="0.18" height="${h}" fill="rgba(0,0,0,.14)"/><rect x="${f2(stx + stw + 0.02)}" y="${y}" width="0.18" height="${h}" fill="rgba(0,0,0,.14)"/>`
+        + `<rect x="${f2(x + w/2 - 0.3)}" y="${y}" width="0.6" height="0.3" fill="#a93226"/>`
+        + `<rect x="${tx}" y="${f2(y + 0.26)}" width="${tw}" height="${tl}" fill="#c0392b"/>`;
+    }
+    if(th === 'punk'){
+      /* open vest over the white undershirt, studs on the shoulders */
+      const stw = f2(w * 0.5), stx = f2(x + (w - stw)/2);
+      return m + `<rect x="${stx}" y="${y}" width="${stw}" height="${h}" fill="${s.baseShirt||'#f2f2ee'}"/>`
+        + `<rect x="${f2(x + 0.15)}" y="${f2(y + 0.3)}" width="0.32" height="0.32" fill="${s.studs||'#c9ced6'}"/><rect x="${f2(x + w - 0.47)}" y="${f2(y + 0.3)}" width="0.32" height="0.32" fill="${s.studs||'#c9ced6'}"/>`;
+    }
+    if(th === 'general'){
+      /* the ONE diagonal bullet strap, drawn continuous corner to corner */
+      let extra = '';
+      const n = 6;
+      for(let i = 0; i < n; i++){
+        const sx = f2(x + (w - 0.72) * i/(n-1)), sy = f2(y + (h - 0.46) * i/(n-1));
+        extra += `<rect x="${sx}" y="${sy}" width="0.72" height="0.46" fill="${s.strap||'#4a3826'}"/>`;
+        if(i % 2 === 0) extra += `<rect x="${f2(sx + 0.22)}" y="${f2(sy + 0.07)}" width="0.26" height="0.32" fill="#d4af37"/>`;
+      }
+      return m + extra;
+    }
+    return m;
+  });
+  /* punk: full-length pant legs become cut-off jorts — denim, white fray, bare leg */
+  if(th === 'punk' && s.pants){
+    svg = svg.replace(blockRe(s.pants), (m, x, y, w, h) => {
+      x = +x; y = +y; w = +w; h = +h;
+      if(w < 0.8 || w > 1.45 || h < 1.6) return m;   /* only leg-shaped columns */
+      const dh = f2(h * 0.42);
+      return `<rect x="${x}" y="${y}" width="${w}" height="${dh}" fill="${s.pants}"/>`
+        + `<rect x="${x}" y="${f2(y + dh)}" width="${w}" height="0.25" fill="#fcfcfb"/>`
+        + `<rect x="${x}" y="${f2(y + dh + 0.25)}" width="${w}" height="${f2(h - dh - 0.25)}" fill="${sk}"/>`;
+    });
+  }
+  return svg;
+}
 /* scenes receive a themed view of the sprite: outfit colors swap in by character */
 function themedSpr(){
   const s = state.spr, th = sprTheme();
@@ -2399,12 +2537,13 @@ function headPx(s, x, y, dir){
     h += `<rect x="${x}" y="${y}" width="2" height="1" fill="#e23b3b"/><rect x="${x}" y="${y-1}" width="1" height="1" fill="#6f7987"/>`;
     return h;
   }
-  if(s.sex==='f' && th!=='punk') h += `<rect x="${x-1}" y="${y}" width="1" height="2" fill="${s.hair}"/><rect x="${x+2}" y="${y}" width="1" height="2" fill="${s.hair}"/>`;
+  /* v141: side hair only where the STYLE calls for it — themed headgear (beret) keeps the female cue */
+  if(s.sex==='f' && th==='general') h += `<rect x="${x-1}" y="${y}" width="1" height="2" fill="${s.hair}"/><rect x="${x+2}" y="${y}" width="1" height="2" fill="${s.hair}"/>`;
   if(s.sex==='f'){
-    /* v89: every female build wears the same lipstick */
+    /* v89/v138: lipstick in the user's chosen shade */
     h += dir==='r'
-      ? `<rect x="${x+1.3}" y="${y+1.42}" width="0.55" height="0.3" fill="#d81b60"/>`
-      : `<rect x="${x+0.55}" y="${y+1.45}" width="0.9" height="0.3" fill="#d81b60"/>`;
+      ? `<rect x="${x+1.3}" y="${y+1.42}" width="0.55" height="0.3" fill="${s.lip||'#d81b60'}"/>`
+      : `<rect x="${x+0.55}" y="${y+1.45}" width="0.9" height="0.3" fill="${s.lip||'#d81b60'}"/>`;
   }
   if(th==='punk' && s.sex==='f'){
     /* v88: punk keeps her stud earrings */
@@ -2413,28 +2552,51 @@ function headPx(s, x, y, dir){
       : `<rect x="${x-0.28}" y="${y+1.1}" width="0.32" height="0.5" fill="${s.studs||'#c9ced6'}"/><rect x="${x+1.96}" y="${y+1.1}" width="0.32" height="0.5" fill="${s.studs||'#c9ced6'}"/>`;
   }
   if(th==='general'){
-    /* v92: buzz cut + cigar with drifting smoke */
-    h += `<rect x="${x}" y="${y-0.55}" width="2" height="0.55" fill="${s.hair}"/>
+    /* v135: green beret (slouched crown, band, gold flash) + burning cigar */
+    h += `<rect x="${x-0.35}" y="${y-0.72}" width="2.5" height="0.52" fill="#3f5426"/>
+    <rect x="${x-0.62}" y="${y-0.42}" width="0.6" height="0.5" fill="#3f5426"/>
+    <rect x="${x-0.1}" y="${y-0.24}" width="2.2" height="0.3" fill="#2e401c"/>
+    <rect x="${x+0.9}" y="${y-0.88}" width="0.3" height="0.2" fill="#2e401c"/>
+    <rect x="${x+1.3}" y="${y-0.56}" width="0.42" height="0.32" fill="#d4af37"/>
     <rect x="${x+1.55}" y="${y+1.5}" width="1.15" height="0.34" fill="#6b4a2f"/>
-    <rect x="${x+2.5}" y="${y+1.5}" width="0.3" height="0.34" fill="#e8542f"/>
-    <rect x="${x+2.6}" y="${y+0.85}" width="0.32" height="0.32" fill="rgba(205,210,218,.8)"/>
-    <rect x="${x+2.85}" y="${y+0.3}" width="0.38" height="0.38" fill="rgba(205,210,218,.55)"/>
-    <rect x="${x+2.7}" y="${y-0.35}" width="0.45" height="0.45" fill="rgba(205,210,218,.32)"/>`;
+    <rect class="cig-tip" x="${x+2.5}" y="${y+1.5}" width="0.3" height="0.34" fill="#ff2b2b"/>
+    <rect class="smk1" x="${x+2.6}" y="${y+0.95}" width="0.32" height="0.32" fill="rgba(205,210,218,.85)"/>
+    <rect class="smk2" x="${x+2.8}" y="${y+0.75}" width="0.36" height="0.36" fill="rgba(205,210,218,.7)"/>
+    <rect class="smk3" x="${x+2.68}" y="${y+0.55}" width="0.4" height="0.4" fill="rgba(205,210,218,.55)"/>`;
   } else if(th==='punk'){
     h += `<rect x="${x+0.5}" y="${y-1.5}" width="1" height="1.5" fill="${s.hair}"/><rect x="${x+0.75}" y="${y-2}" width="0.5" height="0.5" fill="${s.hair}"/>`;
   } else {
-    h += `<rect x="${x}" y="${y-1}" width="2" height="1" fill="${s.hair}"/>`;
+    /* v138/v140: hair styles — short, long, mohawk, bald (+ pigtails for her) */
+    const hs = s.hairStyle||'short';
+    if(hs==='mohawk') h += `<rect x="${x+0.5}" y="${y-1.5}" width="1" height="1.5" fill="${s.hair}"/><rect x="${x+0.75}" y="${y-2}" width="0.5" height="0.5" fill="${s.hair}"/>`;
+    else if(hs==='long') h += `<rect x="${x}" y="${y-1}" width="2" height="1" fill="${s.hair}"/><rect x="${x-0.5}" y="${y-0.5}" width="0.5" height="${s.sex==='f'?3.9:2.7}" fill="${s.hair}"/><rect x="${x+2}" y="${y-0.5}" width="0.5" height="${s.sex==='f'?3.9:2.7}" fill="${s.hair}"/>`;
+    else if(hs==='pigtails') h += `<rect x="${x}" y="${y-1}" width="2" height="1" fill="${s.hair}"/><rect x="${x-0.85}" y="${y+0.15}" width="0.55" height="3.4" fill="${s.hair}"/><rect x="${x+2.3}" y="${y+0.15}" width="0.55" height="3.4" fill="${s.hair}"/><rect x="${x-0.9}" y="${y+0.28}" width="0.65" height="0.22" fill="#e34948"/><rect x="${x+2.25}" y="${y+0.28}" width="0.65" height="0.22" fill="#e34948"/>`;
+    else if(hs!=='bald'){
+      h += `<rect x="${x}" y="${y-1}" width="2" height="1" fill="${s.hair}"/>`;
+      if(s.sex==='f') h += `<rect x="${x-1}" y="${y}" width="1" height="2" fill="${s.hair}"/><rect x="${x+2}" y="${y}" width="1" height="2" fill="${s.hair}"/>`;   /* short (her): bob with sides */
+    }
   }
   /* v86: eyes on everyone except behind the general's mirrored aviators */
   if(th!=='general') h += dir==='r'
-    ? `<rect x="${x+1.25}" y="${y+0.7}" width="0.45" height="0.45" fill="#2a2118"/>`
-    : `<rect x="${x+0.35}" y="${y+0.7}" width="0.4" height="0.4" fill="#2a2118"/><rect x="${x+1.25}" y="${y+0.7}" width="0.4" height="0.4" fill="#2a2118"/>`;
+    ? `<rect x="${x+1.25}" y="${y+0.7}" width="0.45" height="0.45" fill="${s.eyes||'#2a2118'}"/>`
+    : `<rect x="${x+0.35}" y="${y+0.7}" width="0.4" height="0.4" fill="${s.eyes||'#2a2118'}"/><rect x="${x+1.25}" y="${y+0.7}" width="0.4" height="0.4" fill="${s.eyes||'#2a2118'}"/>`;
+  /* v138: facial hair (any style, any persona but the robot) */
+  if(s.sex!=='r' && s.beard && s.beard!=='none'){
+    const bc = s.beardC||'#5b3a21';
+    if(s.beard==='mustache') h += `<rect x="${x+0.45}" y="${y+1.34}" width="1.1" height="0.22" fill="${bc}"/>`;
+    else if(s.beard==='beard') h += `<rect x="${x+0.25}" y="${y+1.62}" width="1.5" height="0.42" fill="${bc}"/>`;
+    else if(s.beard==='full') h += `<rect x="${x+0.45}" y="${y+1.34}" width="1.1" height="0.22" fill="${bc}"/><rect x="${x+0.15}" y="${y+1.52}" width="1.7" height="0.52" fill="${bc}"/>`;
+  }
+  /* v138: accessories */
+  if(s.acc==='headband' && th!=='general') h += `<rect x="${x-0.1}" y="${y+0.06}" width="2.2" height="0.34" fill="${s.accC||'#e8c14b'}"/>`;
+  if(s.acc==='glasses' && th!=='scientist' && th!=='general' && s.sex!=='r')
+    h += `<rect x="${x+0.18}" y="${y+0.58}" width="0.72" height="0.52" fill="rgba(18,20,26,.85)"/><rect x="${x+1.1}" y="${y+0.58}" width="0.72" height="0.52" fill="rgba(18,20,26,.85)"/><rect x="${x+0.9}" y="${y+0.7}" width="0.2" height="0.14" fill="rgba(18,20,26,.85)"/>`;
   if(th==='scientist'){
     /* RoboCop visor — full dark strip, machined silver edge, cyan scan line, red sensor blip */
     h += `<rect x="${x-0.15}" y="${y+0.38}" width="2.3" height="0.78" fill="${s.glasses}"/>
     <rect x="${x-0.15}" y="${y+0.38}" width="2.3" height="0.16" fill="#9aa4b2"/>
     <rect x="${x+0.05}" y="${y+0.68}" width="1.7" height="0.18" fill="#7fd8ff"/>
-    <rect x="${x+1.62}" y="${y+0.68}" width="0.33" height="0.18" fill="#ff5a5a"/>`;
+    <rect class="sci-dot" x="${x+1.62}" y="${y+0.68}" width="0.33" height="0.18" fill="#ff5a5a"/>`;
   }
   if(th==='general'){
     /* silver aviators */
@@ -2451,16 +2613,29 @@ function bodyCore(s){
   const sk = sprSkin(s), th = sprTheme();
   let torso;
   if(th==='arnold'){
+    /* v134: definition — pec split + shelf, ab rows, serratus ticks */
     torso = `<rect x="6" y="6" width="4" height="3" fill="${sk}"/>
     <rect x="6" y="6" width="1" height="3" fill="${s.baseShirt||s.shirt}"/><rect x="9" y="6" width="1" height="3" fill="${s.baseShirt||s.shirt}"/>
+    <rect x="7.9" y="6.1" width="0.2" height="0.85" fill="rgba(0,0,0,.26)"/>
+    <rect x="7.05" y="6.9" width="1.9" height="0.17" fill="rgba(0,0,0,.24)"/>
+    <rect x="7.35" y="7.35" width="1.3" height="0.14" fill="rgba(0,0,0,.2)"/>
+    <rect x="7.35" y="7.72" width="1.3" height="0.14" fill="rgba(0,0,0,.2)"/>
+    <rect x="7.9" y="7.2" width="0.16" height="0.75" fill="rgba(0,0,0,.18)"/>
+    <rect x="7.05" y="7.25" width="0.16" height="0.5" fill="rgba(0,0,0,.16)"/><rect x="8.82" y="7.25" width="0.16" height="0.5" fill="rgba(0,0,0,.16)"/>
     <rect x="6" y="8" width="4" height="1" fill="${s.baseShirt||s.shirt}"/>`;
   } else if(th==='scientist'){
+    /* v134: proper lab coat — open lapels, placket, buttons, chest pocket */
     torso = `<rect x="6" y="6" width="4" height="3" fill="${s.coat}"/>
-    <rect x="7.5" y="6" width="1" height="3" fill="${s.baseShirt||'#e34948'}"/>`;
+    <rect x="7.5" y="6" width="1" height="3" fill="#ffffff"/>
+    <rect x="7.7" y="6" width="0.6" height="0.32" fill="#a93226"/>
+    <rect x="7.82" y="6.28" width="0.36" height="1.6" fill="#c0392b"/>
+    <rect x="7.28" y="6" width="0.22" height="3" fill="rgba(0,0,0,.14)"/><rect x="8.5" y="6" width="0.22" height="3" fill="rgba(0,0,0,.14)"/>
+    <rect x="6.9" y="6" width="0.42" height="0.62" fill="rgba(0,0,0,.2)"/><rect x="8.68" y="6" width="0.42" height="0.62" fill="rgba(0,0,0,.2)"/>
+    <rect x="8.62" y="6.9" width="0.24" height="0.24" fill="#9aa4b2"/><rect x="8.62" y="7.6" width="0.24" height="0.24" fill="#9aa4b2"/>
+    <rect x="6.35" y="7.1" width="0.72" height="0.55" fill="rgba(0,0,0,.12)"/><rect x="6.35" y="7.1" width="0.72" height="0.14" fill="#9aa4b2"/>`;
   } else if(th==='general'){
-    torso = `<rect x="6" y="6" width="4" height="3" fill="${s.uniform}"/>
-    <rect x="6" y="8" width="4" height="0.5" fill="#2e3722"/>
-    <rect x="6.5" y="6.5" width="0.5" height="0.5" fill="#e8c14b"/><rect x="6.5" y="7.5" width="0.5" height="0.5" fill="#e8c14b"/>`;
+    /* v152: plain block — the diagonal bullet strap is painted by outfitize, same as every scene */
+    torso = `<rect x="6" y="6" width="4" height="3" fill="${s.uniform}"/>`;
   } else if(th==='punk'){
     torso = `<rect x="6" y="6" width="4" height="3" fill="${s.baseShirt||s.shirt}"/>
     <rect x="6" y="6" width="1" height="3" fill="${s.vest}"/><rect x="9" y="6" width="1" height="3" fill="${s.vest}"/>
@@ -2468,8 +2643,17 @@ function bodyCore(s){
     <rect x="9" y="5.5" width="0.5" height="0.5" fill="${s.studs}"/><rect x="9.75" y="5.5" width="0.5" height="0.5" fill="${s.studs}"/>
     <rect x="6.25" y="7" width="0.5" height="0.5" fill="${s.studs}"/><rect x="9.25" y="7" width="0.5" height="0.5" fill="${s.studs}"/>`;
   } else {
-    torso = `<rect x="6" y="6" width="4" height="3" fill="${s.shirt}"/>`;
+    /* v138: outfit options for the everyday coach */
+    const of = s.outfit||'tee';
+    if(of==='tank') torso = `<rect x="6" y="6" width="4" height="3" fill="${sk}"/><rect x="6.6" y="6" width="2.8" height="3" fill="${s.shirt}"/>`;
+    else if(of==='hoodie') torso = `<rect x="5.9" y="5.75" width="4.2" height="0.4" fill="${s.shirt}"/><rect x="6" y="6" width="4" height="3" fill="${s.shirt}"/><rect x="7.35" y="6.15" width="0.3" height="1.1" fill="rgba(255,255,255,.72)"/><rect x="8.35" y="6.15" width="0.3" height="1.1" fill="rgba(255,255,255,.72)"/><rect x="7.2" y="7.6" width="1.6" height="1.1" fill="rgba(0,0,0,.14)"/>`;
+    else torso = `<rect x="6" y="6" width="4" height="3" fill="${s.shirt}"/>`;
   }
+  if(s.acc==='chain') torso += `<rect x="6.5" y="6.08" width="3" height="0.2" fill="#e8c14b"/><rect x="7.82" y="6.28" width="0.36" height="0.36" fill="#e8c14b"/>`;
+  /* v140: muscle mass builds the frame — delts first, then traps + forearms */
+  const mm = s.mscale||1;
+  if(mm >= 1.05) torso += `<rect x="5.35" y="6.05" width="0.65" height="1.5" fill="${sk}"/><rect x="10" y="6.05" width="0.65" height="1.5" fill="${sk}"/>`;
+  if(mm >= 1.13) torso += `<rect x="6.35" y="5.6" width="3.3" height="0.4" fill="${sk}"/><rect x="5.15" y="7.45" width="0.62" height="1.25" fill="${sk}"/><rect x="10.23" y="7.45" width="0.62" height="1.25" fill="${sk}"/>`;
   const bottom = th==='arnold' ? (s.trunks||s.pants) : s.pants;
   const legFill = th==='arnold' ? sk : bottom;
   /* v125: punk wears cut-off jorts — denim stops high, white frayed edge, bare legs */
@@ -2481,9 +2665,10 @@ function bodyCore(s){
     <rect x="6" y="11.15" width="1" height="0.85" fill="${sk}"/><rect x="9" y="11.15" width="1" height="0.85" fill="${sk}"/>` : `
     <rect x="6" y="9" width="4" height="1" fill="${bottom}"/>
     <rect x="6" y="10" width="1" height="2" fill="${legFill}"/><rect x="9" y="10" width="1" height="2" fill="${legFill}"/>`;
-  return headPx(s,7,4) + torso + legs + `
+  /* v144: head (and hair) drawn last — long styles drape OVER the shirt */
+  return torso + legs + `
     <rect x="6" y="12" width="1" height="1" fill="${s.socks}"/><rect x="9" y="12" width="1" height="1" fill="${s.socks}"/>
-    <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>`;
+    <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>` + headPx(s,7,4);
 }
 const SCENES = {
   /* overhead press — the classic (also the You-tab default) */
@@ -3122,8 +3307,6 @@ const SCENES = {
       <rect x="6" y="10.5" width="1" height="1.5" fill="${s.pants}"/><rect x="9" y="10.5" width="1" height="1.5" fill="${s.pants}"/>`;
       if(th==='general') return `
       <rect x="6" y="4.6" width="4" height="3.2" fill="${s.uniform||s.shirt}"/>
-      <rect x="6.05" y="4.65" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="6.75" y="5.25" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="7.45" y="5.85" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="8.15" y="6.45" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="8.85" y="7.05" width="0.9" height="0.55" fill="${s.strap||'#4a3826'}"/><rect x="9.4" y="7.65" width="0.6" height="0.55" fill="${s.strap||'#4a3826'}"/>
-      <rect x="6.3" y="4.73" width="0.32" height="0.38" fill="#d4af37"/><rect x="7" y="5.33" width="0.32" height="0.38" fill="#d4af37"/><rect x="7.7" y="5.93" width="0.32" height="0.38" fill="#d4af37"/><rect x="8.4" y="6.53" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.1" y="7.13" width="0.32" height="0.38" fill="#d4af37"/><rect x="9.55" y="7.73" width="0.32" height="0.38" fill="#d4af37"/>
       <rect x="6" y="7.8" width="4" height="1" fill="${s.pants}"/>
       <rect x="6" y="8.8" width="1" height="3.2" fill="${s.pants}"/><rect x="9" y="8.8" width="1" height="3.2" fill="${s.pants}"/>`;
       if(th==='punk') return `
@@ -3143,13 +3326,16 @@ const SCENES = {
       <rect x="6" y="10.32" width="1" height="1.68" fill="${sk}"/><rect x="9" y="10.32" width="1" height="1.68" fill="${sk}"/>`;
       if(big) return `
       <rect x="5.3" y="4.4" width="5.4" height="1.2" fill="${sk}"/>
+      <rect x="5.5" y="4.75" width="0.8" height="0.2" fill="rgba(0,0,0,.22)"/><rect x="9.7" y="4.75" width="0.8" height="0.2" fill="rgba(0,0,0,.22)"/>
+      <rect x="7.85" y="4.5" width="0.22" height="1" fill="rgba(0,0,0,.24)"/>
       <rect x="6.2" y="4.4" width="0.8" height="1.4" fill="${s.shirt}"/><rect x="9" y="4.4" width="0.8" height="1.4" fill="${s.shirt}"/>
       <rect x="5.3" y="5.5" width="5.4" height="1.3" fill="${s.shirt}"/>
       <rect x="7.85" y="5.7" width="0.3" height="0.7" fill="rgba(0,0,0,.25)"/>
       <rect x="5.9" y="6.8" width="4.2" height="1.1" fill="${s.shirt}"/>
       <rect x="6.3" y="7.9" width="3.4" height="1" fill="${s.trunks||s.pants}"/>
       <rect x="6.4" y="8.9" width="1.25" height="1.8" fill="${s.trunks||s.pants}"/><rect x="8.35" y="8.9" width="1.25" height="1.8" fill="${s.trunks||s.pants}"/>
-      <rect x="6.5" y="10.7" width="1.15" height="1.3" fill="${sk}"/><rect x="8.45" y="10.7" width="1.15" height="1.3" fill="${sk}"/>`;
+      <rect x="6.5" y="10.7" width="1.15" height="1.3" fill="${sk}"/><rect x="8.45" y="10.7" width="1.15" height="1.3" fill="${sk}"/>
+      <rect x="6.62" y="11.15" width="0.9" height="0.18" fill="rgba(0,0,0,.22)"/><rect x="8.57" y="11.15" width="0.9" height="0.18" fill="rgba(0,0,0,.22)"/>`;
       return `
       <rect x="6" y="4.6" width="4" height="3.2" fill="${s.shirt}"/>
       <rect x="6" y="7.8" width="4" height="1" fill="${s.pants}"/>
@@ -3196,6 +3382,50 @@ const SCENES = {
       ${armDown}
       ${shoes}
     </g>`; },
+  /* v147: spin — the coach whips around, showing front and mirrored side */
+  spin: s => `
+    <g id="sA"><rect x="1" y="14" width="14" height="1" fill="#3a4150"/></g>
+    <g id="sB">${bodyCore(s)}</g>
+    <g id="sC"><g transform="translate(16 0) scale(-1 1)">${bodyCore(s)}</g></g>`,
+  /* v144: the customizer's mirror — biceps, chest and traps sized live from the muscle slider */
+  pump: s => { const sk = sprSkin(s); const m = s.mscale||1; const t = Math.max(0, Math.min(1, (m-0.9)/0.3));
+    const bw = +(0.85 + t*0.95).toFixed(2);
+    const cw = +(3.6 + t*1.7).toFixed(2);
+    const cx = +(8 - cw/2).toFixed(2);
+    const tr = +(0.18 + t*0.5).toFixed(2);
+    const bra = s.sex==='f';
+    const torso = `
+      <rect x="7.3" y="4.35" width="1.4" height="0.8" fill="${sk}"/>
+      <rect x="${(7-tr).toFixed(2)}" y="4.5" width="${tr}" height="0.6" fill="${sk}"/><rect x="9" y="4.5" width="${tr}" height="0.6" fill="${sk}"/>
+      <rect x="${cx}" y="5" width="${cw}" height="3.4" fill="${sk}"/>
+      ${bra?`<rect x="${cx}" y="5.55" width="${cw}" height="1.05" fill="${s.shirt}"/>`:''}
+      <rect x="7.85" y="${bra?6.85:5.35}" width="0.3" height="${bra?1.5:3}" fill="rgba(0,0,0,.22)"/>
+      <rect x="${(cx+0.3).toFixed(2)}" y="6.75" width="${(cw-0.6).toFixed(2)}" height="0.26" fill="rgba(0,0,0,.2)"/>
+      <rect x="${(cx+0.5).toFixed(2)}" y="7.55" width="${(cw-1).toFixed(2)}" height="0.22" fill="rgba(0,0,0,.16)"/>`;
+    const arms = up => {
+      /* v145: one continuous limb — bicep bulge fused into the elbow, forearm rising off it */
+      const lJx = +(cx-1.55).toFixed(2), rJx = +(cx+cw+0.55-bw).toFixed(2);
+      const fy = +(5.9-bw-1.05-(up?0.3:0)).toFixed(2), fh = +(1.15+(up?0.3:0)).toFixed(2);
+      const lfx = +(cx-1.55+(bw-0.78)/2).toFixed(2), rfx = +(cx+cw+0.55-bw+(bw-0.78)/2).toFixed(2);
+      return `
+      <rect x="${(cx-1.2).toFixed(2)}" y="5.15" width="1.3" height="0.85" fill="${sk}"/>
+      <rect x="${(cx+cw-0.1).toFixed(2)}" y="5.15" width="1.3" height="0.85" fill="${sk}"/>
+      <rect x="${lJx}" y="${(5.9-bw).toFixed(2)}" width="${bw}" height="${bw}" fill="${sk}"/>
+      <rect x="${rJx}" y="${(5.9-bw).toFixed(2)}" width="${bw}" height="${bw}" fill="${sk}"/>
+      <rect x="${lfx}" y="${fy}" width="0.78" height="${fh}" fill="${sk}"/>
+      <rect x="${rfx}" y="${fy}" width="0.78" height="${fh}" fill="${sk}"/>`;
+    };
+    const base = up => `
+      ${torso}
+      ${arms(up)}
+      <rect x="6.4" y="8.4" width="3.2" height="1" fill="${s.pants}"/>
+      <rect x="6.5" y="9.4" width="1" height="3.1" fill="${s.pants}"/><rect x="8.5" y="9.4" width="1" height="3.1" fill="${s.pants}"/>
+      <rect class="sh" x="6" y="12.5" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="8.3" y="12.5" width="2" height="1" fill="#fcfcfb"/>
+      ${headPx(s,7,2.6)}`;
+    return `
+    <g id="sA"><rect x="1" y="13.5" width="14" height="1" fill="#3a4150"/></g>
+    <g id="sB">${base(false)}</g>
+    <g id="sC">${base(true)}</g>`; },
   /* v64: overhead side stretch — You tab */
   stretch: s => { const sk = sprSkin(s); return `
     <g id="sA"><rect x="1" y="13" width="14" height="1" fill="#3a4150"/></g>
@@ -3292,7 +3522,7 @@ const SCENES = {
     const sleeper = lift => `
       <rect x="3.7" y="${8.9+lift}" width="1.4" height="1.4" fill="${sk}"/>
       <rect x="3.5" y="${8.7+lift}" width="1.6" height="0.5" fill="${s.hair}"/>
-      ${s.sex==='f'?`<rect x="3.25" y="${8.9+lift}" width="0.45" height="1.3" fill="${s.hair}"/><rect x="4.6" y="${9.82+lift}" width="0.5" height="0.25" fill="#d81b60"/>`:''}
+      ${s.sex==='f'?`<rect x="3.25" y="${8.9+lift}" width="0.45" height="1.3" fill="${s.hair}"/><rect x="4.6" y="${9.82+lift}" width="0.5" height="0.25" fill="${s.lip||'#d81b60'}"/>`:''}
       <rect x="4.55" y="${9.5+lift}" width="0.45" height="0.2" fill="#1c1c1c"/>
       <rect x="5.3" y="9.5" width="7.2" height="1.1" fill="${s.shirt}"/>
       <rect x="5.3" y="${9.15+lift}" width="1.9" height="0.45" fill="${s.shirt}"/>
@@ -3369,6 +3599,8 @@ const SCENES = {
       <rect class="sh" x="5" y="13" width="2" height="1" fill="#fcfcfb"/><rect class="sh" x="9" y="13" width="2" height="1" fill="#fcfcfb"/>
     </g>`; },
 };
+/* v150: wrap every scene so persona outfits are enforced on the way out */
+Object.keys(SCENES).forEach(k => { const fn = SCENES[k]; SCENES[k] = s => outfitize(fn(s), s); });
 const MG2SCENE = {
   'Chest — Press':'bench', 'Chest — Fly':'mgFly', 'Shoulders — Press':'ohp',
   'Side Delts':'mgSide', 'Rear Delts':'mgRear', 'Front Delts':'mgFront',
@@ -3399,7 +3631,7 @@ function renderSprite(){
   const s = themedSpr(), fig = $('#hud-fig'), active = $('#spr-active');
   const sc = computeScene();
   if(fig) fig.dataset.scene = sc;
-  if(active && SCENES[sc]) active.innerHTML = SCENES[sc](s);
+  if(active && SCENES[sc]) active.innerHTML = sprWrap(SCENES[sc](s));
   /* rest-pose sprite wears your colors (and your chassis) too */
   const restShirt = document.querySelector('#spr-rest rect[x="6"][y="5"]');
   if(restShirt) restShirt.setAttribute('fill', state.spr.shirt);
@@ -3413,7 +3645,7 @@ function renderSprite(){
   if(restSvg){
     let lip = restSvg.querySelector('#rest-lip');
     if(state.spr.sex==='f' && !lip){
-      restSvg.insertAdjacentHTML('beforeend', '<rect id="rest-lip" x="7.35" y="4.45" width="0.9" height="0.32" fill="#d81b60"/>');
+      restSvg.insertAdjacentHTML('beforeend', `<rect id="rest-lip" x="7.35" y="4.45" width="0.9" height="0.32" fill="${state.spr.lip||'#d81b60'}"/>`);
     } else if(state.spr.sex!=='f' && lip){ lip.remove(); }
   }
   /* profile square always wears the (base) shirt color; text flips for contrast */
@@ -3427,14 +3659,14 @@ function transientScene(sc, ms=3800){
 }
 /* v103b: the Progress chart sprite performs the selected exercise — same mapping as live training */
 function exScene(name, mg){
-  if(mg === 'Cardio') return ({run:'run',tread:'run',stair:'stair',ellip:'ellip',bikein:'bike',bikeout:'bike',swim:'swim'})[segCardioType(name)] || 'run';
+  if(mg === 'Cardio') return ({run:'run',tread:'run',walk:'stroll',stair:'stair',ellip:'ellip',bikein:'bike',bikeout:'bike',swim:'swim',box:'jumprope',pil:'stretch',yoga:'stretch'})[segCardioType(name)] || 'run';
   const g = mg || NAME2MG[name] || '';
   return MG2SCENE[g] || 'lift';
 }
 /* v102: mid-size animated coach sprite for empty states — dead ends get personality */
 function emptySprite(scene, px=104){
   /* v104: the wrapper carries data-scene so every scene runs its REAL animation, same as the HUD */
-  return `<span class="e-spr" data-scene="${SCENES[scene]?scene:'wave'}" style="display:inline-block;line-height:0"><svg viewBox="0 0 16 15.5" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true">${(SCENES[scene]||SCENES.wave)(themedSpr())}</svg></span>`;
+  return `<span class="e-spr" data-scene="${SCENES[scene]?scene:'wave'}" style="display:inline-block;line-height:0"><svg viewBox="0 0 16 15.5" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true">${sprWrap((SCENES[scene]||SCENES.wave)(themedSpr()))}</svg></span>`;
 }
 
 function updateHud(){
@@ -4072,6 +4304,62 @@ function showLLMContinue(){
    ============================================================ */
 const chatEl = $('#chat-scroll'), inputEl = $('#chat-input');
 
+/* v131: EVERY dialogue prompt can step back — the previous prompt returns untouched */
+function wireFlowBack(d){
+  if(d.querySelector('.msg-back, .flow-back')) return;
+  if(!d.querySelector('button')) return;   /* informational bubble — nothing to undo */
+  /* a bubble that already ships its own "Go back" doesn't need a second one */
+  if([...d.querySelectorAll('button')].some(x=>/go back/i.test(x.textContent))) return;
+  /* v141: even a first-in-history prompt gets a back (it re-prompts the root menu);
+     only pre-onboarding screens skip it — there is nowhere to go yet */
+  let prev0 = d.previousElementSibling;
+  while(prev0 && !(prev0.classList && prev0.classList.contains('bot') && prev0.querySelector('button'))) prev0 = prev0.previousElementSibling;
+  if(!prev0 && !state.onboarded) return;
+  const panel = document.createElement('div');
+  panel.className = 'btn-panel flow-back-panel';
+  panel.style.marginTop = '4px';
+  const b = document.createElement('button');
+  b.className = 'back-sub flow-back';
+  b.textContent = '← Go back';
+  b.onclick = ()=>{
+    let prev = d.previousElementSibling;
+    while(prev && !(prev.classList && prev.classList.contains('bot') && prev.querySelector('button:not(.flow-back)'))) prev = prev.previousElementSibling;
+    pendingIntent = null;
+    /* v141: back NEVER dead-ends — no earlier prompt means the root menu re-prompts */
+    if(!prev){ d.remove(); showFlow('root'); return; }
+    let n = prev.nextElementSibling;
+    while(n){ const nx = n.nextElementSibling; if(n.id !== 'hist-toggle') n.remove(); n = nx; }
+    prev.querySelectorAll('button, input, select').forEach(x=>{ x.disabled = false; x.classList.remove('dim','sel'); });
+    /* restored prompt must actually offer something — otherwise re-prompt the menu */
+    const live = [...prev.querySelectorAll('button')].filter(x=>!x.disabled && !/go back/i.test(x.textContent));
+    if(!live.length){ showFlow('root'); return; }
+    showInput();
+    scrollChat();
+  };
+  panel.appendChild(b);
+  d.appendChild(panel);
+}
+/* v134: the escape hatch lives only on the newest prompt — older bubbles tuck theirs away */
+function syncBackPills(){
+  const bots = [...chatEl.querySelectorAll('.msg.bot')];
+  const last = bots[bots.length - 1];
+  bots.forEach(m=>{
+    m.querySelectorAll('.back-sub, .msg-back, .flow-back, [data-back], [data-sm="back"], [data-gb]').forEach(btn=>{
+      if(!/go back/i.test(btn.textContent||'')) return;
+      const show = m === last;
+      btn.style.display = show ? '' : 'none';
+      const panel = btn.closest('.btn-panel');
+      if(panel && [...panel.children].every(ch=>/go back/i.test(ch.textContent||''))) panel.style.display = show ? '' : 'none';
+    });
+  });
+}
+new MutationObserver(muts=>{
+  muts.forEach(m=> m.addedNodes.forEach(n=>{
+    if(n.nodeType === 1 && n.classList && n.classList.contains('msg') && n.classList.contains('bot')) wireFlowBack(n);
+  }));
+  syncBackPills();
+}).observe(chatEl, {childList:true});
+
 /* v58/v68: clean chat — messages that arrive together (≤3 s apart, same user turn)
    stay on screen as a bundle; older bundles drop into chat history */
 let chatBreakAt = 0;
@@ -4121,7 +4409,7 @@ function addMsg(html, who){
   const d = document.createElement('div');
   d.className = 'msg '+who;
   d.innerHTML = (who==='bot'?'<span class="tag">'+state.coachName+' · '+flav().t+'</span>':'') + html
-    + (who==='bot'?'<button class="msg-back" title="Take back & redo">↩</button>':'');
+    + (who==='bot'?'<div class="btn-panel" style="margin-top:4px"><button class="back-sub msg-back" title="Take back & redo">← Go back</button></div>':'');
   chatEl.appendChild(d); scrollChat();
   if(who==='bot'){
     d.querySelector('.msg-back').onclick = ()=>{
@@ -4783,14 +5071,16 @@ function checkProgression(e){
   if(e.seg || e.done.length < e.sets) return;
   const top = repTop(e);
   if(e.done.every(d=>d.r >= top && d.w >= e.target.w)){
-    toast(`🎉 ${e.n}: all sets at the top — +5 lb next session`);
+    toast(`🎉 ${e.n}: all sets at the top — +${wInc(e)} lb next session`);
   }
 }
 
 /* dips & pull-ups run on assist machines too — weight may go negative */
 const wFloor = e => /dips?\b|pull-?ups?|chin-?ups?/i.test(e.n) ? -300 : 5;
-/* v117: weights step in 5s — 5 lb, or 5 kg when the app is metric */
-const wStepLb = () => state.units==='kg' ? 5/LB2KG : 5;
+/* v117/v137: barbells & machines step in 5s; DUMBBELL work steps in 2.5s (22.5 lb curls exist) */
+const isDB = e => !!(e && /dumbbell|\bdb\b/i.test(e.n||''));
+const wInc = e => isDB(e) ? 2.5 : 5;
+const wStepLb = (e) => state.units==='kg' ? wInc(e)/LB2KG : wInc(e);
 /* v123: friendly progressive-overload heads-up — once per exercise per session,
    only when a REAL previous weight exists. Never blocks anything. */
 function growthNudge(e){
@@ -4801,7 +5091,7 @@ function growthNudge(e){
   toast(`📈 Last time: ${load(lastW)} on ${e.n} — matching or beating it is what drives growth. Your call!`, 3600);
   return true;
 }
-const snapW = lb => state.units==='kg' ? +(Math.round(lb*LB2KG/5)*5/LB2KG).toFixed(1) : Math.round(lb/5)*5;
+const snapW = (lb, e) => { const inc = wInc(e); return state.units==='kg' ? +(Math.round(lb*LB2KG/inc)*inc/LB2KG).toFixed(1) : +(Math.round(lb/inc)*inc).toFixed(1); };
 
 function renderTrain(){
   const el = $('#screen-train');
@@ -4955,7 +5245,7 @@ function renderTrain(){
           ccfg.forEach(cc=>{ if(e.cardVals[cc.k]===undefined) e.cardVals[cc.k] = cc.k==='dur' ? (e.cardDur||cc.v) : (cc.k==='speed' && e.cardSpeed ? e.cardSpeed : cc.v); });
           return `
         <div class="ctl-row" style="flex-wrap:wrap;gap:10px">
-          ${ccfg.filter(cc=>!(cc.k==='dur' && e.cardMode==='up')).map(cc=>`<span class="ctl">${cc.lab} <button class="adj-btn" data-cvdn="${i}:${cc.k}">−</button> <input class="lb-f" data-cvval="${i}:${cc.k}" inputmode="decimal" value="${e.cardVals[cc.k]}" style="width:46px"> <button class="adj-btn" data-cvup="${i}:${cc.k}">＋</button> ${cc.unit===' mph' ? `<button class="adj-btn" data-cunit="${i}" style="width:auto;padding:0 9px;font-size:11px;font-weight:700" title="Tap to switch mph / kph">${e.cardUnit||'mph'}</button>` : `<span style="font-size:11px;color:var(--muted)">${cc.unit.trim()}</span>`}</span>`).join('')}
+          ${ccfg.filter(cc=>!(cc.k==='dur' && e.cardMode==='up') && cc.k!=='dist').map(cc=>`<span class="ctl">${cc.lab} <button class="adj-btn" data-cvdn="${i}:${cc.k}">−</button> <input class="lb-f" data-cvval="${i}:${cc.k}" inputmode="decimal" value="${e.cardVals[cc.k]}" style="width:46px"> <button class="adj-btn" data-cvup="${i}:${cc.k}">＋</button> ${cc.unit===' mph' ? `<button class="adj-btn" data-cunit="${i}" style="width:auto;padding:0 9px;font-size:11px;font-weight:700" title="Tap to switch mph / kph">${e.cardUnit||'mph'}</button>` : `<span style="font-size:11px;color:var(--muted)">${cc.unit.trim()}</span>`}</span>`).join('')}
         </div>
         <div class="seg" style="margin:8px 0 0">
           <button class="${e.cardMode==='up'?'':'sel'}" data-cmodeseg="${i}:down" style="flex:1">⏱ Countdown</button>
@@ -5210,15 +5500,15 @@ function renderTrain(){
     if(next) toast(`✓ ${state.exercises[i].n} done — up next: ${next.n}`);
     else finishWorkoutSummary();
   });
-  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number'){ e.target.w = Math.max(wFloor(e), +(e.target.w-wStepLb()).toFixed(1)); growthNudge(e); } renderTrain(); });
-  el.querySelectorAll('[data-wup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wup]; if(typeof e.target.w==='number') e.target.w = +(e.target.w+wStepLb()).toFixed(1); renderTrain(); });
+  el.querySelectorAll('[data-wdn]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wdn]; if(typeof e.target.w==='number'){ e.target.w = Math.max(wFloor(e), +(e.target.w-wStepLb(e)).toFixed(1)); growthNudge(e); } renderTrain(); });
+  el.querySelectorAll('[data-wup]').forEach(b=> b.onclick = ()=>{ const e=state.exercises[+b.dataset.wup]; if(typeof e.target.w==='number') e.target.w = +(e.target.w+wStepLb(e)).toFixed(1); renderTrain(); });
   /* typed values snap to sensible increments: weight → nearest 2.5, rest → nearest 5s */
   el.querySelectorAll('[data-wval]').forEach(inp=> inp.onchange = ()=>{
     const e = state.exercises[+inp.dataset.wval];
     let v = parseFloat(inp.value);
     if(isNaN(v)){ renderTrain(); return; }
     if(state.units==='kg') v = v/LB2KG;
-    v = snapW(v);
+    v = snapW(v, e);
     e.target.w = Math.max(wFloor(e), +v.toFixed(1));
     renderTrain();
     if(!growthNudge(e)) toast(`Weight set: ${load(e.target.w)}`);
@@ -5257,9 +5547,9 @@ function renderTrain(){
     const a = state.adj, e = state.exercises[a.i];
     const paint = ()=>{ $('#adj-w').value = typeof a.w==='number' ? (state.units==='kg' ? +(a.w*LB2KG).toFixed(1) : a.w) : a.w; $('#adj-r').value = a.r; };
     const step = (k,v)=>{ if(k==='w'&&typeof a.w==='number') a.w=Math.max(-300,+(a.w+v).toFixed(1)); if(k==='r') a.r=Math.max(0,a.r+v); paint(); };
-    $('#adj-w-dn').onclick = ()=>step('w',-wStepLb()); $('#adj-w-up').onclick = ()=>step('w',wStepLb());
+    $('#adj-w-dn').onclick = ()=>step('w',-wStepLb(e)); $('#adj-w-up').onclick = ()=>step('w',wStepLb(e));
     $('#adj-r-dn').onclick = ()=>step('r',-1); $('#adj-r-up').onclick = ()=>step('r',1);
-    $('#adj-w').onchange = ()=>{ let v = parseFloat($('#adj-w').value); if(!isNaN(v)){ if(state.units==='kg') v = v/LB2KG; a.w = Math.max(-300, +snapW(v).toFixed(1)); } paint(); };
+    $('#adj-w').onchange = ()=>{ let v = parseFloat($('#adj-w').value); if(!isNaN(v)){ if(state.units==='kg') v = v/LB2KG; a.w = Math.max(-300, +snapW(v, e).toFixed(1)); } paint(); };
     $('#adj-r').onchange = ()=>{ const v = parseInt($('#adj-r').value); if(!isNaN(v)) a.r = Math.max(0, Math.min(50, v)); paint(); };
     $('#adj-save').onclick = ()=>{
       e.done[a.s] = {w:a.w, r:a.r, hr:(e.done[a.s]||{}).hr||0, cal:(e.done[a.s]||{}).cal||10};
@@ -5540,7 +5830,7 @@ function renderFuel(){
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex:none">
         <button class="adj-btn" id="water-dn">−</button>
-        <b style="font-size:13px;min-width:70px;text-align:center;font-variant-numeric:tabular-nums">${state.waterUnit==='oz' ? `${Math.round(state.water*33.814)} / ${Math.round(state.waterTarget*33.814)}` : `${+state.water.toFixed(2)} / ${state.waterTarget}`}</b>
+        <input class="lb-f" id="water-in" inputmode="decimal" value="${state.waterUnit==='oz' ? Math.round(state.water*33.814) : +state.water.toFixed(2)}" style="width:52px">
         <button class="adj-btn" id="water-up">＋</button>
         <button class="adj-btn" id="water-unit" style="width:auto;padding:0 8px;font-size:11px;font-weight:700" title="Tap to switch liters / ounces">${state.waterUnit==='oz'?'oz':'L'}</button>
       </div>
@@ -5581,10 +5871,24 @@ function renderFuel(){
     </div>
     <div style="height:56px"></div>`;
   const wdn = $('#water-dn'), wup = $('#water-up'), wu = $('#water-unit');
-  const wStepL = state.waterUnit==='oz' ? 8/33.814 : 0.25;   /* 8 oz a tap, or 0.25 L */
-  if(wdn) wdn.onclick = ()=>{ state.water = Math.max(0, +(state.water - wStepL).toFixed(3)); renderFuel(); };
-  if(wup) wup.onclick = ()=>{ state.water = Math.min(12, +(state.water + wStepL).toFixed(3)); renderFuel(); if(state.water >= state.waterTarget) toast('💧 Water goal hit'); };
-  if(wu) wu.onclick = ()=>{ state.waterUnit = state.waterUnit==='oz' ? 'L' : 'oz'; renderFuel(); toast(state.waterUnit==='oz' ? 'Water in ounces — +8 oz a tap' : 'Water in liters — +0.25 L a tap'); };
+  /* v138: ± moves 4 oz, or snaps to the nearest quarter-liter in L mode */
+  const wStep = dir => {
+    if(state.waterUnit==='oz') return Math.max(0, Math.min(12, +(state.water + dir*4/33.814).toFixed(3)));
+    return Math.max(0, Math.min(12, Math.round((state.water + dir*0.25)*4)/4));
+  };
+  if(wdn) wdn.onclick = ()=>{ state.water = wStep(-1); renderFuel(); };
+  if(wup) wup.onclick = ()=>{ state.water = wStep(1); renderFuel(); if(state.water >= state.waterTarget) toast('💧 Water goal hit'); };
+  if(wu) wu.onclick = ()=>{ state.waterUnit = state.waterUnit==='oz' ? 'L' : 'oz'; renderFuel(); toast(state.waterUnit==='oz' ? 'Water in ounces — +4 oz a tap' : 'Water in liters — +0.25 L a tap'); };
+  /* v137: type your intake directly, same as weights */
+  const wi = $('#water-in');
+  if(wi) wi.onchange = ()=>{
+    const v = parseFloat(wi.value);
+    if(isNaN(v) || v < 0){ renderFuel(); return; }
+    const L = state.waterUnit==='oz' ? v/33.814 : v;
+    state.water = Math.max(0, Math.min(12, +L.toFixed(3)));
+    renderFuel();
+    if(state.water >= state.waterTarget) toast('💧 Water goal hit');
+  };
   const mt = $('#micro-toggle');
   if(mt) mt.onclick = ()=>{ state.microOpen = !state.microOpen; renderFuel(); };
   const cp = $('#cuisine-pick');
@@ -5808,6 +6112,7 @@ function renderProgress(){
   const p = state.prog[state.progressFilter];
   const delta = (state.weightNow - p.start).toFixed(1);
   $('#screen-progress').innerHTML = `
+    <div class="section-label">Snapshot</div>
     <div class="filter-row">
       <select id="prog-pick" class="str-select" style="width:100%;max-width:none">
         ${Object.keys(state.prog).map(fk=>`<option ${state.progressFilter===fk?'selected':''}>${fk}</option>`).join('')}
@@ -5841,6 +6146,7 @@ function renderProgress(){
         return `<div class="tile"><div class="t-l">This week</div><div class="t-v">${state.workoutsWtd}<span style="font-size:12px;color:var(--muted)">${state.workoutsGoal?'/'+state.workoutsGoal:''}</span></div><div class="t-d">${total} session${total!==1?'s':''} all-time</div></div>`;
       })()}
     </div>
+    <div class="section-label">Workout progress</div>
     <div class="card">
       <h3 style="display:flex;align-items:center;gap:8px">
         <select id="str-pick" class="str-select" style="flex:1;min-width:0;max-width:none">${groupedExOptions(state.strengthKey)}</select>
@@ -5862,6 +6168,7 @@ function renderProgress(){
         ? `<div class="chart-wrap">${strengthChart()}</div>`
         : `<div style="text-align:center;padding:16px 12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite(exScene(state.strengthKey, state.strengthData[state.strengthKey].mg),92)}<br>Nothing logged for this ${state.strengthData[state.strengthKey].mg==='Cardio'?'activity':'lift'} yet.<br>Your first session draws the first point.</div>`}
     </div>
+    <div class="section-label">Sleep & recovery</div>
     <div class="card">
       ${state.sleepLog.length >= 2 ? `
       <h3 style="display:flex;align-items:center;gap:8px">Sleep
@@ -5876,6 +6183,7 @@ function renderProgress(){
       <h3>Sleep</h3>
       <div style="text-align:center;padding:12px;color:var(--muted);font-size:13px;line-height:1.55">${emptySprite('sleepbed',108)}<br>No sleep data yet.<br>Sync your Apple Watch (NAVI Sync shortcut) a couple of mornings and your nights chart here.</div>`}
     </div>
+    <div class="section-label">PRs & medals</div>
     <div class="card">
       <div class="seg">
         <button class="${state.progTab==='prs'?'sel':''}" data-ptab="prs">📈 PRs</button>
@@ -5906,6 +6214,7 @@ function renderProgress(){
       <button class="see-all ${state.medalsAll?'float-less':''}" id="see-all">${state.medalsAll?'▴ Show less':'See all '+state.medals.length+' PRs'}</button>
       `}
     </div>
+    <div class="section-label">Community</div>
     <div class="card">
       <h3 style="display:flex;align-items:center;gap:8px">Community rankings · PRs
         <span class="h3-side" style="float:none;margin-left:auto">coming soon</span>
@@ -5957,6 +6266,8 @@ function memorySuggestions(){
   return sug;
 }
 
+const CUST_SCENES = ['run','lift','jumprope','wave'];   /* v148: run → overhead press → jump rope → wave */
+let custCycleT = null, custCycleI = 0;
 function renderYou(){
   $('#screen-you').innerHTML = `
     <div class="prof-head">
@@ -5970,12 +6281,22 @@ function renderYou(){
     <div class="section-label">Edit profile</div>
     <div class="card">
       <div style="display:flex;gap:8px">
-        <div style="flex:1"><label style="display:block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Your name</label><input id="edit-uname" class="lb-search" style="margin:0" placeholder="N/A — set your name" value="${state.profileSet.name ? state.user.name : ''}"></div>
+        <div style="flex:1"><label class="ep-lab">Your name</label><input id="edit-uname" class="lb-search" style="margin:0" placeholder="N/A — set your name" value="${state.profileSet.name ? state.user.name : ''}"></div>
       </div>
-      <button class="adj-save" id="edit-names-save" style="width:100%;margin-top:8px">Save name</button>
-      <p style="font-size:11px;color:var(--muted);margin-top:8px">Weight, height, age and weigh-in days: type <b>"edit profile"</b> in the coach tab and the full setup card reopens.</p>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div style="flex:1"><label class="ep-lab">Age</label><input id="edit-age" class="lb-search" style="margin:0" inputmode="numeric" placeholder="—" value="${state.profileSet.age ? state.user.age : ''}"></div>
+        <div style="flex:1"><label class="ep-lab">Height</label><input id="edit-height" class="lb-search" style="margin:0" placeholder="—" value="${state.profileSet.height ? esc(state.user.height) : ''}"></div>
+        <div style="flex:1"><label class="ep-lab">Weight</label><input id="edit-weight" class="lb-search" style="margin:0" placeholder="—" value="${state.profileSet.weight ? (state.units==='kg' ? Math.round(state.user.weight*LB2KG)+' kg' : state.user.weight+' lb') : ''}"></div>
+      </div>
+      <label class="ep-lab" style="margin-top:8px;display:block">Weigh-in day(s)</label>
+      <div class="wd-row">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d0=>`<button type="button" class="wd-chip ${state.weighDays.includes({Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'}[d0])?'sel':''}" data-epwd="${d0}">${d0}</button>`).join('')}</div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div style="flex:1"><label class="ep-lab">User gender</label><select id="edit-gender" class="str-select" style="width:100%;max-width:none"><option value="">Select…</option><option ${state.user.gender==='Male'?'selected':''}>Male</option><option ${state.user.gender==='Female'?'selected':''}>Female</option></select></div>
+        <div style="flex:1"><label class="ep-lab">Nationality</label><select id="edit-nat" class="str-select" style="width:100%;max-width:none"><option value="">Select…</option>${NAT_LIST.map(c=>`<option ${state.user.nationality===c?'selected':''}>${c}</option>`).join('')}</select></div>
+      </div>
+      <button class="adj-save" id="edit-names-save" style="width:100%;margin-top:10px">Save profile</button>
     </div>
-    <div class="section-label">Current goal</div>
+    <div class="section-label">Coach · Goal</div>
     <div class="card"><div class="persona-wrap">
       <button class="p-arrow" id="g-left" aria-label="Scroll left">‹</button>
       <div class="goal-scroll" id="goal-scroll">
@@ -5983,7 +6304,7 @@ function renderYou(){
       </div>
       <button class="p-arrow" id="g-right" aria-label="Scroll right">›</button>
     </div></div>
-    <div class="section-label">Coaching personality</div>
+    <div class="section-label">Coach · Personality</div>
     <div class="card"><div class="persona-wrap">
       <button class="p-arrow" id="p-left" aria-label="Scroll left">‹</button>
       <div class="persona" id="persona-scroll">
@@ -5994,19 +6315,23 @@ function renderYou(){
       </div>
       <button class="p-arrow" id="p-right" aria-label="Scroll right">›</button>
     </div></div>
-    <div class="section-label">Customize your coach</div>
+    <div class="section-label">Coach · Appearance</div>
     <div class="card">
       <div class="seg" style="margin-bottom:12px">
         <button class="${state.spr.sex==='m'?'sel':''}" data-sprsex="m">Male</button>
         <button class="${state.spr.sex==='f'?'sel':''}" data-sprsex="f">Female</button>
       </div>
+      <div id="cust-prev-wrap" style="text-align:center;margin-bottom:12px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:14px;padding:8px 6px 2px">${emptySprite('lift', 118)}</div>
+      <div class="cust-h">Colors</div>
       <div class="spr-grid">
-      ${SPR_ROWS[sprTheme()].map(([k,lab])=>`
+      ${[['skin','Skin tone'],['hair','Hair'],['eyes','Eyes'],...(state.spr.sex==='f'?[['lip','Lips']]:[]),['shirt','Top'],['pants','Bottom']].map(([k,lab])=>`
       <div class="spr-row"><span class="spr-lab">${lab}</span>
         <input type="color" class="cwheel" data-sprk="${k}" value="${state.spr[k]}">
-        <span style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums">${state.spr[k]}</span>
       </div>`).join('')}
       </div>
+      <div class="cust-h">Hair style</div>
+      <div class="wd-row">${(state.spr.sex==='f' ? [['short','Short'],['long','Long'],['mohawk','Mohawk'],['bald','Bald'],['pigtails','Pigtails']] : [['short','Short'],['long','Long'],['mohawk','Mohawk'],['bald','Bald']]).map(([v,l])=>`<button type="button" class="wd-chip ${state.spr.hairStyle===v?'sel':''}" data-sprstyle="hairStyle:${v}">${l}</button>`).join('')}</div>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">Build and hair are yours — they stay when you switch coaching personalities. Personas keep their signature gear (lab coat, beret, vest, posing trunks).</p>
     </div>
     <div class="section-label">What ${state.coachName} remembers</div>
     <div class="card">
@@ -6173,17 +6498,42 @@ function renderYou(){
     renderYou();
     toast(state.theme==='light' ? '☀️ Light mode on' : '🌙 Dark mode on');
   });
+  $$('#screen-you [data-epwd]').forEach(c=> c.onclick = ()=> c.classList.toggle('sel'));
   const ens = $('#edit-names-save');
   if(ens) ens.onclick = ()=>{
     const un = esc($('#edit-uname').value.trim()).slice(0,40);
     if(un && un.toUpperCase() !== 'N/A'){ state.user.name = un; state.profileSet.name = true; }
+    /* v138: the whole profile edits inline now */
+    const ag = parseInt($('#edit-age').value); if(ag > 0){ state.user.age = Math.min(120, ag); state.profileSet.age = true; }
+    const ht = $('#edit-height').value.trim(); if(ht && !/-/.test(ht)){ state.user.height = ht.replace(/[<>&]/g,'').slice(0,12); state.profileSet.height = true; }
+    const wt = $('#edit-weight').value.trim();
+    if(wt){ const pw = parseObWeight(wt); if(pw){ if(pw.kg) state.units = 'kg'; state.user.weight = pw.lb; state.weightNow = pw.lb; state.macros.protein.t = Math.round(pw.lb); state.profileSet.weight = true; } }
+    const g = $('#edit-gender').value; if(g) state.user.gender = g;
+    const nt = $('#edit-nat').value; if(nt && !/prefer/i.test(nt)) state.user.nationality = nt;
+    const wdM = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
+    state.weighDays = [...$$('#screen-you [data-epwd]')].filter(c=>c.classList.contains('sel')).map(c=>wdM[c.dataset.epwd]);
+    retuneMacros();
     updateHeader(); renderYou(); renderFuel(); renderTrain(); renderProgress();
-    toast('✓ Name updated');
+    toast('✓ Profile updated');
   };
-  $$('#screen-you [data-sprsex]').forEach(b=> b.onclick = ()=>{ state.spr.sex = b.dataset.sprsex; renderSprite(); renderYou(); toast({m:'Your coach is ready',f:'Your coach is ready',r:'🤖 Cyborg coach online — systems nominal'}[state.spr.sex]); });
+  $$('#screen-you [data-sprsex]').forEach(b=> b.onclick = ()=>{ state.spr.sex = b.dataset.sprsex; renderSprite(); renderYou(); renderTrain(); renderFuel(); renderProgress(); toast({m:'Your coach is ready',f:'Your coach is ready',r:'🤖 Cyborg coach online — systems nominal'}[state.spr.sex]); });
+  /* v147: the appearance preview performs a rotating routine — press, run, jump, squat, curl, spin */
+  const custPrev = ()=>{ const c = $('#cust-prev-wrap'); if(c) c.innerHTML = emptySprite(CUST_SCENES[custCycleI % CUST_SCENES.length], 118); };
+  custPrev();
+  clearInterval(custCycleT);
+  custCycleT = setInterval(()=>{
+    if(!document.querySelector('#cust-prev-wrap')){ clearInterval(custCycleT); return; }
+    custCycleI++; custPrev();
+  }, 2800);
   $$('#screen-you [data-sprk]').forEach(inp=>{
-    inp.oninput = ()=>{ state.spr[inp.dataset.sprk] = inp.value; renderSprite(); };
-    inp.onchange = ()=>{ renderYou(); };
+    inp.oninput = ()=>{ state.spr[inp.dataset.sprk] = inp.value; renderSprite(); custPrev(); };
+    inp.onchange = ()=>{ renderYou(); renderTrain(); renderFuel(); renderProgress(); };
+  });
+  /* v138: style chips */
+  $$('#screen-you [data-sprstyle]').forEach(b=> b.onclick = ()=>{
+    const [k, v] = b.dataset.sprstyle.split(':');
+    state.spr[k] = v;
+    renderYou(); renderTrain(); renderFuel(); renderProgress(); renderSprite();
   });
   const pscroll = $('#persona-scroll');
   $('#p-left').onclick = ()=> pscroll.scrollBy({left:-250, behavior:'smooth'});
@@ -6210,9 +6560,9 @@ function renderYou(){
   });
   $$('#screen-you [data-persona]').forEach(b=> b.onclick = ()=>{
     state.personality = b.dataset.persona;
-    const sex = state.spr.sex;
-    Object.assign(state.spr, DEFAULT_SPR, THEME_DEFAULTS[sprTheme()] || {}, {sex});
-    renderYou();
+    Object.assign(state.spr, DEFAULT_SPR, THEME_DEFAULTS[sprTheme()] || {}, sprKeep());
+    /* v135: the new persona walks onto EVERY screen immediately — no stale sprites */
+    renderYou(); renderTrain(); renderFuel(); renderProgress(); renderSprite();
     const p = flav();
     toast(`${p.e} ${p.t} coach activated`);
     setTimeout(()=>{ addMsg(p.e+' '+pick(p.open)+' New coaching style locked in. '+p.push, 'bot'); }, 300);
@@ -6306,6 +6656,9 @@ let bootNewDay = false;
     Object.assign(state, saved.s);
     state.coachName = 'NAVI';   /* v125: NAVI branding is fixed — older saves with custom names fold back */
     delete state.strength;      /* v126: retired unused key from older saves */
+    Object.keys(DEFAULT_SPR).forEach(k=>{ if(state.spr[k]===undefined) state.spr[k] = DEFAULT_SPR[k]; });   /* v138 */
+    if(state.spr.hairStyle==='classic' || state.spr.hairStyle==='buzz') state.spr.hairStyle = 'short';        /* v140 */
+    state.spr.hscale = 1; state.spr.mscale = 1;   /* v146: build sliders retired — everyone back to standard proportions */
     /* saves from before v67 have no profileSet — an onboarded profile counts as fully set */
     if(!state.profileSet) state.profileSet = {name:true, age:true, height:true, weight:true};
     ensureCardioDS();   /* v104: older saves gain the per-activity cardio datasets */
