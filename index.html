@@ -1048,7 +1048,7 @@ const EX_LIB = {
   'Glutes':['Hip Thrusts','Glute Bridge','Walking Lunges','Deep Pause Squat','Cable Kickback'],
   'Calves':['Standing Calf Raises','Seated Calf Raise','Leg-Press Calf Raise'],
   'Traps':['Barbell Shrugs','DB Shrugs'],
-  'Abs / Core':['Hanging Leg Raise','Cable Crunch','Ab-Wheel Rollout','Plank Series','Sit-ups'],
+  'Abs / Core':['Hanging Leg Raise','Cable Crunch','Ab-Wheel Rollout','Plank Series','Sit-ups','V-Ups','Dragon Flags','Decline Sit-ups'],
 };
 /* v50: movement-pattern classifier — compounds earn the long rest, isolations the short one */
 const isComp = n => /press|bench\b|squat|deadlift|rows?\b|pull-?up|pulldown|dips?\b|thrust|bridge|lunge|push-?up/i.test(n) && !/calf|face pull/i.test(n);
@@ -2328,6 +2328,7 @@ function showObForm(edit){
     state.weighDays = [...d.querySelectorAll('.wd-chip.sel')].map(c=>wdMap[c.dataset.wd]);
     if(state.weighDays.length) state.memory.unshift({ic:'⚖️', t:`Weigh-in days: ${state.weighDays.join(', ')} — I'll prompt you`});
     updateHeader();
+    saveState();
     d.querySelectorAll('input,select,button').forEach(x=>x.disabled=true);
     d.querySelector('#ob-go').textContent = '✓ Profile created';
     finishOnboarding();
@@ -4994,6 +4995,7 @@ function pushHistory(label, session){
   if(!cur) state.history[label] = session;
   else if(cur.multi) cur.sessions.push(session);
   else state.history[label] = {multi:true, sessions:[cur, session]};
+  saveState();   /* v163: a finished workout NEVER waits for the autosave tick */
 }
 function showSessionPicker(key, entry){
   const ov = document.createElement('div');
@@ -5070,31 +5072,38 @@ function reactToSet(e, w, r){
   checkProgression(e);
 }
 
-function undoLastSetFor(i){
+function undoLastSetFor(i, s){
+  /* v163: undo a SPECIFIC set — the slot stays open and can be redone any time */
   const e = state.exercises[i];
-  if(!e || !e.done.length) return;
-  const d = e.done.pop();
+  if(!e || !e.done.some(Boolean)) return;
+  let idx = (typeof s === 'number' && e.done[s]) ? s : e.done.length - 1;
+  const d = e.done[idx];
+  if(!d) return;
+  e.done[idx] = null;
+  while(e.done.length && !e.done[e.done.length-1]) e.done.pop();   /* trailing holes collapse */
+  e.completed = false;
   state.burned = Math.max(0, state.burned - (d.cal||0));
   if(state.lastLogged && state.lastLogged.i===i) state.lastLogged = null;
   hideRestOverlay();
   renderTrain(); renderFuel();
-  toast(`↩ Undone — set removed from ${e.n}`);
+  saveState();
+  toast(`↩ Undone — set ${idx+1} reopened on ${e.n}`);
 }
 
 /* your rule: +weight only when EVERY set reaches the top of the range */
 function checkProgression(e){
-  if(e.seg || e.done.length < e.sets) return;
+  const ds = e.done.filter(Boolean);
+  if(e.seg || ds.length < e.sets) return;
   const top = repTop(e);
-  if(e.done.every(d=>d.r >= top && d.w >= e.target.w)){
+  if(ds.every(d=>d.r >= top && d.w >= e.target.w)){
     toast(`🎉 ${e.n}: all sets at the top — +${wInc(e)} lb next session`);
   }
 }
 
 /* dips & pull-ups run on assist machines too — weight may go negative */
 const wFloor = e => /dips?\b|pull-?ups?|chin-?ups?/i.test(e.n) ? -300 : 5;
-/* v117/v137: barbells & machines step in 5s; DUMBBELL work steps in 2.5s (22.5 lb curls exist) */
-const isDB = e => !!(e && /dumbbell|\bdb\b/i.test(e.n||''));
-const wInc = e => isDB(e) ? 2.5 : 5;
+/* v163: EVERY lift steps in 2.5s — captures every plate combo */
+const wInc = () => 2.5;
 const wStepLb = (e) => state.units==='kg' ? wInc(e)/LB2KG : wInc(e);
 /* v123: friendly progressive-overload heads-up — once per exercise per session,
    only when a REAL previous weight exists. Never blocks anything. */
@@ -5108,7 +5117,7 @@ function growthNudge(e){
 }
 const snapW = (lb, e) => { const inc = wInc(e); return state.units==='kg' ? +(Math.round(lb*LB2KG/inc)*inc/LB2KG).toFixed(1) : +(Math.round(lb/inc)*inc).toFixed(1); };
 
-let bfKey = null, bfOpen = false, bfType = 'lift';
+let bfKey = null, bfOpen = false, bfType = 'lift', bfExs = [], bfRate = 0;
 function renderTrain(){
   const el = $('#screen-train');
   const dateBar = `
@@ -5133,6 +5142,19 @@ function renderTrain(){
       <div style="display:flex;gap:8px">
         <div style="flex:1"><label class="ep-lab">Minutes</label><input id="bf-min" class="lb-search" style="margin:0" inputmode="numeric" placeholder="60"></div>
       </div>
+      <label class="ep-lab" style="margin-top:10px;display:block">Exercises — add each lift (optional)</label>
+      ${bfExs.map((x,xi)=>`
+      <div style="display:flex;gap:5px;margin-bottom:6px;align-items:center">
+        <select class="str-select" style="margin:0;flex:2;min-width:0;max-width:none" data-bfex="n:${xi}">
+          <option value="" ${x.n?'':'selected'} disabled>Exercise</option>
+          ${Object.entries(EX_LIB).map(([mg,list])=>`<optgroup label="${mg}">${list.map(n=>`<option ${n===x.n?'selected':''}>${n}</option>`).join('')}</optgroup>`).join('')}
+        </select>
+        <input class="lb-f" data-bfex="w:${xi}" inputmode="decimal" placeholder="lb" value="${x.w}" style="width:50px">
+        <input class="lb-f" data-bfex="s:${xi}" inputmode="numeric" placeholder="sets" value="${x.s}" style="width:42px">
+        <input class="lb-f" data-bfex="r:${xi}" inputmode="numeric" placeholder="reps" value="${x.r}" style="width:42px">
+        <button type="button" class="adj-btn" data-bfexdel="${xi}" style="flex:none">✕</button>
+      </div>`).join('')}
+      <button type="button" class="see-all" id="bf-addex" style="margin:0 0 4px">➕ Add exercise (weight × sets × reps)</button>
       <label class="ep-lab" style="margin-top:8px;display:block">Note (optional)</label>
       <input id="bf-note" class="lb-search" style="margin:0" placeholder="How did it go?">` : `
       <label class="ep-lab">Activity</label>
@@ -5141,11 +5163,25 @@ function renderTrain(){
         <div style="flex:1"><label class="ep-lab">Minutes</label><input id="bf-min" class="lb-search" style="margin:0" inputmode="numeric" placeholder="30"></div>
         <div style="flex:1"><label class="ep-lab">Distance (mi, optional)</label><input id="bf-dist" class="lb-search" style="margin:0" inputmode="decimal" placeholder="—"></div>
       </div>`}
+      <label class="ep-lab" style="margin-top:10px;display:block">How hard was it? (optional)</label>
+      <div class="seg" id="bf-stars" style="margin-bottom:2px">
+        <button type="button" class="${bfRate===1?'sel':''}" data-bfstar="1" style="flex:1">★<br><span style="font-size:10px;font-weight:600">Easy</span></button>
+        <button type="button" class="${bfRate===2?'sel':''}" data-bfstar="2" style="flex:1">★★<br><span style="font-size:10px;font-weight:600">Solid</span></button>
+        <button type="button" class="${bfRate===3?'sel':''}" data-bfstar="3" style="flex:1">★★★<br><span style="font-size:10px;font-weight:600">Max effort</span></button>
+      </div>
       <div class="btn-panel" style="margin-top:12px;align-items:center"><button class="back-sub" id="bf-cancel" style="flex:none">Cancel</button><button class="opt-btn begin" style="flex:none;margin:0 auto;padding:10px 22px;white-space:nowrap" id="bf-save">✓ Save workout</button></div>
     </div>`;
   const wireBf = () => {
     const open = el.querySelector('#bf-open');
-    if(open) open.onclick = ()=>{ bfOpen = true; renderTrain(); };
+    if(open) open.onclick = ()=>{ bfOpen = true; bfExs = []; bfRate = 0; renderTrain(); };
+    const addex = el.querySelector('#bf-addex');
+    if(addex) addex.onclick = ()=>{ bfExs.push({n:'', w:'', s:'3', r:'8'}); renderTrain(); };
+    el.querySelectorAll('[data-bfex]').forEach(inp=> inp.onchange = ()=>{
+      const [k, xi] = inp.dataset.bfex.split(':');
+      if(bfExs[+xi]) bfExs[+xi][k] = inp.value;
+    });
+    el.querySelectorAll('[data-bfexdel]').forEach(b=> b.onclick = ()=>{ bfExs.splice(+b.dataset.bfexdel, 1); renderTrain(); });
+    el.querySelectorAll('[data-bfstar]').forEach(b=> b.onclick = ()=>{ const v = +b.dataset.bfstar; bfRate = bfRate===v ? 0 : v; el.querySelectorAll('[data-bfstar]').forEach(x=>x.classList.toggle('sel', +x.dataset.bfstar===bfRate)); });
     el.querySelectorAll('[data-bftype]').forEach(b=> b.onclick = ()=>{ bfType = b.dataset.bftype; renderTrain(); });
     const cancel = el.querySelector('#bf-cancel');
     if(cancel) cancel.onclick = ()=>{ bfOpen = false; renderTrain(); };
@@ -5157,7 +5193,32 @@ function renderTrain(){
       if(bfType==='lift'){
         const nm = esc(((el.querySelector('#bf-name')||{}).value || 'Workout').trim()).slice(0,40) || 'Workout';
         const note = esc(((el.querySelector('#bf-note')||{}).value || '').trim()).slice(0,200);
-        pushHistory(label, {name:`${nm}`, time:'backfilled', ex:[{n:nm, sets:[`✓ ${min} min session — logged after the fact`]}], ...(note?{note}:{})});
+        /* v163: full detail — every lift with its weight × sets × reps */
+        const rows = bfExs.filter(x=>x.n && x.n.trim()).map(x=>{
+          const w = parseFloat(x.w), sN = Math.min(10, Math.max(1, parseInt(x.s)||1)), rN = Math.min(50, Math.max(1, parseInt(x.r)||8));
+          return { n: esc(x.n.trim()).slice(0,40), w: isNaN(w)?null:w, sN, rN };
+        });
+        const exList = rows.length
+          ? rows.map(x=>({n:x.n, sets:Array.from({length:x.sN},()=>`✓ ${x.w!=null?`${load(x.w)} × `:''}${x.rN}${x.w!=null?'':' reps'}`)}))
+          : [{n:nm, sets:[`✓ ${min} min session — logged after the fact`]}];
+        /* real weights refresh the PR wall AND the Progress strength charts —
+           a backfilled lift shows up everywhere a live one would */
+        rows.forEach(x=>{
+          if(x.w==null) return;
+          const m = state.medals.find(mm=>mm.n===x.n);
+          if(m){ const cur = parseFloat(m.pr); if(isNaN(cur) || x.w > cur){ m.pr = `${x.w} lb`; m.isNew = true; (m.hist = m.hist||[]).unshift([label, `${x.w} lb`, isNaN(cur) ? '—' : `+${+(x.w-cur).toFixed(1)}`]); } }
+          const key = NAME2KEY[x.n] || ('x_' + x.n.toLowerCase().replace(/[^a-z]+/g,'_'));
+          const ds = state.strengthData[key];
+          if(ds){
+            if(!ds.weeks) ds.weeks = [];
+            ds.weeks.push(label);
+            ds.vals.push(x.w);
+            if(ds.reps) ds.reps.push(x.rN);
+            ds.hr.push(0);
+            ds.cal.push(x.sN * 9);
+          }
+        });
+        pushHistory(label, {name:`${nm}`, time:'backfilled', ex:exList, ...(note?{note}:{}), ...(bfRate?{rate:bfRate}:{})});
       } else {
         const actName = el.querySelector('#bf-act').value;
         const type = segCardioType(actName);
@@ -5168,7 +5229,7 @@ function renderTrain(){
           cds.vals.push(min); cds.hr.push(0); cds.cal.push(Math.round(min*60*0.16)); cds.dist.push(km); cds.weeks = cds.weeks||[]; cds.weeks.push(label);
         }
         if(km > 0) state.lifeKm = +((state.lifeKm||0) + km).toFixed(2);
-        pushHistory(label, {name:`${actName}`, time:'backfilled', ex:[{n:actName, sets:[`✓ ${min} min${km?` · ${mi} mi`:''} — logged after the fact`]}]});
+        pushHistory(label, {name:`${actName}`, time:'backfilled', ex:[{n:actName, sets:[`✓ ${min} min${km?` · ${mi} mi`:''} — logged after the fact`]}], ...(bfRate?{rate:bfRate}:{})});
       }
       if(bfKey && !state.trainedDays.includes(bfKey)) state.trainedDays.push(bfKey);
       bfOpen = false;
@@ -5185,7 +5246,7 @@ function renderTrain(){
     el.innerHTML = dateBar + (h && h.rest
       ? `<div class="card empty-state"><div class="e-ic">😴</div><h4>Sunday Recovery</h4><p>No lifting — by design. Rest days are when the training sinks in.</p></div>`
       : !h
-      ? `<div class="card empty-state"><div class="e-ic">📅</div><h4>${state.trainDate}</h4><p>No session logged on this date. Forgot to log one? Add it now — lifting, cardio, or both.</p>${bfOpen?'':'<button class="opt-btn begin" id="bf-open" style="margin-top:10px;max-width:none">➕ Log a workout for this day</button>'}</div>` + (bfOpen ? bfForm() : '')
+      ? `<div class="card empty-state"><div class="e-ic">📅</div><h4>${state.trainDate}</h4><p>No session logged on this date. Forgot to log one? Add it now — lifting, cardio, or both.</p>${bfOpen?'':'<button class="opt-btn begin" id="bf-open" style="margin-top:10px;display:inline-block;width:auto;max-width:none;flex:none;padding:12px 24px">➕ Log workout for the day</button>'}</div>` + (bfOpen ? bfForm() : '')
       : `
       <div class="section-label">${state.trainDate} · ${h.name} · completed${h.time?` · ${h.time}`:''}</div>
       ${h.rate || h.note ? `<div class="card" style="font-size:13px">${h.rate?`<b style="color:${['','#3ecf96','#e8c14b','#e66767'][h.rate]}">${'★'.repeat(h.rate)}${'☆'.repeat(3-h.rate)}</b> <b>${['','Easy day','Solid work','Max effort'][h.rate]}</b>`:''}${h.note?`<div style="margin-top:${h.rate?'6px':'0'};color:var(--muted);font-size:13px;line-height:1.55">📝 ${h.note}</div>`:''}</div>` : ''}
@@ -5271,7 +5332,7 @@ function renderTrain(){
     return;
   }
 
-  const doneSets = state.exercises.reduce((a,e)=>a+e.done.length,0);
+  const doneSets = state.exercises.reduce((a,e)=>a+e.done.filter(Boolean).length,0);
   const totSets = state.exercises.reduce((a,e)=>a+e.sets,0);
   const sessBurn = state.exercises.flatMap(ex=>ex.done.filter(Boolean).map(d=>d.cal||0)).reduce((a,b)=>a+b,0);
   el.innerHTML = dateBar + `
@@ -5302,7 +5363,7 @@ function renderTrain(){
     ${(()=>{ const exCard = (e,i)=>{
       const complete = !!e.completed;
       const isActive = !complete;
-      const allDone = e.done.length >= e.sets;
+      const allDone = e.done.filter(Boolean).length >= e.sets;
       return `
       <div class="card exercise ${complete?'complete':(state.activeSet&&state.activeSet.i===i)?'active':''}">
         <div class="ex-top">
@@ -5339,14 +5400,17 @@ function renderTrain(){
         ${Array.from({length:e.sets},(_,s)=>{
           const d = e.done[s];
           if(d){
-            const undo = (!complete && s===e.done.length-1) ? `<button class="set-undo" data-undoset="${i}">↩ Undo set ${s+1}</button>` : '';
+            /* v164: no undo while a set is LIVE — finish (or undo) the current set first */
+            const undo = (!complete && !state.activeSet) ? `<button class="set-undo" data-undoset="${i}:${s}">↩ Undo set ${s+1}</button>` : '';
             return e.seg
               ? `<div class="set-line done">✓ Complete${d.hr?`<span class="hr">♥ ${d.hr}</span>`:''}</div>${undo}`
               : `<div class="set-line done" data-adj="${i}:${s}" title="Tap to adjust">✓ Set ${s+1} — ${load(d.w)} × ${d.r} ✎${d.hr?`<span class="hr">♥ ${d.hr} max</span>`:''}</div>${undo}`;
           }
           if(state.activeSet && state.activeSet.i===i && state.activeSet.s===s)
             return `<button class="set-go end" data-endset="${i}:${s}">■ End set${e.seg?'':' '+(s+1)} — recording ♥</button><button class="set-undo" data-undostart="${i}">↩ Undo — I didn't mean to start this set</button>`;
-          const isNext = isActive && s===e.done.length;
+          /* v163: the next startable set is the FIRST open slot — undone middles come back */
+          const nextIdx = Array.from({length: e.sets}, (_, k) => k).find(k => !e.done[k]);
+          const isNext = isActive && s===nextIdx && !state.activeSet;
           if(isNext) return e.cardioSeg
             ? (state.exercises.some(x=>!x.cardioSeg && !x.completed)
               ? `<div class="set-line">🔒 Unlocks after your last lift — finish the session first</div>`
@@ -5440,14 +5504,15 @@ function renderTrain(){
     const cal = e.seg ? 240 + Math.floor(Math.random()*60) : (e.comp?12:7) + Math.floor(Math.random()*6);
     state.burned += cal;
     state.activeSet = null;
-    if(e.seg){ e.done[s] = {w:0, r:0, hr, cal}; renderTrain(); renderFuel(); toast(`Complete ✅${hr?` · ♥ ${hr} bpm`:''}`); return; }
+    if(e.seg){ e.done[s] = {w:0, r:0, hr, cal}; saveState(); renderTrain(); renderFuel(); toast(`Complete ✅${hr?` · ♥ ${hr} bpm`:''}`); return; }
     const top = repTop(e);
     e.done[s] = {w:e.target.w, r:top, hr, cal};
     state.lastLogged = {i, s};
+    saveState();   /* v163: every finished set lands on disk right away */
     const isPR = typeof e.target.w==='number' && e.target.w > parseFloat(e.last);
     renderTrain();
     renderFuel();
-    if(e.done.length < e.sets) startRest(e.restSec || (e.comp?120:75));   // custom, else 2 min compound / 75 s isolation
+    if(e.done.filter(Boolean).length < e.sets) startRest(e.restSec || (e.comp?120:75));   // custom, else 2 min compound / 75 s isolation
     if(isPR && s===0){ celebratePR(e, e.target.w); }
     else toast(`Set ${s+1}: ${load(e.target.w)} × ${top}${hr?` · ♥ ${hr}`:''} — tap the row to adjust`);
     checkProgression(e);
@@ -5501,7 +5566,8 @@ function renderTrain(){
     toast('↩ Set cancelled — nothing recorded');
   });
   el.querySelectorAll('[data-undoset]').forEach(b=> b.onclick = ()=>{
-    undoLastSetFor(+b.dataset.undoset);
+    const [ui, us] = b.dataset.undoset.split(':').map(Number);
+    undoLastSetFor(ui, isNaN(us) ? undefined : us);
   });
   el.querySelectorAll('[data-skipseg]').forEach(b=> b.onclick = ()=>{
     const e = state.exercises[+b.dataset.skipseg];
